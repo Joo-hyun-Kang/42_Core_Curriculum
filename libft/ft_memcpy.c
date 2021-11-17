@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 16:49:15 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/17 19:44:52 by jokang           ###   ########.fr       */
+/*   Created: 2021/11/17 13:45:00 by jokang            #+#    #+#             */
+/*   Updated: 2021/11/17 15:29:00 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_isalnum(int c)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	if (ft_isalpha(c) || ft_isdigit(c))
+	char	*dst_temp;
+	char	*src_temp;
+	size_t	i;
+
+	dst_temp = (char *)dst;
+	src_temp = (char *)src;
+	i = 0;
+	while (i < n)
 	{
-		return (1);
+		*dst_temp++ = *src_temp++;
+		i++;
 	}
-	return (0);
+	return (dst);
 }
