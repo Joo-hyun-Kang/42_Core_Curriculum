@@ -1,20 +1,6 @@
 #include <unistd.h>
-#include <stdio.h>
 
-void ft_putnbr(int nb);
-
-int main(void)
-{
-	ft_putnbr(-1);
-	printf("\n");
-	ft_putnbr(0);
-	printf("\n");
-	ft_putnbr(1);
-	printf("\n");
-	ft_putnbr(-2147483647);
-}
-
-void ft_putnbr(int nb)
+void ft_putnbr_recursive(int nb)
 {
 	char digit;
 
@@ -23,12 +9,14 @@ void ft_putnbr(int nb)
 		write(1, "2147483647", 10);
 		return; 
 	}
+
 	if (nb < 0) {
 		nb *= -1;
 		write(1, "-", 1);	
 	}
+
 	if (nb > 9) {
-		ft_putnbr(nb / 10);
+		ft_putnbr_recursive(nb / 10);
 		nb %= 10;
 	}
 	

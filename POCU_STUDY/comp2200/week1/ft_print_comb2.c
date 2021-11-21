@@ -1,20 +1,11 @@
 #include <unistd.h>
 
-void ft_print_comb2(void);
-void put_number(int nb);
-
-int main(void)
-{
-	ft_print_comb2();
-}
-
 void ft_print_comb2(void)
 {
 	size_t i;
 	size_t j;
 	
 	for (i = 0; i <= 98; i++) {
-
 		for (j = i + 1; j <= 99; j++) {
 			put_number(i);
 			write(1, " ", 1);
