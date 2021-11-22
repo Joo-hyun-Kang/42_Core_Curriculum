@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 20:07:42 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/17 20:10:38 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/22 16:41:11 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
+
+}
+
+}
 	char	arr[len];
 	char	*p;
 	size_t	i;

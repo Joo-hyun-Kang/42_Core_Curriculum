@@ -65,4 +65,15 @@ int main(void)
 		printf("strlcat return value is %zu\n", strlcat(dst2, src, 3));
  		printf("strlcat dst is %s\n", dst2);
 	}
+
+	printf("\n\n");
+	printf("ft_strdup is testing...\n");
+	
+	{
+		char	*arr = "abcd";
+		char	*temp1 = ft_strdup(arr);
+		char	*temp2 = strdup(arr);
+		printf("ft_strdup : %s\n", temp1);
+		printf("strdup : %s\n", temp2);
+	}
 }
