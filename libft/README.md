@@ -1,8 +1,14 @@
 # 11.25(수) Part1 단위 테스트로 디버깅 및 코딩 표준 고치기
-memo
-ft_memmove 동적할당 없이 overlap 구현
+memo    
+-ft_memmove    
+동적할당 없이 overlap 구현   
+void 일때는 간접 참조로 대입을 못 한다  
 
-time   
+-ft_memcmp   
+1바이트에 있는 값에서 서로 큰지 비교하는데 unsigned를 사용하지 않으면 음수가 되서    
+return 값인 매개변수끼리 뺄셈이 잘못되어 버린다
+
+time      
 23개 C라이브러리 함수 디버깅
 
 # 11.25(수) How to make Makefile
