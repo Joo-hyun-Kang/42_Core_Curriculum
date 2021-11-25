@@ -1,6 +1,6 @@
 # 11.25(수) Part1 단위 테스트로 디버깅 및 코딩 표준 고치기
 * memo    
-+ ft_memmove    
+  * ft_memmove    
 동적할당 없이 overlap 구현   
 void 일때는 간접 참조로 대입을 못 한다  
 
