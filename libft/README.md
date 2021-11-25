@@ -4,7 +4,7 @@
 동적할당 없이 overlap 구현   
 void 일때는 간접 참조로 대입을 못 한다  
 
-+ ft_memcmp   
+ * ft_memcmp   
 1바이트에 있는 값에서 서로 큰지 비교하는데 unsigned를 사용하지 않으면 음수가 되서    
 return 값인 매개변수끼리 뺄셈이 잘못되어 버린다
 
@@ -18,7 +18,7 @@ makefile 작성.
 반면에 변수를 선언해서 타겟에 넣으면 변수에 있는 값들을 1개씩 넣어준다
 <pre>
 <code>
-$(OBJS) : $(OBJS)
+$(OBJS) : $(SRCS)
 $(CC) $(CFLAGS) -c $< -o $@ -MD
 </code>
 </pre>
