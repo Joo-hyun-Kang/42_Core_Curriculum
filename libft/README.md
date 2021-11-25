@@ -17,10 +17,11 @@ makefile 작성.
 메이크파일에서 변수를 선언해서 전제 조건에 변수를 사용할 때 1개씩 가져오는 것이 아니라 여러 개 한꺼번에 가져온다   
 반면에 변수를 선언해서 타겟에 넣으면 변수에 있는 값들을 1개씩 넣어준다
 
-<pre><code>
+<pre>
+<code>
 $(OBJS) : $(OBJS)
 $(CC) $(CFLAGS) -c $< -o $@ -MD
-</pre></code>
+</code></pre>
 
 src  
 메이크 파일에 대한 기본적인 설명 https://bowbowbow.tistory.com/12   
