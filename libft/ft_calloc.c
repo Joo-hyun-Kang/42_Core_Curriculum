@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:16:15 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/22 15:24:54 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/25 13:44:26 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	*ft_calloc(size_t count, size_t size)
 		temp++;
 		i++;
 	}
-	return (temp);
+	return (p);
 }

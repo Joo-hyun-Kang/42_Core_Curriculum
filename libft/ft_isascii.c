@@ -6,17 +6,17 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:02:32 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/17 11:13:32 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/25 20:31:11 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	isascii(int c)
+int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 255)
 	{
 		return (1);
 	}
-	return (0);	
+	return (0);
 }

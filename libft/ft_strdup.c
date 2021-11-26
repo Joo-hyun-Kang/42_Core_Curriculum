@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 16:17:15 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/22 16:17:53 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/25 19:25:20 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ char	*ft_strdup(const char *s1)
 
 	len = ft_strlen(s1) + 1;
 	p = (char *)malloc(sizeof(char) * len);
-	if (p == NULL)
+	if (p == 0)
 	{
-		return (NULL);
+		return (0);
 	}
 	ft_strlcpy(p, s1, len);
 	return (p);
 }
-

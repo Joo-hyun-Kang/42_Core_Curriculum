@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 20:07:42 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/22 16:41:11 by jokang           ###   ########.fr       */
+/*   Created: 2021/11/25 18:22:27 by jokang            #+#    #+#             */
+/*   Updated: 2021/11/25 19:24:18 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,30 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-
-}
-
-}
-	char	arr[len];
-	char	*p;
 	size_t	i;
+	char	*temp_dst;
+	char	*temp_src;
 
-	p = (char *)src;
 	i = 0;
-	while (i < len)
+	temp_dst = (char *)dst;
+	temp_src = (char *)src;
+	if (temp_dst > temp_src)
 	{
-		arr[i++] = *p++;
+		while (i < len)
+		{
+			*temp_dst++ = *temp_src++;
+			i++;
+		}
 	}
-	p = (char *)dst;
-	i = 0;
-	while (i < len)
+	else
 	{
-		*p++ = arr[i++]; 
+		temp_dst += len - 1;
+		temp_src += len - 1;
+		while (i < len)
+		{
+			*temp_dst-- = *temp_src--;
+			i++;
+		}
 	}
-	return (dst);
+	return (dst); 
 }

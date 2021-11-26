@@ -6,19 +6,19 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 11:13:00 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/17 11:13:48 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/25 18:36:41 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	const char *p;
+	const char	*p;
 
 	p = s;
 	while (*p++ != '\0')
 	{
 	}
-	return p - s - 1;
+	return (p - s - 1);
 }

@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:14:33 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/22 15:14:52 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/25 20:29:22 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	ft_atoi(const char *str)
 {
 	int	sign;
 	int	result;
-	
-	while (*str == '\t' || *str == '\n' || *str == '\v' 
+
+	while (*str == '\t' || *str == '\n' || *str == '\v'
 		   || *str == '\f' || *str == '\r' || *str == ' ')
 	{
 		str++;
@@ -29,7 +29,7 @@ int	ft_atoi(const char *str)
 		{
 			sign *= -1;
 		}
-		str++;	
+		str++;
 	}
 	result = 0;
 	while (ft_isdigit(*str))

@@ -76,4 +76,14 @@ int main(void)
 		printf("ft_strdup : %s\n", temp1);
 		printf("strdup : %s\n", temp2);
 	}
+
+	printf("\n\n");
+	printf("ft_memcmp is testing...\n");
+
+	{
+		printf("%d\n", ft_memcmp("abcdefghij", "abcdefgxyz", 7));
+		printf("%d\n", memcmp("abcdefghij", "abcdefgxyz", 7));
+		printf("%d\n", ft_memcmp("zyxbcdefgh", "abcdefgxyz", 0));
+		printf("%d\n", memcmp("zyxbcdefgh", "abcdefgxyz", 0));
+	}
 }
