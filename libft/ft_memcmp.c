@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:13:29 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/26 11:12:00 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/26 12:24:56 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	p1 = (unsigned char *)s1;
 	p2 = (unsigned char *)s2;
 	i = 0;
-	while (i++ < 7 && p1[i] == p2[i])
+	while (i < n)
 	{
-		printf("%zu\n", i);
+		if (*p1 != *p2)
+		{
+			return (*p1 - *p2);
+		}
+		p1++;
+		p2++;
+		i++;
 	}
-	printf("%zu\n", i);
-	return (i);
+	return (0);
 }
