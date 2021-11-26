@@ -6,17 +6,17 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 19:55:22 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/22 16:19:43 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/26 21:36:43 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	tolower(int c)
+int	ft_tolower(int c)
 {
 	if (c >= 'A' && c <= 'Z')
 	{
-		c += 32;		
+		c += 32;
 	}
 	return (c);
 }
