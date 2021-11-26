@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:18:54 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/25 19:13:50 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/26 16:50:02 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		src++;
 		dst_length++;
 	}
-	if (dst_length > dstsize)
+	if (dst_length < dstsize)
 		return (src_length);
 	else
 		return (dst_length);
