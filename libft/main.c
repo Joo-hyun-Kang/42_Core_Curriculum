@@ -81,9 +81,56 @@ int main(void)
 	printf("ft_memcmp is testing...\n");
 
 	{
-		printf("%d\n", ft_memcmp("abcdefghij", "abcdefgxyz", 7));
-		printf("%d\n", memcmp("abcdefghij", "abcdefgxyz", 7));
-		printf("%d\n", ft_memcmp("zyxbcdefgh", "abcdefgxyz", 0));
-		printf("%d\n", memcmp("zyxbcdefgh", "abcdefgxyz", 0));
+		printf("ft_memcmp : %d\n", ft_memcmp("abcdefghij", "abcdefgxyz", 7));
+		printf("memcmp : %d\n", memcmp("abcdefghij", "abcdefgxyz", 7));
+		printf("ft_memcmp : %d\n", ft_memcmp("zyxbcdefgh", "abcdefgxyz", 0));
+		printf("memcmp : %d\n", memcmp("zyxbcdefgh", "abcdefgxyz", 0));
+	}
+
+	printf("\n\n");
+	printf("ft_strlcat is testing...\n");
+	
+	{
+		char	*dest;
+		int		dest_len;
+
+		dest_len = 15;
+		dest = (char *)malloc(sizeof(*dest) * dest_len);
+		memset(dest, 0, dest_len);
+		memset(dest, 'r', 6);
+		dest[10] = 'a';
+		printf("ft_strlcat: %zu\n", ft_strlcat(dest, "lorem ipsum dolor sit amet", 0));
+		printf("%s\n", dest);
+		free(dest);
+	}
+
+	{
+		char	*dest;
+		int		dest_len;
+
+		dest_len = 15;
+		dest = (char *)malloc(sizeof(*dest) * dest_len);
+		memset(dest, 0, dest_len);
+		memset(dest, 'r', 6);
+		dest[10] = 'a';
+		printf("strlcat: %zu\n", strlcat(dest, "lorem ipsum dolor sit amet", 0));
+		printf("%s\n", dest);
+		free(dest);
+	}
+
+	{
+		char	dest[30] = "123";
+		char	*src = "456789";
+		
+		size_t ret = strlcat(dest, src, 3);
+		printf("return : %zu, value : %s\n", ret, dest);
+	}
+
+	printf("\n\n");
+	printf("ft_atoit is testing...\n");
+
+	{
+		printf("ft_atoi : %d\n", ft_atoi("99999999999999999999999999"));
+		printf("atoi : %d\n", atoi("99999999999999999999999999"));
 	}
 }
