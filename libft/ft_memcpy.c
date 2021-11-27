@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:45:00 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/22 16:14:55 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/27 13:39:51 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	char	*src_temp;
 	size_t	i;
 
+	if (dst == NULL && src == NULL)
+		return (NULL);
 	dst_temp = (char *)dst;
 	src_temp = (char *)src;
 	i = 0;

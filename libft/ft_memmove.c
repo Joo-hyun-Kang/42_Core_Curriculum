@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 18:22:27 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/26 13:50:44 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/27 14:04:53 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	char	*temp_dst;
 	char	*temp_src;
 
+	if (dst == NULL && src == NULL)
+		return (NULL);
 	i = 0;
 	temp_dst = (char *)dst;
 	temp_src = (char *)src;
 	if (temp_dst < temp_src)
 	{
 		while (i++ < len)
-		{
 			*temp_dst++ = *temp_src++;
-		}
 	}
 	else
 	{
