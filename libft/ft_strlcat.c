@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:18:54 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/27 12:38:37 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/27 12:56:25 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	while (*src++ != '\0')
 		copied_length++;
 	if (dstsize < dst_length)
-		return (src_length);
+		return (src_length + dstsize);
 	else
 		return (copied_length);
 }
