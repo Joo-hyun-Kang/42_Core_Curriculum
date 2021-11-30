@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 18:08:38 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/26 21:36:53 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/30 11:48:53 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,5 @@ int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
 void	*ft_memmove(void *dst, const void *src, size_t len);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
