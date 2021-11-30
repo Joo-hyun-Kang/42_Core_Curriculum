@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:11:11 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/30 16:58:09 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/30 17:12:34 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*do_char_mallc(size_t length)
+char	*do_char_malloc(size_t length)
 {
 	char	*p;
 
@@ -33,10 +33,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	s_length = ft_strlen(s);
 	if (start > s_length)
 		return (ft_strdup(""));
-	if (size > s_length - start + 1)
+	if (len > s_length - start + 1)
 		pa_str = do_char_malloc(s_length - start + 1);
 	else
-		pa_str = (char *)malloc(size);
+		pa_str = do_char_malloc(len + 1);
+	if (pa_str == NULL)
+		return (NULL);
 	tmp_str = pa_str;
 	p = (char *)s + start;
 	end_s = (char *)s + s_length;
