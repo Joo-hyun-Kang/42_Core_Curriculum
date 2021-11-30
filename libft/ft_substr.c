@@ -6,11 +6,21 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:11:11 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/30 15:13:41 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/30 16:58:09 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*do_char_mallc(size_t length)
+{
+	char	*p;
+
+	p = (char *)malloc(sizeof(char) * length);
+	if (p == NULL)
+		return (NULL);
+	return (p);
+}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -20,15 +30,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char		*tmp_str;
 	size_t		s_length;
 
-	pa_str = (char *)malloc(sizeof(char) * (len + 1));
-	if (pa_str == NULL)
-		return (NULL);
 	s_length = ft_strlen(s);
 	if (start > s_length)
-	{
-		*pa_str = '\0';
-		return (pa_str);
-	}	
+		return (ft_strdup(""));
+	if (size > s_length - start + 1)
+		pa_str = do_char_malloc(s_length - start + 1);
+	else
+		pa_str = (char *)malloc(size);
 	tmp_str = pa_str;
 	p = (char *)s + start;
 	end_s = (char *)s + s_length;
