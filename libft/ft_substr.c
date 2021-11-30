@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 11:11:11 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/30 17:12:34 by jokang           ###   ########.fr       */
+/*   Updated: 2021/11/30 17:18:28 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 char	*do_char_malloc(size_t length)
 {
-	char	*p;
-
-	p = (char *)malloc(sizeof(char) * length);
-	if (p == NULL)
-		return (NULL);
-	return (p);
+	return ((char *)malloc(sizeof(char) * length));
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
