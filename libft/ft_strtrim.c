@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 13:16:05 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/04 13:27:58 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/04 14:37:45 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	is_set(char ch, char const *set)
 	return (0);
 }
 
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char const	*p;
@@ -33,16 +34,15 @@ char	*ft_strtrim(char const *s1, char const *set)
 	{
 		s1++;
 	}
-	p = s1;
-	len = 0;
-	while (*p != '\0' && !is_set(*s1, set))
+	p = s1 + ft_strlen(s1);
+	while (!is_set(*p, set))
 	{
-		s1++;
-		len++;
+		p--;
 	}
+	len = p - s1;
 	res = (char *)malloc(sizeof(char) * len + 1);
 	if (res == NULL)
 		return (NULL);
-	strlcpy(res, s1, len + 1);
+	ft_strlcpy(res, s1, len + 1);
 	return (res);
 }
