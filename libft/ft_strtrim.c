@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 13:16:05 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/04 15:09:23 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/04 15:10:33 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		s1++;
 	}
 	if (*s1 == '\0')
-		return (ft_strdup("");
+		return (ft_strdup(""));
 	p = s1 + ft_strlen(s1);
 	while (is_set(*p, set) || *p == '\0')
 	{
