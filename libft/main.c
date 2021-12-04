@@ -153,4 +153,16 @@ int main(void)
 			printf("%s\n", s);
 			free(s);
 	}
+
+	printf("\n\n");
+	printf("ft_strtrim is testing\n");
+
+	{
+		char arr[] = "  \t \t \n   \n\n\n\t";
+		char set[] = " \n\t";
+		
+		char *result = ft_strtrim(arr, set);
+		printf("%s\n", result);
+		free(result);
+	}
 }
