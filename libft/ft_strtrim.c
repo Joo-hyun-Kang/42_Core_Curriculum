@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 13:16:05 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/04 13:27:58 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/04 13:51:34 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,26 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char const	*p;
 	size_t		len;
 	char		*res;
+	char		*tmp_res;
 
-	while (*s1 != '\0' && is_set(*s1, set))
-	{
-		s1++;
-	}
 	p = s1;
 	len = 0;
-	while (*p != '\0' && !is_set(*s1, set))
+	while (*p != '\0')
 	{
-		s1++;
-		len++;
+		if (!is_set(*p, set))
+			len++;	
+		p++;
 	}
 	res = (char *)malloc(sizeof(char) * len + 1);
 	if (res == NULL)
 		return (NULL);
-	strlcpy(res, s1, len + 1);
+	tmp_res = res;
+	while (*s1 != '\0')
+	{
+		if (!is_set(*s1, set))
+			*tmp_res++ = *s1;
+		s1++;
+	}
+	*tmp_res = '\0';
 	return (res);
 }
