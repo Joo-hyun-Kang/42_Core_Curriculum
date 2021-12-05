@@ -6,82 +6,72 @@
 #    By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 16:56:05 by jokang            #+#    #+#              #
-#    Updated: 2021/12/05 19:52:39 by jokang           ###   ########.fr        #
+#    Updated: 2021/12/05 20:22:04 by jokang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	= 	ft_atoi.c\
-			ft_bzero.c\
-			ft_calloc.c\
-			ft_isalnum.c\
-			ft_isalpha.c\
-			ft_isascii.c\
-			ft_isdigit.c\
-			ft_isprint.c\
-			ft_itoa.c\
-			ft_memchr.c\
-			ft_memcmp.c\
-			ft_memcpy.c\
-			ft_memmove.c\
-			ft_memset.c\
-			ft_putchar_fd.c\
-			ft_putendl_fd.c\
-			ft_putnbr_fd.c\
-			ft_putstr_fd.c\
-			ft_split.c\
-			ft_strchr.c\
-			ft_strdup.c\
-			ft_striteri.c\
-			ft_strjoin.c\
-			ft_strlcat.c\
-			ft_strlcpy.c\
-			ft_strlen.c\
-			ft_strmapi.c\
-			ft_strncmp.c\
-			ft_strnstr.c\
-			ft_strrchr.c\
-			ft_strtrim.c\
-			ft_substr.c\
-			ft_tolower.c\
-			ft_toupper.c
-
-OBJS = $(SRCS:.c=.o)
-
-SRCS_BONUS	=	ft_lstnew.c
-
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
-
 NAME = libft.a
+FILES = ft_memset.c \
+		ft_bzero.c \
+		ft_memcpy.c \
+		ft_memmove.c \
+		ft_memchr.c \
+		ft_memcmp.c \
+		ft_strlen.c \
+		ft_strlcpy.c \
+		ft_strlcat.c \
+		ft_strchr.c \
+		ft_strrchr.c \
+		ft_strnstr.c \
+		ft_strncmp.c \
+		ft_atoi.c \
+		ft_isalpha.c \
+		ft_isdigit.c \
+		ft_isalnum.c \
+		ft_isascii.c \
+		ft_isprint.c \
+		ft_toupper.c \
+		ft_tolower.c \
+		ft_calloc.c \
+		ft_strdup.c \
+		ft_substr.c \
+		ft_strjoin.c \
+		ft_strtrim.c \
+		ft_split.c \
+		ft_itoa.c \
+		ft_strmapi.c \
+		ft_striteri.c \
+		ft_putchar_fd.c \
+		ft_putstr_fd.c \
+		ft_putendl_fd.c \
+		ft_putnbr_fd.c
 
-CC	= gcc
-CFLAGS = -Wall -Wextra -Werror
+BONUS = ft_lstnew.c
 
-RM = rm -f
+CC		= gcc
+CFLAGS	= -Wall -Werror -Wextra
 
-ifdef WITH_BONUS
-		OBJS_SWITCH = $(OBJS_BONUS) $(OBJS)
-else
-		OBJS_SWITCH = $(OBJS)
-endif
+OBJ		= ${FILES:.c=.o}
+BONUS_OBJ = ${BONUS:.c=.o}
 
-.c.o :
-	$(CC) $(CFLAGS) -c $< -o $@ -MD
+RM		= rm -rf
 
-$(NAME) : $(OBJS_SWITCH)
-	ar rcu $@ $^
-	ranlib $@
+.c.o:
+		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-all : $(NAME)
+$(NAME)	: ${OBJ}
+			ar rc ${NAME} ${OBJ}
+
+all : ${NAME}
+bonus: ${OBJ} ${BONUS_OBJ}
+			ar rc ${NAME} ${OBJ} ${BONUS_OBJ}
 
 clean :
-	$(RM) $(OBJS) $(OBJS_BONUS)
+			${RM} *.o 
 
 fclean : clean
-	$(RM) $(NAME)
+			${RM} ${NAME}
 
 re : fclean all
 
-bonus : 
-	$(MAKE) WITH_BONUS=1 $(NAME)
-
-.PHONY: all clean fclean re bonus
+.PHONY : all clean fclean re
