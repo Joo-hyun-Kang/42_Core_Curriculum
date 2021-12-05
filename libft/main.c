@@ -165,4 +165,24 @@ int main(void)
 		printf("%s\n", result);
 		free(result);
 	}
+
+	printf("\n\n");
+	printf("ft_itoa is testing\n");
+	
+	{
+		int num1 = 1234;
+		int num2 = -1234;
+		
+		char *res1 = ft_itoa(num1);
+		char *res2 = ft_itoa(num2);
+		
+		printf("ft_itoi res1 : %s\n", res1);
+		printf("ft_itoi res2 : %s\n", res2);
+
+		free(res1);
+		free(res2);
+		
+		res1 = NULL;
+		res2 = NULL;
+	}
 }
