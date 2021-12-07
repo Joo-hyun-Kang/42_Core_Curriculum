@@ -6,21 +6,21 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:52 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/06 17:41:08 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:48:15 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (lst != NULL)
 	{
 		len++;
-		lst = lst->next;	
+		lst = lst->next;
 	}
 	return (len);
 }

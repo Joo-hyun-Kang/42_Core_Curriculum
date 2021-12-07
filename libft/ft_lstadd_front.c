@@ -6,14 +6,14 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 15:38:43 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/06 17:38:20 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:46:50 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	new->next = *lst;
-	*lst = new;	
+	*lst = new;
 }
