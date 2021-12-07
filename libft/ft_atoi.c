@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:14:33 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/27 15:40:16 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:55:44 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	ft_atoi(const char *str)
 			return (0);
 		str++;
 	}
-	return (sign * result);
+	return ((int)(sign * result));
 }
