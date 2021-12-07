@@ -6,14 +6,16 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:41:37 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/06 17:42:43 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/07 17:47:38 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list *ft_lstlast(t_list *lst)
+t_list	*ft_lstlast(t_list *lst)
 {
+	if (lst == NULL)
+		return (lst);
 	while (lst->next != NULL)
 	{
 		lst = lst->next;
