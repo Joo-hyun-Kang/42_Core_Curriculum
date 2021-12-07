@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/11/26 16:56:05 by jokang            #+#    #+#              #
-#    Updated: 2021/12/05 20:22:04 by jokang           ###   ########.fr        #
+#    Created: 2021/12/07 17:44:28 by jokang            #+#    #+#              #
+#    Updated: 2021/12/07 17:44:44 by jokang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,15 @@ FILES = ft_memset.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c
 
-BONUS = ft_lstnew.c
+BONUS = ft_lstnew.c \
+		ft_lstadd_front.c \
+		ft_lstsize.c \
+		ft_lstlast.c \
+		ft_lstadd_back.c \
+		ft_lstdelone.c \
+		ft_lstclear.c \
+		ft_lstiter.c \
+		ft_lstmap.c
 
 CC		= gcc
 CFLAGS	= -Wall -Werror -Wextra
