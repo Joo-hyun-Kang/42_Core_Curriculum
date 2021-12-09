@@ -6,21 +6,37 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:18:54 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/27 12:56:25 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/09 21:26:32 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+int	is_wrong_dst(char *dst, size_t dstsize)
+{
+	size_t	i;
+
+	i = 0;
+	while (*dst != '\0' && i < dstsize)
+	{
+		i++;
+		dst++;
+	}
+	if (*dst == '\0')
+		return (0);
+	else
+		return (1);
+}
+
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	copied_length;
-	size_t	dst_length;
 	size_t	src_length;
 
-	copied_length = 0;
-	dst_length = ft_strlen(dst);
 	src_length = ft_strlen(src);
+	if (is_wrong_dst(dst, dstsize) == 1)
+		return (src_length + dstsize);
+	copied_length = 0;
 	while (*dst != '\0')
 	{
 		dst++;
@@ -34,8 +50,5 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	*dst = '\0';
 	while (*src++ != '\0')
 		copied_length++;
-	if (dstsize < dst_length)
-		return (src_length + dstsize);
-	else
-		return (copied_length);
+	return (copied_length);
 }
