@@ -52,10 +52,10 @@ src가 dst보다 주소값이 클 때는 앞에서 복사
 return 값인 매개변수끼리 뺄셈이 잘못되어 버린다   
     * while 조건식과 ++ 연산 케이스 총 정리   
 
+>	1. 올바른 경우
+
 <pre>
 <code>
-    1. 올바른 경우    
-    
     
 // i가 n이 될 때 탈출을 한다
 // while문 안에 있는 건 n - 1까지 비교만한다
@@ -78,9 +78,11 @@ return 값인 매개변수끼리 뺄셈이 잘못되어 버린다
 	}
 	return (0);
 
-</code></pre>
-    
-       2. while 조건식에 ++연산을 하는 경우   
+</code>
+</pre>
+
+>	2. while 조건식에 ++연산을 하는 경우   
+
 <pre>
 <code>
 // 이 경우 i, p1, p2는 i < n조건에 걸려서 나갈 때
@@ -92,9 +94,11 @@ return 값인 매개변수끼리 뺄셈이 잘못되어 버린다
 	{
 	}
 	return (p1 - p2);
-</code></pre>
+</code>
+</pre>
    
-       3. while 문 {} 안에서 ++연산을 하는 경우   
+>	3. while 문 {} 안에서 ++연산을 하는 경우   
+
 <pre>
 <code>
 // 이 경우 i, p1, p2는 i < n조건에 걸려서 나갈 때 
@@ -122,9 +126,11 @@ return 값인 매개변수끼리 뺄셈이 잘못되어 버린다
 	}
 	return (p1[i] - p2[i]);
 }
-</code></pre>
+</code>
+</pre>
 
-       4. 인덱스를 쓰는데 조건식에서 실수하는 경우   
+>	4. 인덱스를 쓰는데 조건식에서 실수하는 경우   
+
 <pre>
 <code>
 // 이 경우 &&이 걸려있기 떄문에 i가 첫번째 조건식에서
@@ -141,7 +147,8 @@ return 값인 매개변수끼리 뺄셈이 잘못되어 버린다
 	}
 	return (p1[i] - p2[i]);
 
-</code></pre>
+</code>
+</pre>
 
 * time      
 23개 C라이브러리 함수 디버깅   
@@ -162,5 +169,7 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
 * src  
 메이크 파일에 대한 기본적인 설명 https://bowbowbow.tistory.com/12   
 메이크 파일을 어떻게 사용할까? https://modoocode.com/311   
-   
+메이크 파일 기초 사용 법 https://www.joinc.co.kr/w/Site/C/Documents/minzkn_make
+메이크 파일 확장자 규칙 https://mintnlatte.tistory.com/433
+
 * time 3.00   
