@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 18:08:38 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/10 11:44:42 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 13:36:19 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <unistd.h>
+# include <stdlib.h>
 
 typedef struct s_list
 {
