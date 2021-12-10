@@ -6,7 +6,7 @@
 #    By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 16:56:05 by jokang            #+#    #+#              #
-#    Updated: 2021/12/09 20:01:13 by jokang           ###   ########.fr        #
+#    Updated: 2021/12/10 20:55:19 by jokang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,12 @@ OBJS = $(SRCS:.c=.o)
 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
+ifdef WITH_BONUS
+	OBJS_FILES = $(OBJS) $(OBJS_BONUS)
+else
+	OBJS_FILES = $(OBJS)
+endif
+
 NAME = libft.a
 
 CC	= gcc
@@ -69,13 +75,13 @@ RM = rm -rf
 .c.o :
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-$(NAME) : $(OBJS)
+$(NAME) : $(OBJS_FILES)
 	ar rc $@ $^
 
 all : $(NAME)
 
-bonus : $(OBJS) $(OBJS_BONUS)
-	ar rc $(NAME) $^
+bonus :
+	make WITH_BONUS=1 all
 
 clean :
 	$(RM) $(OBJS) $(OBJS_BONUS)
