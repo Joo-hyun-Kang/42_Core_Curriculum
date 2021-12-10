@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 11:17:12 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/05 12:51:40 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 12:54:27 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	put_nbr(unsigned int n, int is_neg, char *out_res, unsigned int pos)
+static void	put_nbr(unsigned int n, int is_neg, char *out_res, unsigned int pos)
 {
 	if (is_neg == 1)
 	{
@@ -29,7 +29,7 @@ void	put_nbr(unsigned int n, int is_neg, char *out_res, unsigned int pos)
 	*(out_res + --pos) = n + '0';
 }
 
-int	get_num_pos(unsigned int n)
+static int	get_num_pos(unsigned int n)
 {
 	unsigned int	n_digit;
 	unsigned int	pos;

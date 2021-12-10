@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:13:21 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/04 21:20:14 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 12:49:52 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	is_set(char ch, char const *set)
+static char	is_set(char ch, char const *set)
 {
 	while (*set != '\0')
 	{

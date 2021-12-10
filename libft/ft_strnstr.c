@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:13:44 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/27 16:36:46 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 12:46:08 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_cmpstr(const char *p_hay, const char *p_ne, size_t len)
+static int	ft_cmpstr(const char *p_hay, const char *p_ne, size_t len)
 {
 	size_t	j;
 

@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:18:54 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/09 21:26:32 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 12:45:15 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	is_wrong_dst(char *dst, size_t dstsize)
+static int	is_shorter_size(char *dst, size_t dstsize)
 {
 	size_t	i;
 
@@ -34,7 +34,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	size_t	src_length;
 
 	src_length = ft_strlen(src);
-	if (is_wrong_dst(dst, dstsize) == 1)
+	if (is_shorter_size(dst, dstsize) == 1)
 		return (src_length + dstsize);
 	copied_length = 0;
 	while (*dst != '\0')

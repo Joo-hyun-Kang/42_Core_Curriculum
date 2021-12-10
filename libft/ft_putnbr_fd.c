@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 15:58:49 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/05 16:20:13 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 12:58:34 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	putnbr_recursive(unsigned int n, int is_neg, int fd)
+static void	putnbr_recursive(unsigned int n, int is_neg, int fd)
 {
 	char	ch;
 

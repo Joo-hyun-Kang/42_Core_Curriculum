@@ -6,16 +6,16 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 19:41:46 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/04 20:55:48 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 12:53:57 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_do_split_malloc_or_null(const char *s, char c, char **out_res);
-int		get_w_length(const char *str, char c);
-int		is_charset(char str, char c);
-void	do_free_malloc(char **res, char **tmp_res);
+static char	**ft_do_split_malloc_or_null(const char *s, char c, char **out_res);
+static int	get_w_length(const char *str, char c);
+static int	is_charset(char str, char c);
+static void	do_free_malloc(char **res, char **tmp_res);
 
 char	**ft_split(const char *s, char c)
 {
@@ -46,7 +46,7 @@ char	**ft_split(const char *s, char c)
 	return (ft_do_split_malloc_or_null(s, c, result));
 }
 
-char	**ft_do_split_malloc_or_null(const char *s, char c, char **out_res)
+static char	**ft_do_split_malloc_or_null(const char *s, char c, char **out_res)
 {
 	char	**t_result;
 	int		is_word;
@@ -75,7 +75,7 @@ char	**ft_do_split_malloc_or_null(const char *s, char c, char **out_res)
 	return (out_res);
 }
 
-int	get_w_length(const char *str, char c)
+static int	get_w_length(const char *str, char c)
 {
 	const char	*p;
 	int			length;
@@ -90,7 +90,7 @@ int	get_w_length(const char *str, char c)
 	return (length);
 }
 
-int	is_charset(char str, char c)
+static int	is_charset(char str, char c)
 {
 	if (str == c)
 	{
@@ -99,7 +99,7 @@ int	is_charset(char str, char c)
 	return (0);
 }
 
-void	do_free_malloc(char **res, char **tmp_res)
+static void	do_free_malloc(char **res, char **tmp_res)
 {
 	char	**p;
 	size_t	count;

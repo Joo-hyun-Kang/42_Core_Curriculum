@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:14:33 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/07 17:55:44 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 12:46:27 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isspace(char ch)
+static int	ft_isspace(char ch)
 {
 	if (ch == '\t' || ch == '\n' || ch == '\v'
 		|| ch == '\f' || ch == '\r' || ch == ' ')
