@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:12:24 by jokang            #+#    #+#             */
-/*   Updated: 2021/11/25 18:57:53 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/10 20:28:07 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	*p;
-	char	ch;
+	unsigned char	*p;
+	unsigned char	ch;
 	size_t	i;
 
-	p = (char *)s;
-	ch = (char)c;
+	p = (unsigned char *)s;
+	ch = (unsigned char)c;
 	i = 0;
 	while (i < n)
 	{
