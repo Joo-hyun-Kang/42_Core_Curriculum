@@ -27,7 +27,7 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
   
 # Reproduce C libraray fuction
   
-##### ft_atoi   
+### ft_atoi   
 19자리 이상 시 리턴 값      
 atoi에서 64비트 int보다 큰 값이 들어올 때   
 양수기준으로 클 때는 -1 반환   
