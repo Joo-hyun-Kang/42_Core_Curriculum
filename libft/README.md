@@ -7,7 +7,7 @@
     
 > C 스타일 문자열 조작, 포인터, 동적할당에 대한 이해    
 
-# How to make Makefile   
+# How to write Makefile   
 * memo   
 makefile 작성   
 메이크파일에서 수를 선언해서 전제 조건에 변수를 사용할 때 1개씩 가져오는 것이 아니라 여러 개 한꺼번에 가져온다   
@@ -26,7 +26,7 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
 메이크 파일 기초 사용 법 https://www.joinc.co.kr/w/Site/C/Documents/minzkn_make
 메이크 파일 확장자 규칙 https://mintnlatte.tistory.com/433
   
-# C 라이브러리 함수 작성하기   
+# Reproduce C libraray fuction
 * memo    
   * ft_atoi - 19자리 이상 시 리턴 값 수정   
 atoi에서 64비트 int보다 큰 값이 들어올 때   
