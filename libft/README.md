@@ -32,15 +32,13 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
 atoi에서 64비트 int보다 큰 값이 들어올 때   
 양수기준으로 클 때는 -1 반환   
 음수기준으로 더 큰 값이 들어올 때는 0 반환       
-<br><
-    
+<br>    
 * ft_strlact    
 dstsize가 dst + src 크기보다 큰 경우 : 모두 잘 붙여지고 dst+src반환   
 dstsize가 dst보다는 크지만 src까지 합 한 것보다 작은 경우 : 잘려서 붙여지고 dst+src반환   
 dstsize가 dst보다도 작은 경우 : src반환 + dstsize   
 세번째 경우 dst + src 에서 반환값을 빼면 dstsize에 추가해야할 값을 알 수 있다       
 <br>
-
 * ft_strchr    
 매개변수를 int로 받는 이유   
    
