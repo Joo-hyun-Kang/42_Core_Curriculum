@@ -27,21 +27,21 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
   
 # Reproduce C libraray fuction
   
-* ft_atoi   
+##### ft_atoi   
 19자리 이상 시 리턴 값      
 atoi에서 64비트 int보다 큰 값이 들어올 때   
 양수기준으로 클 때는 -1 반환   
 음수기준으로 더 큰 값이 들어올 때는 0 반환
 <br>    
    
-* ft_strlact    
+##### ft_strlact    
 dstsize가 dst + src 크기보다 큰 경우 : 모두 잘 붙여지고 dst+src반환   
 dstsize가 dst보다는 크지만 src까지 합 한 것보다 작은 경우 : 잘려서 붙여지고 dst+src반환   
 dstsize가 dst보다도 작은 경우 : src반환 + dstsize   
 세번째 경우 dst + src 에서 반환값을 빼면 dstsize에 추가해야할 값을 알 수 있다
 <br>
     
-* ft_strchr    
+##### ft_strchr    
 매개변수를 int로 받는 이유   
    
     *ft_strchr의 사례   
@@ -64,14 +64,14 @@ int	ft_isascii(int c)
 </code>
 </pre>
    
-  * ft_memmove   
+##### ft_memmove   
     * void 간접 참조 대입   
 void 일때는 간접 참조로 대입을 못 한다   
     * malloc 없이 overlap 구현   
 dst가 src보다 주소값이 클 때는 overlap이 되기 때문에 뒤에서 복사   
 src가 dst보다 주소값이 클 때는 앞에서 복사   
    
-  * ft_memcmp   
+##### ft_memcmp   
     * 바이트 값을 비교할 때 unsigned char를 사용해야 한다   
 1바이트에 있는 값에서 서로 큰지 비교하는데 unsigned를 사용하지 않으면 음수가 되서    
 return 값인 매개변수끼리 뺄셈이 잘못되어 버린다   
