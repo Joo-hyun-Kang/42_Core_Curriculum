@@ -26,21 +26,21 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
 메이크 파일 확장자 규칙 https://mintnlatte.tistory.com/433
   
 # Reproduce C libraray fuction
-* memo    
-  * ft_atoi   
-- 19자리 이상 시 리턴 값 수정   
+  
+* ft_atoi   
+19자리 이상 시 리턴 값      
 atoi에서 64비트 int보다 큰 값이 들어올 때   
 양수기준으로 클 때는 -1 반환   
 음수기준으로 더 큰 값이 들어올 때는 0 반환   
-  * ft_strlact    
-- 리턴 값 수정   
+    
+* ft_strlact    
 dstsize가 dst + src 크기보다 큰 경우 : 모두 잘 붙여지고 dst+src반환   
 dstsize가 dst보다는 크지만 src까지 합 한 것보다 작은 경우 : 잘려서 붙여지고 dst+src반환   
 dstsize가 dst보다도 작은 경우 : src반환 + dstsize   
 세번째 경우 dst + src 에서 반환값을 빼면 dstsize에 추가해야할 값을 알 수 있다   
    
-  * ft_strchr    
-- 매개변수를 int로 받는 이유   
+* ft_strchr    
+매개변수를 int로 받는 이유   
    
     *ft_strchr의 사례   
 오버플로우가 생겨도 그냥 형 변환할 때 그 비트 패턴에 맞는에 맞는 걸 허용하는 함수임 아래 ft_isascii와는 조금 다름   
