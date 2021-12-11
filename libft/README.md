@@ -1,4 +1,4 @@
-# libft에서 무엇을 배우는가?   
+# 0. libft에서 무엇을 배우는가?   
 > 메이크 파일을 통해서 빌드를 위한 프로젝트 작성하는 방법    
     
 > 리눅스에서 정적 라이브러리를 빌드하는 과정   
@@ -27,7 +27,7 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
 메이크 파일 확장자 규칙 https://mintnlatte.tistory.com/433
 <br>
    
-# Reproduce C libraray fuction
+# 2. Reproduce C libraray fuction
   
 ## ft_atoi   
 19자리 이상 시 리턴 값      
@@ -65,7 +65,6 @@ int	ft_isascii(int c)
 }
 </code>
 </pre>
-   
 ## ft_memmove   
     * void 간접 참조 대입   
 void 일때는 간접 참조로 대입을 못 한다   
