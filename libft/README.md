@@ -1,4 +1,4 @@
-# libft에서 무엇을 배우는가?   
+# 0. libft에서 무엇을 배우는가?   
 > 메이크 파일을 통해서 빌드를 위한 프로젝트 작성하는 방법    
     
 > 리눅스에서 정적 라이브러리를 빌드하는 과정   
@@ -6,8 +6,8 @@
 > C의 라이브러리 중 문자열, 메모리, 리스트 함수의 내부 이해   
     
 > C 스타일 문자열 조작, 포인터, 동적할당에 대한 이해    
-
-# How to write Makefile     
+<br>
+# 1. How to write Makefile     
 * makefile 작성   
 메이크파일에서 수를 선언해서 전제 조건에 변수를 사용할 때 1개씩 가져오는 것이 아니라 여러 개 한꺼번에 가져온다   
 반면에 변수를 선언해서 타겟에 넣으면 변수에 있는 값들을 1개씩 넣어준다   
@@ -24,8 +24,8 @@ $(CC) $(CFLAGS) -c $< -o $@ -MD
 메이크 파일을 어떻게 사용할까? https://modoocode.com/311   
 메이크 파일 기초 사용 법 https://www.joinc.co.kr/w/Site/C/Documents/minzkn_make
 메이크 파일 확장자 규칙 https://mintnlatte.tistory.com/433
-  
-# Reproduce C libraray fuction
+<br>  
+# 2. Reproduce C libraray fuction
   
 ## ft_atoi   
 19자리 이상 시 리턴 값      
@@ -176,8 +176,8 @@ return 값인 매개변수끼리 뺄셈이 잘못되어 버린다
 </pre>
 
 
-  
-# Bonus 연결리스트 함수 구현하기   
+<br>  
+# 3. Bonus 연결리스트 함수 구현하기   
 * 연결리스트에서 포인터를 사용하는 이유   
    1. 동적 할당 받아서 연결 리스트를 구현하니까   
    2. 포인터의 기능 중 하나인 외부에서도 이 변수를 사용할거니까!   
