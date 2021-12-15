@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:10:11 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/15 18:29:02 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/15 19:17:37 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,19 @@ char	*get_next_line(int fd)
 	p = srcs + idx_srcs;
 
 	// 예외처리 필요
-	read_return = read(fd, p, BUFFER_SIZE);
-	assert(read_return > 1);
-	
+	if (read(fd, p, BUFFER_SIZE) < -1)
+		return (NULL);
+
 	*(p + BUFFER_SIZE) = '\0';
 
 	res = NULL;
 	while (*p != '\0')
 	{
+		printf("alpabet: %c\n", *p);
 		if (*p == '\n')
 		{
 			line_len = p - srcs + 1;
-			printf("%zu\n", line_len);
+			printf("line_len : %zu\n", line_len);
 			res = (char	*)malloc(sizeof(char) * line_len);
 			assert(res != 0);
 			ft_memcpy(res, srcs, line_len);
@@ -70,11 +71,10 @@ int	main(void)
 	char	*line;
 
 	line = get_next_line(fd);
-	//while (line != NULL)
-	//{
-		printf("%s\n", line);
-		//line = get_next_line(fd);
-	//}
+	printf("output : %s\n", line);
+	
+	line = get_next_line(fd);
+	printf("output : %s\n", line);
 	
 	close(fd);
 }
