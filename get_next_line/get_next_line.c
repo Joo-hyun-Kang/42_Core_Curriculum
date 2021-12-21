@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:10:11 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/16 19:28:27 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/21 12:03:40 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,34 +86,4 @@ int	ft_try_get_line_len(char *srcs, size_t *out_len)
 	}
 	*out_len = tmp - srcs + 1;
 	return (is_get_line);
-}
-
-int	main(void)
-{
-	int fd;
-
-	fd = open("source", O_RDONLY);
-	assert(fd > -1);
-
-	char	*line;
-
-	line = get_next_line(fd);
-	printf("output : %s\n", line);
-	
-	line = get_next_line(fd);
-	printf("output : %s\n", line);
-	
-	line = get_next_line(fd);
-	printf("output : %s\n", line);
-
-	line = get_next_line(fd);
-	printf("output : %s\n", line);
-	
-	line = get_next_line(fd);
-	printf("output : %s\n", line);
-
-	line = get_next_line(fd);
-	printf("output : %s\n", line);
-
-	close(fd);
 }
