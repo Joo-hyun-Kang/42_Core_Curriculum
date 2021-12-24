@@ -118,3 +118,10 @@ bar에 대한 아이노드 번호를 찾아낸다. 마지막 단계의 open()은
 *open-file table은 결국 파일의 metadata가 저장되어 있는 주소값을 가지고 있는 것이고 그 각각의 index에 대한 주소가 바로 open()함수의 return 값이 되는 것이다. 이제 파일을 어떻게 access하는지 대략적으로 감을 잡았으리라고 본다. 그러면 이제는 조금 더 구체적으로 과정을 이야기 해보자. 방금전에 open-file table에 대해서 이야기를 했다.    
 *그런데 이 open-file table은 사실 두 가지 형태로 존재한다. per-process open-file table 그리고 system-wide open-file table이다. per-process open-file table은 프로세스마다 가지고 있는 open-file table이다. system-wide open-file table은 시스템의 모든 open된 파일들에 대한 open-file table이다.    
 * 출처: https://operatingsystems.tistory.com/entry/OS-File-System [Maybe]   
+## window VS code 환경에서 파일 여러개 빌드하고 디버깅 하는 방법 
+* wsl 설치, 우분투 설치
+* gcc 설치 등을 위해서 업그레이드 https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=lidaxi043682&logNo=221717515827
+* vs 코드 리눅스로 실행 후 launch 에서 분할 컴파일이 되게 *.c로 수정 https://www.youtube.com/watch?v=DVyYnOHP4nY&t=441s&ab_channel=MichaelHoefer
+* lanch, task 생성 gcc, /bin에 있는 gcc-9로 설정
+* 마지막으로 https://sjkim-dev.tistory.com/26 c_cpp_프로퍼티 만들어주기
+* 디버그는 잘 되는데 C라이브러리 안에 탐색하는 디버그는 안 되고(소스코드 못 보고) 그냥 내 코드 f10으로 보는 건 된다.

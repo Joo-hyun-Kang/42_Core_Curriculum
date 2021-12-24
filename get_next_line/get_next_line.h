@@ -25,7 +25,10 @@
 
 char	*get_next_line(int fd);
 int		ft_try_get_line_len(char *srcs, size_t *line_len);
+
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+int     ft_read_str_fd(char* out_buffer, int fd, size_t len);
+char    *ft_strdup_range_malloc(char *src, size_t start, size_t end);
 
 #endif /* GET_NEXT_LINE_H */
 

@@ -30,3 +30,22 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	}
 	return (dst);
 }
+
+int ft_read_str_fd(char* out_buffer, int fd, size_t len)
+{
+	if (read(fd, out_buffer, len) < 0)
+	    return (0);
+	*(out_buffer + len) = '\0';
+    return (1);
+}
+
+char    *ft_strdup_range_malloc(char *src, size_t start, size_t end)
+{
+    char    *p;
+    size_t  range;
+
+    range = end - start;
+    p = (char *)malloc(sizeof(char) * range + 1);
+    ft_memcpy(p, src, range);
+    return (p);
+}
