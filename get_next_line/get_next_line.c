@@ -76,16 +76,6 @@ char	*get_next_line(int fd)
 	return (res);
 }
 
-/*
-unsigned int	ft_power(unsigned int base, unsigned int n)
-{
-	if (n == 0)
-		return 1;
-
-	return base * ft_power(base, n - 1);
-}
-*/
-
 int	ft_try_get_line_len(char *srcs, size_t *out_len)
 {
 	char	*tmp;
@@ -127,6 +117,15 @@ int main(void)
 		p = get_next_line(fd);
 	}
 
-
 	return 1;
 }
+
+/* this function will be deleted later
+unsigned int	ft_power_recursive(unsigned int base, unsigned int n)
+{
+	if (n == 0)
+		return 1;
+
+	return base * ft_power(base, n - 1);
+}
+*/
