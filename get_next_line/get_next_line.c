@@ -12,9 +12,7 @@
 
 #include "get_next_line.h"
 
-enum { BUFFER_SIZE = 5 }; 
-
-
+//enum { BUFFER_SIZE = 5 };
 
 int build_queue_malloc(t_queue **queue)
 {
@@ -31,10 +29,9 @@ int build_queue_malloc(t_queue **queue)
 		return (FALSE);
 	}
 
-	(*queue)->front = 0;
-	(*queue)->back = 0;
+	(*queue)->is_EOF = FALSE;
 	(*queue)->num_count = 0;
-
+	(*queue)->last_count = 0;
 
 	return (TRUE);
 }
@@ -50,12 +47,19 @@ int	is_queue_empty(t_queue *queue_pa)
 
 int	try_enqueue_fd(t_queue *queue_pa, int fd)
 {
-	if (read(fd, queue_pa->buffer_pa, BUFFER_SIZE) < 0)
-	{
+	int ret;
+	
+	ret = read(fd, queue_pa->buffer_pa, BUFFER_SIZE);
+	if (ret < 1)
 		return (FALSE);	
+	if (ret != BUFFER_SIZE)
+	{
+		queue_pa->num_count = ret;
+		queue_pa->last_count = ret;
+		queue_pa->is_EOF = TRUE;
 	}
-	queue_pa->num_count = BUFFER_SIZE;
-	queue_pa->back = BUFFER_SIZE;
+	else
+		queue_pa->num_count = BUFFER_SIZE;
 	return (TRUE);
 }
 
@@ -65,11 +69,12 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 	char	*string;
 
 	while (head->next != NULL)
-	{
 		head = head->next;
-	}
 
-	buffer = queue_pa->buffer_pa;
+	if (queue_pa->is_EOF == TRUE)
+		buffer = queue_pa->buffer_pa + (queue_pa->last_count - queue_pa->num_count);
+	else
+		buffer = queue_pa->buffer_pa + (BUFFER_SIZE - queue_pa->num_count);
 	string = head->string_pa + head->capacity;
 
 	while (is_queue_empty(queue_pa) != TRUE && head->capacity != e_TABLE_SIZE)
@@ -78,7 +83,7 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 		queue_pa->num_count--;
 		head->capacity++;
 
-		if (*(string - 1) == '\n')
+		if (*(string - 1) == '\n' || (queue_pa->is_EOF && !queue_pa->num_count))
 		{
 			return (TRUE);
 		}
@@ -125,10 +130,16 @@ char	*get_next_line(int fd)
 
 	result = ft_strdup_table_malloc(head);
 	ft_lstclear(&head);
-
+	if (queue_pa->is_EOF)
+	{
+		free(queue_pa->buffer_pa);
+		free(queue_pa);
+		queue_pa = NULL;
+	}
 	return (result);
 }
 
+/*
 int	main(void)
 {
 	int		fd;
@@ -138,7 +149,10 @@ int	main(void)
 
 	p_pa = get_next_line(fd);
 	printf("%s", p_pa);
+	free(p_pa);
 
 	p_pa = get_next_line(fd);
 	printf("%s", p_pa);
+	free(p_pa);
 }
+*/

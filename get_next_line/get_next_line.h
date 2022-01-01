@@ -33,12 +33,12 @@ typedef struct
 typedef struct
 {
 	char	*buffer_pa;
-	size_t	front;
-	size_t	back;
+	int		is_EOF;
 	size_t	num_count;
+	size_t	last_count;
 }	t_queue;
 
-enum { e_TABLE_SIZE = 4 };
+enum { e_TABLE_SIZE = 5 };
 
 int		build_queue_malloc(t_queue **queue);
 int		is_queue_empty(t_queue *queue_pa);
