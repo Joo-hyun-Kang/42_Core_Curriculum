@@ -1,0 +1,79 @@
+[BUFFER_SIZE = 1]: 
+Invalid fd: 1.OK gnlTest(62461,0x113eb3dc0) malloc: *** error for object 0x7fd1fdd04200: pointer being freed was not allocated
+gnlTest(62461,0x113eb3dc0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+files/empty: 1.OK gnlTest(62481,0x113eb3dc0) malloc: *** error for object 0x7fd1fdd04200: pointer being freed was not allocated
+gnlTest(62481,0x113eb3dc0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+files/nl: 1.OK 2.OK LEAKS.KO [0x7fd1fdd04230 : 1] 
+files/41_no_nl: TIMEOUT
+files/41_with_nl: 1.OK TIMEOUT
+files/42_no_nl: TIMEOUT
+files/42_with_nl: 1.OK TIMEOUT
+files/43_no_nl: TIMEOUT
+files/43_with_nl: 1.OK TIMEOUT
+files/multiple_nlx5: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK LEAKS.KO [0x7fd1fdd04230 : 1] 
+files/multiple_line_no_nl: 1.OK 2.OK 3.OK 4.KO TIMEOUT
+files/multiple_line_with_nl: 1.OK 2.OK 3.OK 4.KO 5.KO 6.OK LEAKS.KO [0x7fd1fdd04230 : 1] 
+files/alternate_line_nl_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.KO 8.OK TIMEOUT
+files/alternate_line_nl_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.KO 8.OK 9.KO 10.OK LEAKS.KO [0x7fd1fdd04230 : 1] 
+files/big_line_no_nl: TIMEOUT
+files/big_line_with_nl: 1.KO 2.OK LEAKS.KO [0x7fd1fde04230 : 1] 
+stdin: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.KO 8.OK 9.KO 10.OK LEAKS.KO [0x7fd1fdd04260 : 1] 
+[BUFFER_SIZE = 42]: 
+Invalid fd: 1.OK gnlTest(62528,0x115b94dc0) malloc: *** error for object 0x7f9723d04200: pointer being freed was not allocated
+gnlTest(62528,0x115b94dc0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+files/empty: 1.OK gnlTest(62529,0x115b94dc0) malloc: *** error for object 0x7f9723d04200: pointer being freed was not allocated
+gnlTest(62529,0x115b94dc0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+files/nl: 1.OK 2.OK LEAKS.KO [0x7f9723d04220 : 42] 
+files/41_no_nl: 1.OK 2.OK LEAKS.KO [0x7f9723c059e0 : 42] 
+files/41_with_nl: 1.OK TIMEOUT
+files/42_no_nl: TIMEOUT
+files/42_with_nl: 1.OK 2.OK 3.OK LEAKS.KO [0x7f9723d04230 : 42] 
+files/43_no_nl: 1.OK 2.OK LEAKS.KO [0x7f9723d04400 : 42] 
+files/43_with_nl: 1.OK 2.SIGSEGV
+
+files/multiple_nlx5: 1.OK 2.SIGSEGV
+
+files/multiple_line_no_nl: 1.OK 2.OK 3.OK 4.KO 5.KO 6.OK LEAKS.KO [0x7f9723d04400 : 42] 
+files/multiple_line_with_nl: 1.OK 2.OK 3.OK 4.KO 5.KO 6.OK LEAKS.KO [0x7f9723d04400 : 42] 
+files/alternate_line_nl_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.KO 8.OK 9.KO 10.OK LEAKS.KO [0x7f9723d04400 : 42] 
+files/alternate_line_nl_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.KO 8.OK 9.KO 10.OK LEAKS.KO [0x7f9723d04400 : 42] 
+files/big_line_no_nl: 1.KO 2.OK LEAKS.KO [0x7f9723d04220 : 42] 
+files/big_line_with_nl: 1.KO 2.OK LEAKS.KO [0x7f9723d04220 : 42] 
+stdin: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.KO 8.OK 9.KO 10.OK LEAKS.KO [0x7f9723d04400 : 42] 
+[BUFFER_SIZE = 10000000]: 
+Invalid fd: 1.OK gnlTest(62576,0x117babdc0) malloc: *** error for object 0x7fb98bd04200: pointer being freed was not allocated
+gnlTest(62576,0x117babdc0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+files/empty: 1.OK gnlTest(62578,0x117babdc0) malloc: *** error for object 0x7fb98bd04200: pointer being freed was not allocated
+gnlTest(62578,0x117babdc0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+files/nl: 1.OK 2.OK LEAKS.KO [0x7fb98d800000 : 10000000] 
+files/41_no_nl: 1.OK 2.OK LEAKS.KO [0x7fb98d000000 : 10000000] 
+files/41_with_nl: 1.OK 2.SIGSEGV
+
+files/42_no_nl: 1.OK 2.OK LEAKS.KO [0x7fb98d800000 : 10000000] 
+files/42_with_nl: 1.OK 2.SIGSEGV
+
+files/43_no_nl: 1.OK 2.OK LEAKS.KO [0x7fb98d000000 : 10000000] 
+files/43_with_nl: 1.OK 2.SIGSEGV
+
+files/multiple_nlx5: 1.OK 2.SIGSEGV
+
+files/multiple_line_no_nl: 1.OK 2.SIGSEGV
+
+files/multiple_line_with_nl: 1.OK 2.SIGSEGV
+
+files/alternate_line_nl_no_nl: 1.OK 2.SIGSEGV
+
+files/alternate_line_nl_with_nl: 1.OK 2.SIGSEGV
+
+files/big_line_no_nl: 1.OK 2.OK LEAKS.KO [0x7fb98d000000 : 10000000] 
+files/big_line_with_nl: 1.KO 2.OK LEAKS.KO [0x7fb98d000000 : 10000000] 
+stdin: 1.OK 2.SIGSEGV
+
+[Static = cat: ../*bonus.c: No such file or directory
+0]

@@ -52,10 +52,11 @@ int	try_enqueue_fd(t_queue *queue_pa, int fd)
 	ret = read(fd, queue_pa->buffer_pa, BUFFER_SIZE);
 	if (ret < 1)
 		return (FALSE);	
-	if (ret != BUFFER_SIZE)
+	if (ret < BUFFER_SIZE)
 	{
-		queue_pa->num_count = ret;
-		queue_pa->last_count = ret;
+		queue_pa->buffer_pa[ret] = '\0';
+		queue_pa->num_count = ret + 1;
+		queue_pa->last_count = ret + 1;
 		queue_pa->is_EOF = TRUE;
 	}
 	else
@@ -89,12 +90,13 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 		}
 	}
 
+
 	return (FALSE);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_queue	*queue_pa;
+	static t_queue	*queue_pa = NULL;
 	t_table			*head;
 	char			*result;
 
@@ -107,7 +109,12 @@ char	*get_next_line(int fd)
 		return (NULL);
 	//check whether queue is free when try_enqeue_fd is FALSE.
 	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd) == FALSE)
+	{
+		free(queue_pa->buffer_pa);
+		free(queue_pa);
+		queue_pa = NULL;
 		return (NULL);
+	}
 
 	head = build_table_malloc();
 	if (head == NULL)
