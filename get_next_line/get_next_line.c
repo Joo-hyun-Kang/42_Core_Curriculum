@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-//enum { BUFFER_SIZE = 5 };
+enum { BUFFER_SIZE = 5 };
 
 int build_queue_malloc(t_queue **queue)
 {
@@ -50,7 +50,7 @@ int	try_enqueue_fd(t_queue *queue_pa, int fd)
 	int ret;
 	
 	ret = read(fd, queue_pa->buffer_pa, BUFFER_SIZE);
-	if (ret < 1)
+	if (ret < 0)
 		return (FALSE);	
 	if (ret < BUFFER_SIZE)
 	{
@@ -146,7 +146,7 @@ char	*get_next_line(int fd)
 	return (result);
 }
 
-/*
+
 int	main(void)
 {
 	int		fd;
@@ -158,8 +158,9 @@ int	main(void)
 	printf("%s", p_pa);
 	free(p_pa);
 
+/*
 	p_pa = get_next_line(fd);
 	printf("%s", p_pa);
 	free(p_pa);
-}
 */
+}
