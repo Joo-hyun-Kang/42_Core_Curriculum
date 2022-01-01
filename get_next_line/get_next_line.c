@@ -6,126 +6,139 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:10:11 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/28 17:13:49 by jokang           ###   ########.fr       */
+/*   Updated: 2021/12/28 17:11:17 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-#include <stdio.h>
+enum { BUFFER_SIZE = 5 }; 
 
-#define BUFFER_SIZE 20
+
+
+int build_queue_malloc(t_queue **queue)
+{
+	*queue = (t_queue *)malloc(sizeof(t_queue));
+	if (*queue == NULL)
+	{
+		return (FALSE);
+	}
+
+	(*queue)->buffer_pa = ((char *)malloc(sizeof(char) * BUFFER_SIZE));
+	if ((*queue)->buffer_pa == NULL)
+	{
+		free(*queue);
+		return (FALSE);
+	}
+
+	(*queue)->front = 0;
+	(*queue)->back = 0;
+	(*queue)->num_count = 0;
+
+
+	return (TRUE);
+}
+
+int	is_queue_empty(t_queue *queue_pa)
+{
+	if (queue_pa->num_count == 0)
+	{
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+int	try_enqueue_fd(t_queue *queue_pa, int fd)
+{
+	if (read(fd, queue_pa->buffer_pa, BUFFER_SIZE) < 0)
+	{
+		return (FALSE);	
+	}
+	queue_pa->num_count = BUFFER_SIZE;
+	queue_pa->back = BUFFER_SIZE;
+	return (TRUE);
+}
+
+int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
+{
+	char	*buffer;
+	char	*string;
+
+	while (head->next != NULL)
+	{
+		head = head->next;
+	}
+
+	buffer = queue_pa->buffer_pa;
+	string = head->string_pa + head->capacity;
+
+	while (is_queue_empty(queue_pa) != TRUE && head->capacity != e_TABLE_SIZE)
+	{
+		*string++ = *buffer++;
+		queue_pa->num_count--;
+		head->capacity++;
+
+		if (*(string - 1) == '\n')
+		{
+			return (TRUE);
+		}
+	}
+
+	return (FALSE);
+}
 
 char	*get_next_line(int fd)
 {
-	static char		*buffer;
-	static size_t	buffer_length;
-	static size_t	idx_buffer = 0;
-	char			*res;
-	char			*p;
-	size_t			line_length;
-	int				is_line;
-	size_t			rotation;
-	
-	if (idx_buffer == 0)
-	{
-		rotation = 1;
-		buffer_length = BUFFER_SIZE * rotation;
-		buffer = (char *)malloc(sizeof(char) * (buffer_length + 1));
+	static t_queue	*queue_pa;
+	t_table			*head;
+	char			*result;
 
-		if (ft_read_str_fd(buffer, fd, buffer_length) == 0)
-			return (NULL);
+	//file -> queue -> head ---> res
+	//			|		|
+	//			---------		
+	//			   loop
+
+	if (queue_pa == NULL && build_queue_malloc(&queue_pa) == FALSE)
+		return (NULL);
+	//check whether queue is free when try_enqeue_fd is FALSE.
+	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd) == FALSE)
+		return (NULL);
+
+	head = build_table_malloc();
+	if (head == NULL)
+	{	
+		return (NULL);
 	}
 
-	is_line = FALSE;
-	res = NULL;
-
-	while(TRUE)
+	while (dequeue_by_next_line(queue_pa, head) == FALSE)
 	{
-		p = buffer + idx_buffer;
-		is_line = ft_try_get_line_len(p, &line_length);
-		idx_buffer = line_length;
-		printf("lien_len : %zu\n", line_length);
-
-		if (is_line == TRUE)
+		if (is_queue_empty(queue_pa) == TRUE && is_table_capacity_full(head) == TRUE)
 		{
-			res = ft_strdup_range_malloc(buffer, 0, line_length + idx_buffer);
-
-			p = NULL;
-			if (idx_buffer == buffer_length)
-				idx_buffer = 0;
-			else
-				p = ft_strdup_range_malloc(buffer, idx_buffer, buffer_length);
-
-			free(buffer);
-			buffer = p;
-
-			break;
+			try_enqueue_fd(queue_pa, fd);
+			add_back_table_malloc(&head);
 		}
-		
-		rotation++;
-		buffer_length = BUFFER_SIZE * rotation;
-		p = (char *)malloc(sizeof(char) * (buffer_length + 1));
-		ft_memcpy(p, buffer, buffer_length / 2);
-		free(buffer);
-		buffer = p;
-		if (ft_read_str_fd(buffer + idx_buffer, fd, buffer_length / 2) < 0)
-			return (NULL);
-	}	
-	
-	return (res);
-}
-
-int	ft_try_get_line_len(char *srcs, size_t *out_len)
-{
-	char	*tmp;
-	int		is_get_line;
-
-	is_get_line = FALSE;
-	tmp = srcs;
-	while (*tmp != '\0')
-	{
-		if (*tmp == '\n' || *tmp == EOF)
-		{
-			is_get_line = TRUE;
-			break;
-		}	
-		tmp++;
+		else if (is_queue_empty(queue_pa) == TRUE)
+			try_enqueue_fd(queue_pa, fd);
+		else if (is_table_capacity_full(head) == TRUE)
+			add_back_table_malloc(&head);
 	}
-	*out_len = tmp - srcs + 1;
-	return (is_get_line);
+
+	result = ft_strdup_table_malloc(head);
+	ft_lstclear(&head);
+
+	return (result);
 }
 
-int main(void)
+int	main(void)
 {
 	int		fd;
-	char	*p;
+	char	*p_pa;
 
 	fd = open("source.txt", O_RDONLY);
-	if (fd < 0)
-	{
-		printf("FILE_OPEN ERROR");
-		return 0;
-	}
-	
-	p = get_next_line(fd);
 
-	while (p != NULL)
-	{
-		printf("%s", p);
-		free(p);
-		p = get_next_line(fd);
-	}
+	p_pa = get_next_line(fd);
+	printf("%s", p_pa);
 
-	return 1;
+	p_pa = get_next_line(fd);
+	printf("%s", p_pa);
 }
-
-/* this function will be deleted later
-unsigned int	ft_power_recursive(unsigned int base, unsigned int n)
-{
-	if (n == 0)
-		return 1;
-
-	return base * ft_power(base, n - 1);
-}
-*/

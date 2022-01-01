@@ -31,21 +31,103 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-int ft_read_str_fd(char* out_buffer, int fd, size_t len)
+
+/*============= making refactory ==========*/
+
+// linked list Null make linked list
+// or back
+
+
+
+int	add_back_table_malloc(t_table **head)
 {
-	if (read(fd, out_buffer, len) < 0)
-	    return (0);
-	*(out_buffer + len) = '\0';
-    return (1);
+	t_table	*tmp;
+
+	tmp = *head;
+	while (TRUE)
+	{
+		if (tmp->next == NULL)
+		{
+			tmp->next = build_table_malloc();
+			return (TRUE);
+		}
+		tmp = tmp->next;
+	}
 }
 
-char    *ft_strdup_range_malloc(char *src, size_t start, size_t end)
+t_table	*build_table_malloc(void)
+{
+	t_table	*table;
+
+	table = (t_table *)malloc(sizeof(t_table));
+	if (table == NULL)
+		return (NULL);
+	table->string_pa = (char *)malloc(sizeof(char) * e_TABLE_SIZE);
+	if (table->string_pa == NULL)
+		return (NULL);
+	table->capacity = 0;
+	table->next = NULL;
+	return (table);
+}
+
+int is_table_capacity_full(t_table *table)
+{
+	while (table->next != NULL)
+	{
+		table = table->next;
+	}
+	if (table->capacity == e_TABLE_SIZE)
+	{
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+char    *ft_strdup_table_malloc(t_table *head)
 {
     char    *p;
-    size_t  range;
+	char	*res;
+	t_table	*tmp;
+	size_t	total;
+	size_t	capacitys_count;
+	size_t	lst_table_capacity;
+	size_t	i;
 
-    range = end - start;
-    p = (char *)malloc(sizeof(char) * range + 1);
-    ft_memcpy(p, src, range);
-    return (p);
+	tmp = head;
+	capacitys_count = 1;
+	total = tmp->capacity;
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+		total += tmp->capacity;
+		capacitys_count++;
+	}
+
+    p = (char *)malloc(sizeof(char) * total);
+	res = p;
+	i = 0;
+	while (i < capacitys_count - 1)
+	{
+		ft_memcpy(p, head->string_pa, e_TABLE_SIZE);
+		p += e_TABLE_SIZE;
+		head = head->next;
+		i++;
+	}
+	lst_table_capacity = total - e_TABLE_SIZE * (capacitys_count - 1);
+	ft_memcpy(p, head->string_pa, lst_table_capacity);
+
+    return (res);
+}
+
+void	ft_lstclear(t_table **lst)
+{
+	t_table	*p;
+
+	while (*lst != NULL)
+	{
+		free((*lst)->string_pa);
+		p = (*lst)->next;
+		free(*lst);
+		*lst = p;
+	}
 }
