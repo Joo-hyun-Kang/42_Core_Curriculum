@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-//enum { BUFFER_SIZE = 1 };
+enum { BUFFER_SIZE = 10 };
 
 int build_queue_malloc(t_queue **queue)
 {
@@ -146,7 +146,7 @@ char	*get_next_line(int fd)
 
 	result = ft_strdup_table_malloc(head);
 	ft_lstclear(&head);
-	if (queue_pa->is_EOF)
+	if (queue_pa->is_EOF && is_queue_empty(queue_pa))
 	{
 		free(queue_pa->buffer_pa);
 		free(queue_pa);
@@ -156,20 +156,22 @@ char	*get_next_line(int fd)
 }
 
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*p_pa;
+int	main(void)
+{
+	int		fd;
+	char	*p_pa;
+	int		i;
+	int		n;
 
-// 	fd = open("source.txt", O_RDONLY);
+	fd = open("source.txt", O_RDONLY);
 
-// 	p_pa = get_next_line(fd);
-// 	printf("%s", p_pa);
-// 	free(p_pa);
-
-
-// 	p_pa = get_next_line(fd);
-// 	printf("%s", p_pa);
-// 	free(p_pa);
-
-// }
+	i = 0;
+	n = 5;
+	while (i < n)
+	{
+		p_pa = get_next_line(fd);
+		printf("%s", p_pa);
+		free(p_pa);
+		i++;
+	}
+}
