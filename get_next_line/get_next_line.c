@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-enum { BUFFER_SIZE = 5 };
+//enum { BUFFER_SIZE = 1 };
 
 int build_queue_malloc(t_queue **queue)
 {
@@ -45,13 +45,20 @@ int	is_queue_empty(t_queue *queue_pa)
 	return (FALSE);
 }
 
-int	try_enqueue_fd(t_queue *queue_pa, int fd)
+int	try_enqueue_fd(t_queue *queue_pa, int fd, int *is_first_read)
 {
 	int ret;
 	
 	ret = read(fd, queue_pa->buffer_pa, BUFFER_SIZE);
 	if (ret < 0)
-		return (FALSE);	
+		return (FALSE);
+	if (ret == 0 && *is_first_read == TRUE)
+	{
+		return (FALSE);
+	}
+	
+	*is_first_read = FALSE;
+
 	if (ret < BUFFER_SIZE)
 	{
 		queue_pa->buffer_pa[ret] = '\0';
@@ -99,6 +106,7 @@ char	*get_next_line(int fd)
 	static t_queue	*queue_pa = NULL;
 	t_table			*head;
 	char			*result;
+	int				is_frist_read;
 
 	//file -> queue -> head ---> res
 	//			|		|
@@ -108,7 +116,8 @@ char	*get_next_line(int fd)
 	if (queue_pa == NULL && build_queue_malloc(&queue_pa) == FALSE)
 		return (NULL);
 	//check whether queue is free when try_enqeue_fd is FALSE.
-	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd) == FALSE)
+	is_frist_read = TRUE;
+	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd, &is_frist_read) == FALSE)
 	{
 		free(queue_pa->buffer_pa);
 		free(queue_pa);
@@ -126,11 +135,11 @@ char	*get_next_line(int fd)
 	{
 		if (is_queue_empty(queue_pa) == TRUE && is_table_capacity_full(head) == TRUE)
 		{
-			try_enqueue_fd(queue_pa, fd);
+			try_enqueue_fd(queue_pa, fd, &is_frist_read);
 			add_back_table_malloc(&head);
 		}
 		else if (is_queue_empty(queue_pa) == TRUE)
-			try_enqueue_fd(queue_pa, fd);
+			try_enqueue_fd(queue_pa, fd, &is_frist_read);
 		else if (is_table_capacity_full(head) == TRUE)
 			add_back_table_malloc(&head);
 	}
@@ -147,20 +156,20 @@ char	*get_next_line(int fd)
 }
 
 
-int	main(void)
-{
-	int		fd;
-	char	*p_pa;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*p_pa;
 
-	fd = open("source.txt", O_RDONLY);
+// 	fd = open("source.txt", O_RDONLY);
 
-	p_pa = get_next_line(fd);
-	printf("%s", p_pa);
-	free(p_pa);
+// 	p_pa = get_next_line(fd);
+// 	printf("%s", p_pa);
+// 	free(p_pa);
 
-/*
-	p_pa = get_next_line(fd);
-	printf("%s", p_pa);
-	free(p_pa);
-*/
-}
+
+// 	p_pa = get_next_line(fd);
+// 	printf("%s", p_pa);
+// 	free(p_pa);
+
+// }
