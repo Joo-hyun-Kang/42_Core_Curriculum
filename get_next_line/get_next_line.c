@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-enum { BUFFER_SIZE = 20 };
+enum { BUFFER_SIZE = 1 };
 
 int build_queue_malloc(t_queue **queue)
 {
@@ -50,20 +50,34 @@ int	try_enqueue_fd(t_queue *queue_pa, int fd, int *is_first_read)
 	int ret;
 	
 	ret = read(fd, queue_pa->buffer_pa, BUFFER_SIZE);
+
+	if (ret < 1)
+		return (FALSE);
+		
+	/* EOF is on first of Buffer */
+	if (ret == 0)
+	{
+		queue_pa->is_EOF = TRUE;
+		return (FALSE);
+	}
+	
+	/*
 	if (ret < 0)
 		return (FALSE);
 	if (ret == 0 && *is_first_read == TRUE)
 	{
+		queue_pa->is_EOF = TRUE;
 		return (FALSE);
 	}
-	
+	*/
 	*is_first_read = FALSE;
 
+	/* EOF is on middle of Buffer */
 	if (ret < BUFFER_SIZE)
 	{
-		queue_pa->buffer_pa[ret] = '\0';
-		queue_pa->num_count = ret + 1;
-		queue_pa->last_count = ret + 1;
+		//queue_pa->buffer_pa[ret] = '\0';
+		queue_pa->num_count = ret;
+		queue_pa->last_count = ret;
 		queue_pa->is_EOF = TRUE;
 	}
 	else
@@ -84,6 +98,9 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 	else
 		buffer = queue_pa->buffer_pa + (BUFFER_SIZE - queue_pa->num_count);
 	string = head->string_pa + head->capacity;
+
+	if (queue_pa->is_EOF && is_queue_empty(queue_pa)== TRUE)
+		return (TRUE);
 
 	while (is_queue_empty(queue_pa) != TRUE && head->capacity != e_TABLE_SIZE)
 	{
@@ -166,7 +183,7 @@ int	main(void)
 	fd = open("source.txt", O_RDONLY);
 
 	i = 0;
-	n = 5;
+	n = 3;
 	while (i < n)
 	{
 		p_pa = get_next_line(fd);
