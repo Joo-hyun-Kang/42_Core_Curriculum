@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-enum { BUFFER_SIZE = 10 };
+enum { BUFFER_SIZE = 20 };
 
 int build_queue_malloc(t_queue **queue)
 {

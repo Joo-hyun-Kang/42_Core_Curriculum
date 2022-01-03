@@ -31,14 +31,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-
-/*============= making refactory ==========*/
-
-// linked list Null make linked list
-// or back
-
-
-
 int	add_back_table_malloc(t_table **head)
 {
 	t_table	*tmp;
@@ -103,7 +95,7 @@ char    *ft_strdup_table_malloc(t_table *head)
 		capacitys_count++;
 	}
 
-    p = (char *)malloc(sizeof(char) * total);
+    p = (char *)malloc(sizeof(char) * total + 1);
 	res = p;
 	i = 0;
 	while (i < capacitys_count - 1)
@@ -115,6 +107,7 @@ char    *ft_strdup_table_malloc(t_table *head)
 	}
 	lst_table_capacity = total - e_TABLE_SIZE * (capacitys_count - 1);
 	ft_memcpy(p, head->string_pa, lst_table_capacity);
+	p[total] = '\0';
 
     return (res);
 }
