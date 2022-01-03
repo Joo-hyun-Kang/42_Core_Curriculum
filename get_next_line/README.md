@@ -9,6 +9,35 @@
 * 파일에서 한줄까지 읽거나 한 줄이 없는 경우 그 파일의 끝까지 읽는 함수
 * 사용자가 버퍼 사이즈(어느 정도 토막내서 불러올지)를 결정할 수 있다
 
+## 이슈 : EOF가 되는 경우
+1. 큐를 초기화하고 읽는데 EOF : Early return
+*블록 만큼 읽었는데 블록 처음에 EOF가 있는 경우 = > ret은 0반환
+*블록처음 값이 이전 값을 BUFFER_SIZE
+*만약 값이 없는 경우 '\0'을 반환
+*큐를 초기화 한 후에 처음에 걸리는 경우
+	*buffer_size가 작을 때 like buffer_size == 1
+*초기화한 큐를 바로 읽을 때 early return
+*ret == 0이면 바로 큐 초기화 할 때 NULL 반환
+
+
+2. 큐를 읽다가 EOF가 있는 경우 : deqeueue 처리
+
+*케이스 1. 블록 만큼 읽었는데 블록 안에 중간에 EOF가 있는 경우 = > ret은 0이 아님
+*is_EOF로 dequeue에서 중간에 EOF에 도달할 시 처리
+
+if (ret < BUFFER_SIZE)
+{
+	queue_pa->num_count = ret;
+	queue_pa->last_count = ret;
+	queue_pa->is_EOF = TRUE;
+}
+
+
+*케이스2: 큐가 남아있어서 큐를 계속 넣는 와중에 읽어서 처음에 EOF가 오는 경우 => ret은 0
+*주로 Buffer_size == 1일 때
+*Buffer_size 블록 다음에 우연히 EOF가 오는 경우
+*is_EOF로 dequeue에서 처음에서 early-return
+
 
 
 ## 이슈 : 자료구조 고민
