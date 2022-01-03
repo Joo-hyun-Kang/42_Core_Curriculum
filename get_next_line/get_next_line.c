@@ -12,8 +12,6 @@
 
 #include "get_next_line.h"
 
-enum { BUFFER_SIZE = 1 };
-
 int build_queue_malloc(t_queue **queue)
 {
 	*queue = (t_queue *)malloc(sizeof(t_queue));
@@ -45,7 +43,7 @@ int	is_queue_empty(t_queue *queue_pa)
 	return (FALSE);
 }
 
-int	try_enqueue_fd(t_queue *queue_pa, int fd, int *is_first_read)
+int	try_enqueue_fd(t_queue *queue_pa, int fd)
 {
 	int ret;
 	
@@ -62,21 +60,9 @@ int	try_enqueue_fd(t_queue *queue_pa, int fd, int *is_first_read)
 		return (FALSE);
 	}
 	
-	/*
-	if (ret < 0)
-		return (FALSE);
-	if (ret == 0 && *is_first_read == TRUE)
-	{
-		queue_pa->is_EOF = TRUE;
-		return (FALSE);
-	}
-	*/
-	*is_first_read = FALSE;
-
 	/* EOF is on middle of Buffer */
 	if (ret < BUFFER_SIZE)
 	{
-		//queue_pa->buffer_pa[ret] = '\0';
 		queue_pa->num_count = ret;
 		queue_pa->last_count = ret;
 		queue_pa->is_EOF = TRUE;
@@ -116,8 +102,6 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 			return (TRUE);
 		}
 	}
-
-
 	return (FALSE);
 }
 
@@ -126,42 +110,31 @@ char	*get_next_line(int fd)
 	static t_queue	*queue_pa = NULL;
 	t_table			*head;
 	char			*result;
-	int				is_frist_read;
-
-	//file -> queue -> head ---> res
-	//			|		|
-	//			---------		
-	//			   loop
 
 	if (queue_pa == NULL && build_queue_malloc(&queue_pa) == FALSE)
 		return (NULL);
-	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd, &is_frist_read) == FALSE)
+	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd))
 	{
 		free(queue_pa->buffer_pa);
 		free(queue_pa);
 		queue_pa = NULL;
 		return (NULL);
 	}
-
 	head = build_table_malloc();
 	if (head == NULL)
-	{	
 		return (NULL);
-	}
-
 	while (dequeue_by_next_line(queue_pa, head) == FALSE)
 	{
 		if (is_queue_empty(queue_pa) == TRUE && is_table_capacity_full(head) == TRUE)
 		{
-			try_enqueue_fd(queue_pa, fd, &is_frist_read);
+			try_enqueue_fd(queue_pa, fd);
 			add_back_table_malloc(&head);
 		}
 		else if (is_queue_empty(queue_pa) == TRUE)
-			try_enqueue_fd(queue_pa, fd, &is_frist_read);
+			try_enqueue_fd(queue_pa, fd);
 		else if (is_table_capacity_full(head) == TRUE)
 			add_back_table_malloc(&head);
 	}
-
 	result = ft_strdup_table_malloc(head);
 	ft_lstclear(&head);
 	if (queue_pa->is_EOF && is_queue_empty(queue_pa))
@@ -171,25 +144,4 @@ char	*get_next_line(int fd)
 		queue_pa = NULL;
 	}
 	return (result);
-}
-
-
-int	main(void)
-{
-	int		fd;
-	char	*p_pa;
-	int		i;
-	int		n;
-
-	fd = open("source.txt", O_RDONLY);
-
-	i = 0;
-	n = 3;
-	while (i < n)
-	{
-		p_pa = get_next_line(fd);
-		printf("%s", p_pa);
-		free(p_pa);
-		i++;
-	}
 }

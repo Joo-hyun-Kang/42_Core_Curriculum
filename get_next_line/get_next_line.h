@@ -38,11 +38,11 @@ typedef struct
 	size_t	last_count;
 }	t_queue;
 
-enum { e_TABLE_SIZE = 50 };
+enum { e_TABLE_SIZE = 2048 };
 
 int		build_queue_malloc(t_queue **queue);
 int		is_queue_empty(t_queue *queue_pa);
-int		try_enqueue_fd(t_queue *queue_pa, int fd, int *is_first_read);
+int		try_enqueue_fd(t_queue *queue_pa, int fd);
 int		dequeue_by_next_line(t_queue *queue_pa, t_table *head);
 char	*get_next_line(int fd);
 
