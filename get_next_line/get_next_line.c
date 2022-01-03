@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:10:11 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/28 17:11:17 by jokang           ###   ########.fr       */
+/*   Updated: 2022/01/03 16:05:30 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 
 	if (queue_pa == NULL && build_queue_malloc(&queue_pa) == FALSE)
 		return (NULL);
-	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd))
+	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd) == FALSE)
 	{
 		free(queue_pa->buffer_pa);
 		free(queue_pa);
