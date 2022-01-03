@@ -51,13 +51,14 @@ int	try_enqueue_fd(t_queue *queue_pa, int fd, int *is_first_read)
 	
 	ret = read(fd, queue_pa->buffer_pa, BUFFER_SIZE);
 
-	if (ret < 1)
+	if (ret < 0)
 		return (FALSE);
-		
+
 	/* EOF is on first of Buffer */
 	if (ret == 0)
 	{
 		queue_pa->is_EOF = TRUE;
+		queue_pa->num_count = 0;
 		return (FALSE);
 	}
 	
@@ -90,17 +91,19 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 	char	*buffer;
 	char	*string;
 
+	/* EOF is on first of Buffer */
+	if (queue_pa->is_EOF == TRUE && is_queue_empty(queue_pa)== TRUE)
+		return (TRUE);
+
 	while (head->next != NULL)
 		head = head->next;
 
-	if (queue_pa->is_EOF == TRUE)
-		buffer = queue_pa->buffer_pa + (queue_pa->last_count - queue_pa->num_count);
-	else
-		buffer = queue_pa->buffer_pa + (BUFFER_SIZE - queue_pa->num_count);
+	buffer = queue_pa->buffer_pa + (BUFFER_SIZE - queue_pa->num_count);
 	string = head->string_pa + head->capacity;
 
-	if (queue_pa->is_EOF && is_queue_empty(queue_pa)== TRUE)
-		return (TRUE);
+	/* EOF is on middle of Buffer */
+	if (queue_pa->is_EOF == TRUE)
+		buffer = queue_pa->buffer_pa + (queue_pa->last_count - queue_pa->num_count);
 
 	while (is_queue_empty(queue_pa) != TRUE && head->capacity != e_TABLE_SIZE)
 	{
@@ -108,7 +111,7 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 		queue_pa->num_count--;
 		head->capacity++;
 
-		if (*(string - 1) == '\n' || (queue_pa->is_EOF && !queue_pa->num_count))
+		if (*(string - 1) == '\n' || (queue_pa->is_EOF == TRUE && is_queue_empty(queue_pa)== TRUE))
 		{
 			return (TRUE);
 		}
@@ -132,8 +135,6 @@ char	*get_next_line(int fd)
 
 	if (queue_pa == NULL && build_queue_malloc(&queue_pa) == FALSE)
 		return (NULL);
-	//check whether queue is free when try_enqeue_fd is FALSE.
-	is_frist_read = TRUE;
 	if (is_queue_empty(queue_pa) == TRUE && try_enqueue_fd(queue_pa, fd, &is_frist_read) == FALSE)
 	{
 		free(queue_pa->buffer_pa);
