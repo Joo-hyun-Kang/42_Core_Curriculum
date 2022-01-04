@@ -14,8 +14,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-enum { BUFFER_SIZE = 1 };
-
 int	build_queue_malloc(t_queue **queue)
 {
 	*queue = (t_queue *)malloc(sizeof(t_queue));
