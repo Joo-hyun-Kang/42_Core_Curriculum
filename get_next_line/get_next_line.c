@@ -56,7 +56,7 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 	while (head->next != NULL)
 		head = head->next;
 	string = head->string_pa + head->capacity;
-	buffer = queue_pa->buffer_pa + (BUFFER_SIZE - queue_pa->num_count);
+	buffer = queue_pa->buffer_pa;
 	if (queue_pa->is_EOF == TRUE)
 		buffer += (queue_pa->last_count - queue_pa->num_count);
 	else

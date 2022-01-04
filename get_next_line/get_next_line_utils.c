@@ -76,26 +76,26 @@ char	*ft_strdup_table_malloc(t_table *head)
 	char	*res;
 	t_table	*tmp;
 	size_t	total;
-	size_t	capacitys_count;
+	size_t	count;
 	size_t	i;
 
 	tmp = head;
-	capacitys_count = 0;
+	count = 0;
 	total = 0;
 	while (tmp != NULL)
 	{
 		total += tmp->capacity;
 		tmp = tmp->next;
-		capacitys_count++;
+		count++;
 	}
 	res = (char *)malloc(sizeof(char) * total + 1);
 	i = 0;
-	while (i < capacitys_count - 1)
+	while (i < count - 1)
 	{
 		ft_memcpy(&res[i++ * e_T_SIZE], head->string_pa, e_T_SIZE);
 		head = head->next;
 	}
-	ft_memcpy(&res[i * e_T_SIZE], head->string_pa, total - e_T_SIZE * (capacitys_count - 1));
+	ft_memcpy(&res[i * e_T_SIZE], head->string_pa, total - e_T_SIZE * (count - 1));
 	res[total] = '\0';
     return (res);
 }
