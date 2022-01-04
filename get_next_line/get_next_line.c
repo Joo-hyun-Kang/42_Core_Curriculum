@@ -15,29 +15,11 @@
 int	build_queue_malloc(t_queue **queue)
 {
 	*queue = (t_queue *)malloc(sizeof(t_queue));
-	if (*queue == NULL)
-	{
-		return (FALSE);
-	}
 	(*queue)->buffer_pa = ((char *)malloc(sizeof(char) * BUFFER_SIZE));
-	if ((*queue)->buffer_pa == NULL)
-	{
-		free(*queue);
-		return (FALSE);
-	}
 	(*queue)->is_EOF = FALSE;
 	(*queue)->num_count = 0;
 	(*queue)->last_count = 0;
 	return (TRUE);
-}
-
-int	is_queue_empty(t_queue *queue_pa)
-{
-	if (queue_pa->num_count == 0)
-	{
-		return (TRUE);
-	}
-	return (FALSE);
 }
 
 int	try_enqueue_fd(t_queue *queue_pa, int fd)
@@ -69,28 +51,45 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 	char	*buffer;
 	char	*string;
 
-	if (queue_pa->is_EOF == TRUE && is_queue_empty(queue_pa) == TRUE)
-		return (TRUE);
 	while (head->next != NULL)
 		head = head->next;
-	buffer = queue_pa->buffer_pa + (BUFFER_SIZE - queue_pa->num_count);
 	string = head->string_pa + head->capacity;
-	buffer = queue_pa->buffer_pa;
+	buffer = queue_pa->buffer_pa + (BUFFER_SIZE - queue_pa->num_count);
 	if (queue_pa->is_EOF == TRUE)
 		buffer += (queue_pa->last_count - queue_pa->num_count);
-	buffer += (queue_pa->last_count - queue_pa->num_count);
-	while (is_queue_empty(queue_pa) != TRUE && head->capacity != e_TABLE_SIZE)
+	else
+		buffer += (BUFFER_SIZE - queue_pa->num_count);
+	while (queue_pa->num_count != 0 && head->capacity != e_T_SIZE)
 	{
 		*string++ = *buffer++;
 		queue_pa->num_count--;
 		head->capacity++;
 		if (*(string - 1) == '\n' \
-				|| (queue_pa->is_EOF && is_queue_empty(queue_pa)))
+				|| (queue_pa->is_EOF && queue_pa->num_count == 0))
 		{
 			return (TRUE);
 		}
 	}
 	return (FALSE);
+}
+
+void	free_t_struct(t_queue **queue, t_table **lst)
+{
+	t_table	*p;
+
+	if (*queue != NULL)
+	{
+		free((*queue)->buffer_pa);
+		free(*queue);
+		*queue = NULL;
+	}
+	while (*lst != NULL)
+	{
+		free((*lst)->string_pa);
+		p = (*lst)->next;
+		free(*lst);
+		*lst = p;
+	}
 }
 
 char	*get_next_line(int fd)
@@ -99,37 +98,25 @@ char	*get_next_line(int fd)
 	t_table			*head;
 	char			*result;
 
-	if (queue_pa == NULL && build_queue_malloc(&queue_pa) == FALSE)
-		return (NULL);
-	if (is_queue_empty(queue_pa) && !try_enqueue_fd(queue_pa, fd))
+	if (queue_pa == NULL)
+		build_queue_malloc(&queue_pa);
+	if (queue_pa->num_count == 0 && !try_enqueue_fd(queue_pa, fd))
 	{
-		free(queue_pa->buffer_pa);
-		free(queue_pa);
-		queue_pa = NULL;
+		free_t_struct(&queue_pa, NULL);
 		return (NULL);
 	}
 	head = build_table_malloc();
-	if (head == NULL)
-		return (NULL);
 	while (dequeue_by_next_line(queue_pa, head) == FALSE)
 	{
-		if (is_queue_empty(queue_pa) && is_table_capacity_full(head))
-		{
-			try_enqueue_fd(queue_pa, fd);
-			add_back_table_malloc(&head);
-		}
-		else if (is_queue_empty(queue_pa) == TRUE)
-			try_enqueue_fd(queue_pa, fd);
-		else if (is_table_capacity_full(head) == TRUE)
+		if (queue_pa->num_count == 0)
+			if(try_enqueue_fd(queue_pa, fd) == FALSE)
+				break;
+		if (is_table_capacity_full(head) == TRUE)
 			add_back_table_malloc(&head);
 	}
 	result = ft_strdup_table_malloc(head);
-	ft_lstclear(&head);
-	if (queue_pa->is_EOF && is_queue_empty(queue_pa))
-	{
-		free(queue_pa->buffer_pa);
-		free(queue_pa);
-		queue_pa = NULL;
-	}
+	free_t_struct(NULL, &head);
+	if (queue_pa->is_EOF && queue_pa->num_count == 0)
+		free_queue(&queue_pa, NULL);
 	return (result);
 }

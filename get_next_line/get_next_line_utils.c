@@ -52,11 +52,7 @@ t_table	*build_table_malloc(void)
 	t_table	*table;
 
 	table = (t_table *)malloc(sizeof(t_table));
-	if (table == NULL)
-		return (NULL);
-	table->string_pa = (char *)malloc(sizeof(char) * e_TABLE_SIZE);
-	if (table->string_pa == NULL)
-		return (NULL);
+	table->string_pa = (char *)malloc(sizeof(char) * e_T_SIZE);
 	table->capacity = 0;
 	table->next = NULL;
 	return (table);
@@ -68,7 +64,7 @@ int	is_table_capacity_full(t_table *table)
 	{
 		table = table->next;
 	}
-	if (table->capacity == e_TABLE_SIZE)
+	if (table->capacity == e_T_SIZE)
 	{
 		return (TRUE);
 	}
@@ -77,48 +73,29 @@ int	is_table_capacity_full(t_table *table)
 
 char	*ft_strdup_table_malloc(t_table *head)
 {
-	char	*p;
 	char	*res;
 	t_table	*tmp;
 	size_t	total;
 	size_t	capacitys_count;
-	size_t	lst_table_capacity;
 	size_t	i;
 
 	tmp = head;
-	capacitys_count = 1;
-	total = tmp->capacity;
-	while (tmp->next != NULL)
+	capacitys_count = 0;
+	total = 0;
+	while (tmp != NULL)
 	{
-		tmp = tmp->next;
 		total += tmp->capacity;
+		tmp = tmp->next;
 		capacitys_count++;
 	}
-	p = (char *)malloc(sizeof(char) * total + 1);
-	res = p;
+	res = (char *)malloc(sizeof(char) * total + 1);
 	i = 0;
 	while (i < capacitys_count - 1)
 	{
-		ft_memcpy(p, head->string_pa, e_TABLE_SIZE);
-		p += e_TABLE_SIZE;
+		ft_memcpy(res[i++ * e_T_SIZE], head->string_pa, e_T_SIZE);
 		head = head->next;
-		i++;
 	}
-	lst_table_capacity = total - e_TABLE_SIZE * (capacitys_count - 1);
-	ft_memcpy(p, head->string_pa, lst_table_capacity);
-	p[total] = '\0';
+	ft_memcpy(res[i * e_T_SIZE], head->string_pa, total - e_T_SIZE * (capacitys_count - 1));
+	res[total] = '\0';
     return (res);
-}
-
-void	ft_lstclear(t_table **lst)
-{
-	t_table	*p;
-
-	while (*lst != NULL)
-	{
-		free((*lst)->string_pa);
-		p = (*lst)->next;
-		free(*lst);
-		*lst = p;
-	}
 }

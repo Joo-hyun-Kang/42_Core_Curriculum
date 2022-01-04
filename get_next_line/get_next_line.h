@@ -34,21 +34,18 @@ typedef struct s_queue
 	size_t	last_count;
 }	t_queue;
 
-enum { e_TABLE_SIZE = 2048 };
+enum { e_T_SIZE = 2048 };
 
 int		build_queue_malloc(t_queue **queue);
-int		is_queue_empty(t_queue *queue_pa);
+void	free_t_struct(t_queue **queue, t_table **lst);
 int		try_enqueue_fd(t_queue *queue_pa, int fd);
 int		dequeue_by_next_line(t_queue *queue_pa, t_table *head);
 char	*get_next_line(int fd);
 
 void	*ft_memcpy(void *dst, const void *src, size_t n);
-int		ft_read_str_fd(char *out_buffer, int fd, size_t len);
-char	*ft_strdup_range_malloc(char *src, size_t start, size_t end);
 int		add_back_table_malloc(t_table **head);
 t_table	*build_table_malloc(void);
 int		is_table_capacity_full(t_table *table);
 char	*ft_strdup_table_malloc(t_table *head);
-void	ft_lstclear(t_table **lst);
 
 #endif /* GET_NEXT_LINE_H */
