@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <unistd.h>
+#include <fcntl.h>
+
+enum { BUFFER_SIZE = 1 };
 
 int	build_queue_malloc(t_queue **queue)
 {
@@ -77,18 +81,21 @@ void	free_t_struct(t_queue **queue, t_table **lst)
 {
 	t_table	*p;
 
-	if (*queue != NULL)
+	if (queue != NULL && *queue != NULL)
 	{
 		free((*queue)->buffer_pa);
 		free(*queue);
 		*queue = NULL;
 	}
-	while (*lst != NULL)
+	if (lst != NULL)
 	{
-		free((*lst)->string_pa);
-		p = (*lst)->next;
-		free(*lst);
-		*lst = p;
+		while (*lst != NULL)
+		{
+			free((*lst)->string_pa);
+			p = (*lst)->next;
+			free(*lst);
+			*lst = p;
+		}
 	}
 }
 
