@@ -117,6 +117,6 @@ char	*get_next_line(int fd)
 	result = ft_strdup_table_malloc(head);
 	free_t_struct(NULL, &head);
 	if (queue_pa->is_EOF && queue_pa->num_count == 0)
-		free_queue(&queue_pa, NULL);
+		free_t_struct(&queue_pa, NULL);
 	return (result);
 }

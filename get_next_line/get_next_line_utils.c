@@ -92,10 +92,10 @@ char	*ft_strdup_table_malloc(t_table *head)
 	i = 0;
 	while (i < capacitys_count - 1)
 	{
-		ft_memcpy(res[i++ * e_T_SIZE], head->string_pa, e_T_SIZE);
+		ft_memcpy(&res[i++ * e_T_SIZE], head->string_pa, e_T_SIZE);
 		head = head->next;
 	}
-	ft_memcpy(res[i * e_T_SIZE], head->string_pa, total - e_T_SIZE * (capacitys_count - 1));
+	ft_memcpy(&res[i * e_T_SIZE], head->string_pa, total - e_T_SIZE * (capacitys_count - 1));
 	res[total] = '\0';
     return (res);
 }
