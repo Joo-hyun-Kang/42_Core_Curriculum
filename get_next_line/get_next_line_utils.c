@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:03:40 by jokang            #+#    #+#             */
-/*   Updated: 2021/12/15 17:04:00 by jokang           ###   ########.fr       */
+/*   Updated: 2022/01/04 18:36:06 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_table	*build_table_malloc(void)
 	return (table);
 }
 
-int is_table_capacity_full(t_table *table)
+int	is_table_capacity_full(t_table *table)
 {
 	while (table->next != NULL)
 	{
@@ -75,9 +75,9 @@ int is_table_capacity_full(t_table *table)
 	return (FALSE);
 }
 
-char    *ft_strdup_table_malloc(t_table *head)
+char	*ft_strdup_table_malloc(t_table *head)
 {
-    char    *p;
+	char	*p;
 	char	*res;
 	t_table	*tmp;
 	size_t	total;
@@ -94,8 +94,7 @@ char    *ft_strdup_table_malloc(t_table *head)
 		total += tmp->capacity;
 		capacitys_count++;
 	}
-
-    p = (char *)malloc(sizeof(char) * total + 1);
+	p = (char *)malloc(sizeof(char) * total + 1);
 	res = p;
 	i = 0;
 	while (i < capacitys_count - 1)
@@ -108,7 +107,6 @@ char    *ft_strdup_table_malloc(t_table *head)
 	lst_table_capacity = total - e_TABLE_SIZE * (capacitys_count - 1);
 	ft_memcpy(p, head->string_pa, lst_table_capacity);
 	p[total] = '\0';
-
     return (res);
 }
 
