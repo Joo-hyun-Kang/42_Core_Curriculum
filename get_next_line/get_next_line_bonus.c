@@ -28,9 +28,9 @@ t_queue *set_queue_list(t_queue **queue, int fd)
 			is_exist = TRUE;
 			break;
 		}
-		p = p->next; 
+		p = p->next;
 	}
-	if (is_exist == FALSE)
+	if (!is_exist)
 	{
 		p = (t_queue *)malloc(sizeof(t_queue));
 		p->buffer_pa = ((char *)malloc(sizeof(char) * BUFFER_SIZE));
@@ -94,15 +94,29 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 	return (FALSE);
 }
 
-void	free_t_struct(t_queue **queue, t_table **lst)
+void	free_t_struct(t_queue **queue, t_table **lst, int fd)
 {
+	t_queue	**head;
+	t_queue	*tmp;
 	t_table	*p;
 
-	if (queue != NULL && *queue != NULL)
+	if (queue != NULL)
 	{
-		free((*queue)->buffer_pa);
-		free(*queue);
-		*queue = NULL;
+		head = queue;
+
+		while (*head != NULL)
+		{
+			if ((*head)->fd == fd)
+			{
+				tmp = *head;
+				*head = (*head)->next;
+				free(tmp->buffer_pa);
+				free(tmp);
+				break;
+			}
+			
+			head = &(*head)->next;
+		}
 	}
 	if (lst != NULL)
 	{
@@ -126,7 +140,7 @@ char	*get_next_line(int fd)
 	queue_pa = set_queue_list(&queue_list, fd);
 	if (queue_pa->num_count == 0 && !try_enqueue_fd(queue_pa, fd))
 	{
-		free_t_struct(&queue_pa, NULL);
+		free_t_struct(&queue_list, NULL, fd);
 		return (NULL);
 	}
 	head = build_table_malloc();
@@ -139,8 +153,8 @@ char	*get_next_line(int fd)
 			add_back_table_malloc(&head);
 	}
 	result = ft_strdup_table_malloc(head);
-	free_t_struct(NULL, &head);
+	free_t_struct(NULL, &head, fd);
 	if (queue_pa->is_EOF && queue_pa->num_count == 0)
-		free_t_struct(&queue_pa, NULL);
+		free_t_struct(&queue_list, NULL, fd);
 	return (result);
 }

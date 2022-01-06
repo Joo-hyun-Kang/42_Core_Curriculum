@@ -38,7 +38,7 @@ typedef struct s_queue
 enum { e_T_SIZE = 2048 };
 
 t_queue	*set_queue_list(t_queue **queue, int fd);
-void	free_t_struct(t_queue **queue, t_table **lst);
+void	free_t_struct(t_queue **queue, t_table **lst, int fd);
 int		try_enqueue_fd(t_queue *queue_pa, int fd);
 int		dequeue_by_next_line(t_queue *queue_pa, t_table *head);
 char	*get_next_line(int fd);
