@@ -1,55 +1,108 @@
-[Mandatory]
+[Static = 1]
+[Bonus]
 [BUFFER_SIZE = 1]: 
-Invalid fd: 1.OK 2.OK 3.OK 
-files/empty: 1.OK 2.OK 
-files/nl: 1.OK 2.OK 
-files/41_no_nl: 1.OK 2.OK 
-files/41_with_nl: 1.OK 2.OK 3.OK 
-files/42_no_nl: 1.OK 2.OK 
-files/42_with_nl: 1.OK 2.OK 3.OK 
-files/43_no_nl: 1.OK 2.OK 
-files/43_with_nl: 1.OK 2.OK 3.OK 
-files/multiple_nlx5: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 
-files/multiple_line_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 
-files/multiple_line_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 
-files/alternate_line_nl_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK 
-files/alternate_line_nl_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK 
-files/big_line_no_nl: 1.OK 2.OK 
-files/big_line_with_nl: 1.OK 2.OK 
-stdin: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK 
+Invalid fd: 1.OK 2.OK 3.OK LEAKS.KO [0x7fbbf2d04200 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d04270 : 48] [0x7fbbf2d04230 : 1] [0x7fbbf2d042e0 : 48] [0x7fbbf2d04
+250 : 1] 
+files/empty: 1.OK 2.OK LEAKS.KO [0x7fbbf2d04200 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d04270 : 48] [0x7fbbf2d04230 : 1] 
+files/nl: 1.OK 2.OK LEAKS.KO [0x7fbbf2c056a0 : 48] [0x7fbbf2c05820 : 1] [0x7fbbf2c05830 : 48] [0x7fbbf2c05810 : 1] 
+files/41_no_nl: 1.OK 2.OK LEAKS.KO [0x7fbbf2d04200 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d042d0 : 48] [0x7fbbf2d04230 : 1] 
+files/41_with_nl: 1.OK 2.OK 3.OK LEAKS.KO [0x7fbbf2e04200 : 48] [0x7fbbf2e04240 : 1] [0x7fbbf2e042d0 : 48] [0x7fbbf2e04230 : 1] [0x7fbbf2e04280 : 48] [0x7fb
+bf2e04270 : 1] 
+files/42_no_nl: 1.OK 2.OK LEAKS.KO [0x7fbbf2e04200 : 48] [0x7fbbf2e04240 : 1] [0x7fbbf2e042d0 : 48] [0x7fbbf2e04230 : 1] 
+files/42_with_nl: 1.OK 2.OK 3.OK LEAKS.KO [0x7fbbf2c056a0 : 48] [0x7fbbf2c05820 : 1] [0x7fbbf2c058b0 : 48] [0x7fbbf2c05810 : 1] [0x7fbbf2c05860 : 48] [0x7fb
+bf2c05850 : 1] 
+files/43_no_nl: 1.OK 2.OK LEAKS.KO [0x7fbbf2c056a0 : 48] [0x7fbbf2c05820 : 1] [0x7fbbf2c058b0 : 48] [0x7fbbf2c05810 : 1] 
+files/43_with_nl: 1.OK 2.OK 3.OK LEAKS.KO [0x7fbbf2d04080 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d042d0 : 48] [0x7fbbf2d04230 : 1] [0x7fbbf2d04280 : 48] [0x7fb
+bf2d04270 : 1] 
+files/multiple_nlx5: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK LEAKS.KO [0x7fbbf2e04200 : 48] [0x7fbbf2e04240 : 1] [0x7fbbf2e04250 : 48] [0x7fbbf2e04230 : 1] [0x7fbbf2e
+04350 : 48] [0x7fbbf2e042a0 : 1] [0x7fbbf2e042c0 : 48] [0x7fbbf2e042b0 : 1] [0x7fbbf2e04300 : 48] [0x7fbbf2e042f0 : 1] [0x7fbbf2e04480 : 48] [0x7fbbf2e04280
+ : 1] 
+files/multiple_line_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK LEAKS.KO [0x7fbbf2d04080 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d042d0 : 48] [0x7fbbf2d04230 : 1] [0x7
+fbbf2d04270 : 48] [0x7fbbf2d04250 : 1] [0x7fbbf2d04380 : 48] [0x7fbbf2d04260 : 1] [0x7fbbf2d04300 : 48] [0x7fbbf2d042a0 : 1] [0x7fbbf2d04330 : 48] [0x7fbbf2
+d042b0 : 1] 
+files/multiple_line_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK LEAKS.KO [0x7fbbf2e04200 : 48] [0x7fbbf2e04240 : 1] [0x7fbbf2e042d0 : 48] [0x7fbbf2e04230 : 1] [0
+x7fbbf2e04270 : 48] [0x7fbbf2e04250 : 1] [0x7fbbf2e04380 : 48] [0x7fbbf2e04260 : 1] [0x7fbbf2e04300 : 48] [0x7fbbf2e042a0 : 1] [0x7fbbf2e04330 : 48] [0x7fbb
+f2e042b0 : 1] 
+files/alternate_line_nl_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK LEAKS.KO [0x7fbbf2d04080 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d042d0 : 48] 
+[0x7fbbf2d04230 : 1] [0x7fbbf2d04280 : 48] [0x7fbbf2d04270 : 1] [0x7fbbf2d04380 : 48] [0x7fbbf2d042b0 : 1] [0x7fbbf2d04300 : 48] [0x7fbbf2d042c0 : 1] [0x7fb
+bf2d04330 : 48] [0x7fbbf2d04250 : 1] [0x7fbbf2d044b0 : 48] [0x7fbbf2d04260 : 1] [0x7fbbf2d044e0 : 48] [0x7fbbf2d04360 : 1] [0x7fbbf2d043b0 : 48] [0x7fbbf2d0
+4370 : 1] [0x7fbbf2d04400 : 48] [0x7fbbf2d043e0 : 1] 
+files/alternate_line_nl_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK LEAKS.KO [0x7fbbf2e04200 : 48] [0x7fbbf2e04240 : 1] [0x7fbbf2e042d0 : 48
+] [0x7fbbf2e04230 : 1] [0x7fbbf2e04280 : 48] [0x7fbbf2e04270 : 1] [0x7fbbf2e04380 : 48] [0x7fbbf2e042b0 : 1] [0x7fbbf2e04300 : 48] [0x7fbbf2e042c0 : 1] [0x7
+fbbf2e04330 : 48] [0x7fbbf2e04250 : 1] [0x7fbbf2e044b0 : 48] [0x7fbbf2e04260 : 1] [0x7fbbf2e044e0 : 48] [0x7fbbf2e04360 : 1] [0x7fbbf2e043b0 : 48] [0x7fbbf2
+e04370 : 1] [0x7fbbf2e04400 : 48] [0x7fbbf2e043e0 : 1] 
+files/big_line_no_nl: 1.OK 2.OK LEAKS.KO [0x7fbbf2d04080 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d04250 : 48] [0x7fbbf2d04280 : 1] 
+files/big_line_with_nl: 1.OK 2.OK LEAKS.KO [0x7fbbf2e04200 : 48] [0x7fbbf2e04240 : 1] [0x7fbbf2e04250 : 48] [0x7fbbf2e04280 : 1] 
+stdin: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK LEAKS.KO [0x7fbbf2d04080 : 48] [0x7fbbf2d04240 : 1] [0x7fbbf2d042d0 : 48] [0x7fbbf2d04230 : 1] [0x
+7fbbf2d04280 : 48] [0x7fbbf2d04270 : 1] [0x7fbbf2d04380 : 48] [0x7fbbf2d042b0 : 1] [0x7fbbf2d04300 : 48] [0x7fbbf2d042c0 : 1] [0x7fbbf2d04330 : 48] [0x7fbbf
+2d04250 : 1] [0x7fbbf2d044b0 : 48] [0x7fbbf2d04260 : 1] [0x7fbbf2d044e0 : 48] [0x7fbbf2d04360 : 1] [0x7fbbf2d043b0 : 48] [0x7fbbf2d04370 : 1] [0x7fbbf2e0408
+0 : 48] [0x7fbbf2e040b0 : 1] 
 [BUFFER_SIZE = 42]: 
-Invalid fd: 1.OK 2.OK 3.OK 
-files/empty: 1.OK 2.OK 
-files/nl: 1.OK 2.KO 
-files/41_no_nl: 1.OK 2.OK 
-files/41_with_nl: 1.OK TIMEOUT
-files/42_no_nl: 1.OK 2.OK 
-files/42_with_nl: 1.OK 2.OK 3.OK 
-files/43_no_nl: 1.OK 2.OK 
-files/43_with_nl: 1.OK 2.OK 3.OK 
-files/multiple_nlx5: 1.OK 2.OK 3.OK 4.OK 5.OK 6.KO 
-files/multiple_line_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 
-files/multiple_line_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.KO 
-files/alternate_line_nl_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK 
-files/alternate_line_nl_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.KO 
-files/big_line_no_nl: 1.OK 2.OK 
-files/big_line_with_nl: 1.OK 2.KO 
-stdin: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.KO 
+Invalid fd: 1.OK 2.OK 3.OK LEAKS.KO [0x7f83fbd04200 : 48] [0x7f83fbd04240 : 42] [0x7f83fbd04290 : 48] [0x7f83fbd04300 : 42] [0x7f83fbd04330 : 48] [0x7f83fbd
+043e0 : 42] 
+files/empty: 1.OK 2.OK LEAKS.KO [0x7f83fbd04200 : 48] [0x7f83fbd04240 : 42] [0x7f83fbd04290 : 48] [0x7f83fbd04300 : 42] 
+files/nl: 1.OK 2.OK LEAKS.KO [0x7f83fbc056a0 : 48] [0x7f83fbc05820 : 42] [0x7f83fbc05850 : 48] [0x7f83fbc05880 : 42] 
+files/41_no_nl: 1.OK 2.OK LEAKS.KO [0x7f83fbd04200 : 48] [0x7f83fbd04240 : 42] [0x7f83fbd042f0 : 48] [0x7f83fbd04270 : 42] 
+files/41_with_nl: 1.OK 2.SIGSEGV
+
+files/42_no_nl: 1.OK 2.OK LEAKS.KO [0x7f83fbc056a0 : 48] [0x7f83fbc05820 : 42] [0x7f83fbc058d0 : 48] [0x7f83fbc05850 : 42] 
+files/42_with_nl: 1.OK 2.OK 3.OK LEAKS.KO [0x7f83fbc056a0 : 48] [0x7f83fbc05820 : 42] [0x7f83fbc058d0 : 48] [0x7f83fbc05850 : 42] 
+files/43_no_nl: 1.OK 2.OK LEAKS.KO [0x7f83fbe04200 : 48] [0x7f83fbe04240 : 42] [0x7f83fbe042f0 : 48] [0x7f83fbe04270 : 42] 
+files/43_with_nl: 1.OK 2.SIGSEGV
+
+files/multiple_nlx5: 1.OK 2.SIGSEGV
+
+files/multiple_line_no_nl: 1.OK 2.OK 3.KO 4.KO 5.KO 6.OK LEAKS.KO [0x7f83fbe04200 : 48] [0x7f83fbe04240 : 42] [0x7f83fbe042f0 : 48] [0x7f83fbe04270 : 42] [0
+x7f83fbe042c0 : 48] [0x7f83fbe043a0 : 42] [0x7f83fbe04320 : 48] [0x7f83fbe04350 : 42] [0x7f83fbe044d0 : 48] [0x7f83fbe04500 : 42] [0x7f83fbe04530 : 48] [0x7
+f83fbe04560 : 42] 
+files/multiple_line_with_nl: 1.OK 2.KO 3.KO 4.OK 5.OK 6.OK LEAKS.KO [0x7f83fbc056a0 : 48] [0x7f83fbc05820 : 42] [0x7f83fbc058d0 : 48] [0x7f83fbc05850 : 42] 
+[0x7f83fbc058a0 : 48] [0x7f83fbc05980 : 42] [0x7f83fbc059b0 : 48] [0x7f83fbc05900 : 42] [0x7f83fbc05930 : 48] [0x7f83fbc05ae0 : 42] [0x7f83fbc05b10 : 48] [0
+x7f83fbc05b40 : 42] 
+files/alternate_line_nl_no_nl: 1.OK 2.OK 3.KO 4.KO 5.KO 6.KO 7.SIGSEGV
+
+files/alternate_line_nl_with_nl: 1.OK 2.OK 3.KO 4.KO 5.KO 6.KO 7.SIGSEGV
+
+files/big_line_no_nl: 1.OK 2.OK LEAKS.KO [0x7f83fbc056a0 : 48] [0x7f83fbc05820 : 42] [0x7f83fbc05850 : 48] [0x7f83fbc058b0 : 42] 
+files/big_line_with_nl: 1.OK 2.OK LEAKS.KO [0x7f83fbc056a0 : 48] [0x7f83fbc05820 : 42] [0x7f83fbc05850 : 48] [0x7f83fbc058b0 : 42] 
+stdin: 1.OK 2.OK 3.KO 4.KO 5.KO 6.KO 7.SIGSEGV
+
 [BUFFER_SIZE = 10000000]: 
-Invalid fd: 1.OK 2.OK 3.OK 
-files/empty: 1.OK 2.OK 
-files/nl: 1.OK 2.KO 
-files/41_no_nl: 1.OK 2.OK 
-files/41_with_nl: 1.OK 2.OK 3.OK 
-files/42_no_nl: 1.OK 2.OK 
-files/42_with_nl: 1.OK 2.OK 3.OK 
-files/43_no_nl: 1.OK 2.OK 
-files/43_with_nl: 1.OK 2.OK 3.OK 
-files/multiple_nlx5: 1.OK 2.OK 3.OK 4.OK 5.OK 6.KO 
-files/multiple_line_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 
-files/multiple_line_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.KO 
-files/alternate_line_nl_no_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK 
-files/alternate_line_nl_with_nl: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.KO 
-files/big_line_no_nl: 1.OK 2.OK 
-files/big_line_with_nl: 1.OK 2.KO 
-stdin: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.KO 
+Invalid fd: 1.OK 2.OK 3.OK LEAKS.KO [0x7fcc7c4056a0 : 48] [0x7fcc7d000000 : 10000000] [0x7fcc7c405840 : 48] [0x7fcc7d98a000 : 10000000] [0x7fcc7c4058b0 : 48
+] [0x7fcc7e314000 : 10000000] 
+files/empty: 1.OK 2.OK LEAKS.KO [0x7fcc7c504200 : 48] [0x7fcc7d800000 : 10000000] [0x7fcc7c504260 : 48] [0x7fcc7e18a000 : 10000000] 
+files/nl: 1.OK 2.OK LEAKS.KO [0x7fcc7c504200 : 48] [0x7fcc7d800000 : 10000000] [0x7fcc7c504240 : 48] [0x7fcc7e18a000 : 10000000] 
+files/41_no_nl: 1.OK 2.OK LEAKS.KO [0x7fcc7c504200 : 48] [0x7fcc7d800000 : 10000000] [0x7fcc7c5042c0 : 48] [0x7fcc7e18a000 : 10000000] 
+files/41_with_nl: 1.OK 2.SIGSEGV
+
+files/42_no_nl: 1.OK 2.OK LEAKS.KO [0x7fcc7c504200 : 48] [0x7fcc7d800000 : 10000000] [0x7fcc7c5042c0 : 48] [0x7fcc7e18a000 : 10000000] 
+files/42_with_nl: 1.OK 2.SIGSEGV
+
+files/43_no_nl: 1.OK 2.OK LEAKS.KO [0x7fcc7c504200 : 48] [0x7fcc7d800000 : 10000000] [0x7fcc7c5042c0 : 48] [0x7fcc7e18a000 : 10000000] 
+files/43_with_nl: 1.OK 2.SIGSEGV
+
+files/multiple_nlx5: 1.OK 2.SIGSEGV
+
+files/multiple_line_no_nl: 1.OK 2.SIGSEGV
+
+files/multiple_line_with_nl: 1.OK 2.SIGSEGV
+
+files/alternate_line_nl_no_nl: 1.OK 2.SIGSEGV
+
+files/alternate_line_nl_with_nl: 1.OK 2.SIGSEGV
+
+files/big_line_no_nl: 1.OK 2.OK LEAKS.KO [0x7fcc7c504200 : 48] [0x7fcc7d800000 : 10000000] [0x7fcc7c504230 : 48] [0x7fcc7e18a000 : 10000000] 
+files/big_line_with_nl: 1.OK 2.OK LEAKS.KO [0x7fcc7c504200 : 48] [0x7fcc7d800000 : 10000000] [0x7fcc7c504230 : 48] [0x7fcc7e18a000 : 10000000] 
+stdin: 1.OK 2.SIGSEGV
+
+[BUFFER_SIZE = 1]: 
+multiple fd: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.OK 9.OK 10.OK 11.OK 12.OK 13.OK 14.OK 15.OK LEAKS.KO [0x7fe3bd4056a0 : 48] [0x7fe3bd4056e0 : 1] [0x7fe3bd4
+05710 : 48] [0x7fe3bd4056d0 : 1] [0x7fe3bd405800 : 48] [0x7fe3bd4056f0 : 1] [0x7fe3bd405740 : 48] [0x7fe3bd405770 : 1] [0x7fe3bd405950 : 48] [0x7fe3bd405700
+ : 1] [0x7fe3bd405780 : 48] [0x7fe3bd405830 : 1] [0x7fe3bd4057d0 : 48] [0x7fe3bd405840 : 1] [0x7fe3bd405980 : 48] [0x7fe3bd4057b0 : 1] [0x7fe3bd405850 : 48]
+ [0x7fe3bd4057c0 : 1] [0x7fe3bd405880 : 48] [0x7fe3bd4059b0 : 1] [0x7fe3bd4058b0 : 48] [0x7fe3bd4059c0 : 1] [0x7fe3bd4058e0 : 48] [0x7fe3bd405910 : 1] [0x7f
+e3bd405bd0 : 48] [0x7fe3bd405940 : 1] [0x7fe3bd405c00 : 48] [0x7fe3bd405920 : 1] [0x7fe3bd405c30 : 48] [0x7fe3bd405930 : 1] 16.OK 17.OK 18.OK 19.OK LEAKS.KO
+ [0x7fe3bd405c60 : 48] [0x7fe3bd405c90 : 1] [0x7fe3bd405ca0 : 48] [0x7fe3bd405cd0 : 1] [0x7fe3bd405d10 : 48] [0x7fe3bd405d00 : 1] [0x7fe3bd405d40 : 48] [0x7
+fe3bd405ce0 : 1] 
+[BUFFER_SIZE = 42]: 
+multiple fd: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.SIGSEGV
+[BUFFER_SIZE = 10000000]: 
+multiple fd: 1.OK 2.OK 3.OK 4.OK 5.OK 6.OK 7.OK 8.SIGSEGV

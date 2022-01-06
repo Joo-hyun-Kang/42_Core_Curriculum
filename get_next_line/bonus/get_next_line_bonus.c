@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+enum { BUFFER_SIZE = 1 };
+
 t_queue *set_queue_list(t_queue **queue, int fd)
 {
 	t_queue	**p;
@@ -157,4 +159,21 @@ char	*get_next_line(int fd)
 	if (queue_pa->is_EOF && queue_pa->num_count == 0)
 		free_t_struct(&queue_list, NULL, fd);
 	return (result);
+}
+
+
+int main(void)
+{
+	int fd;
+	char	*p;
+	//fd = open("source.txt", O_RDONLY);
+
+	p = get_next_line(1000);
+	free(p);
+
+	p = get_next_line(-1);
+	free(p);
+
+	p = get_next_line(fd);
+	free(p);
 }
