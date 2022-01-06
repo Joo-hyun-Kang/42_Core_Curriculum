@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:10:11 by jokang            #+#    #+#             */
-/*   Updated: 2022/01/04 18:30:49 by jokang           ###   ########.fr       */
+/*   Updated: 2022/01/07 00:45:42 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 		buffer += (queue_pa->last_count - queue_pa->num_count);
 	else
 		buffer += (BUFFER_SIZE - queue_pa->num_count);
-	while (queue_pa->num_count != 0 && head->capacity != e_T_SIZE)
+	while (queue_pa->num_count != 0 && head->capacity != e_SIZE)
 	{
 		*string++ = *buffer++;
 		queue_pa->num_count--;
@@ -114,8 +114,8 @@ char	*get_next_line(int fd)
 	while (dequeue_by_next_line(queue_pa, head) == FALSE)
 	{
 		if (queue_pa->num_count == 0)
-			if(try_enqueue_fd(queue_pa, fd) == FALSE)
-				break;
+			if (try_enqueue_fd(queue_pa, fd) == FALSE)
+				break ;
 		if (is_table_capacity_full(head) == TRUE)
 			add_back_table_malloc(&head);
 	}

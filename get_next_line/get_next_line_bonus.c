@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 16:10:11 by jokang            #+#    #+#             */
-/*   Updated: 2022/01/04 18:30:49 by jokang           ###   ########.fr       */
+/*   Created: 2022/01/07 00:39:36 by jokang            #+#    #+#             */
+/*   Updated: 2022/01/07 00:47:55 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-t_queue *set_queue_list(t_queue **queue, int fd)
+t_queue	*set_queue_list(t_queue **queue, int fd)
 {
 	t_queue	**p;
 	int		is_exist;
@@ -26,7 +26,7 @@ t_queue *set_queue_list(t_queue **queue, int fd)
 		if ((*p)->fd == fd)
 		{
 			is_exist = TRUE;
-			break;
+			break ;
 		}
 		p = &(*p)->next;
 	}
@@ -80,7 +80,7 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 		buffer += (queue_pa->last_count - queue_pa->num_count);
 	else
 		buffer += (BUFFER_SIZE - queue_pa->num_count);
-	while (queue_pa->num_count != 0 && head->capacity != e_T_SIZE)
+	while (queue_pa->num_count != 0 && head->capacity != e_SIZE)
 	{
 		*string++ = *buffer++;
 		queue_pa->num_count--;
@@ -96,37 +96,27 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 
 void	free_t_struct(t_queue **queue, t_table **lst, int fd)
 {
-	t_queue	**head;
 	t_queue	*tmp;
 	t_table	*p;
 
-	if (queue != NULL)
+	while (queue != NULL && *queue != NULL)
 	{
-		head = queue;
-
-		while (*head != NULL)
-		{
-			if ((*head)->fd == fd)
-			{
-				tmp = *head;
-				*head = (*head)->next;
-				free(tmp->buffer_pa);
-				free(tmp);
-				break;
-			}
-			
-			head = &(*head)->next;
+		if ((*queue)->fd == fd)
+		{	
+			tmp = *queue;
+			*queue = (*queue)->next;
+			free(tmp->buffer_pa);
+			free(tmp);
+			break ;
 		}
+		queue = &(*queue)->next;
 	}
-	if (lst != NULL)
+	while (lst != NULL && *lst != NULL)
 	{
-		while (*lst != NULL)
-		{
-			free((*lst)->string_pa);
-			p = (*lst)->next;
-			free(*lst);
-			*lst = p;
-		}
+		free((*lst)->string_pa);
+		p = (*lst)->next;
+		free(*lst);
+		*lst = p;
 	}
 }
 
@@ -147,8 +137,8 @@ char	*get_next_line(int fd)
 	while (dequeue_by_next_line(queue_pa, head) == FALSE)
 	{
 		if (queue_pa->num_count == 0)
-			if(try_enqueue_fd(queue_pa, fd) == FALSE)
-				break;
+			if (try_enqueue_fd(queue_pa, fd) == FALSE)
+				break ;
 		if (is_table_capacity_full(head) == TRUE)
 			add_back_table_malloc(&head);
 	}

@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:13:40 by jokang            #+#    #+#             */
-/*   Updated: 2022/01/04 18:33:23 by jokang           ###   ########.fr       */
+/*   Updated: 2022/01/07 00:42:34 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_queue
 	size_t	last_count;
 }	t_queue;
 
-enum { e_T_SIZE = 2048 };
+enum { e_SIZE = 2048 };
 
 int		build_queue_malloc(t_queue **queue);
 void	free_t_struct(t_queue **queue, t_table **lst);

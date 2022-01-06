@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 16:13:40 by jokang            #+#    #+#             */
-/*   Updated: 2022/01/06 23:52:53 by jokang           ###   ########.fr       */
+/*   Created: 2022/01/07 00:40:23 by jokang            #+#    #+#             */
+/*   Updated: 2022/01/07 00:48:12 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_queue
 	struct s_queue	*next;
 }	t_queue;
 
-enum { e_T_SIZE = 2048 };
+enum { e_SIZE = 2048 };
 
 t_queue	*set_queue_list(t_queue **queue, int fd);
 void	free_t_struct(t_queue **queue, t_table **lst, int fd);
