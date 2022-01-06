@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:13:40 by jokang            #+#    #+#             */
-/*   Updated: 2022/01/04 18:33:23 by jokang           ###   ########.fr       */
+/*   Updated: 2022/01/06 23:52:53 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ typedef struct s_table
 
 typedef struct s_queue
 {
-	char	*buffer_pa;
-	int		is_EOF;
-	size_t	num_count;
-	size_t	last_count;
-	int		fd;
-	void	*next;
+	char			*buffer_pa;
+	int				is_EOF;
+	size_t			num_count;
+	size_t			last_count;
+	int				fd;
+	struct s_queue	*next;
 }	t_queue;
 
 enum { e_T_SIZE = 2048 };
