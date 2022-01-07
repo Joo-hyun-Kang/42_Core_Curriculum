@@ -85,12 +85,14 @@
 * 해시 세트를 이용하면 파일 디스크립터 탐색 속도가 Linked list에 비해서 매우 빠르다. 일반적으로 O(1)을 기대할 수 있다.
 
 <br>
+<br>
 
 # 이번 프로젝트를 진행하면서 느낀점
 #### gnl에서는 운영체제 파일 시스템과 시스템 콜에  배울 수 있었다.
 #### 구현은 어렵지 않지만 요구사항이 막연한 상태에서 보다 효율적이고 포괄적인 자료구조를 위해서 고민을 굉장히 많이 하였다.
 #### 25줄 제한과 함수 10개 제한으로 코드를 깔끔하고 가독성 높게 작성하기 위해서 올바른 에러처리 방법에 대해 고민하였다.
 
+<br>
 <br>
 
 # 프로젝트를 진행하면서 배운 지식들
@@ -106,9 +108,9 @@
 * 출처 : 운영체제 : 아주 쉬운 세 가지 이야기 [ch 40]   
 
 ## 파일 디스크립터와  open-file table
-*지금까지는 위에서 다 설명했던 내용이다. 그 다음 과정에는 open-file table이라는 새로운 개념이 들어간다. open-file table은 open()함수에 의해 open된 파일의 list 형태로 나타낸 테이블이다. 즉 이 테이블에는 open된 파일이 모두 들어와 있다고 보면 된다.  
-*open-file table은 결국 파일의 metadata가 저장되어 있는 주소값을 가지고 있는 것이고 그 각각의 index에 대한 주소가 바로 open()함수의 return 값이 되는 것이다. 이제 파일을 어떻게 access하는지 대략적으로 감을 잡았으리라고 본다. 그러면 이제는 조금 더 구체적으로 과정을 이야기 해보자. 방금전에 open-file table에 대해서 이야기를 했다.    
-*그런데 이 open-file table은 사실 두 가지 형태로 존재한다. per-process open-file table 그리고 system-wide open-file table이다. per-process open-file table은 프로세스마다 가지고 있는 open-file table이다. system-wide open-file table은 시스템의 모든 open된 파일들에 대한 open-file table이다.    
+* 지금까지는 위에서 다 설명했던 내용이다. 그 다음 과정에는 open-file table이라는 새로운 개념이 들어간다. open-file table은 open()함수에 의해 open된 파일의 list 형태로 나타낸 테이블이다. 즉 이 테이블에는 open된 파일이 모두 들어와 있다고 보면 된다.  
+* open-file table은 결국 파일의 metadata가 저장되어 있는 주소값을 가지고 있는 것이고 그 각각의 index에 대한 주소가 바로 open()함수의 return 값이 되는 것이다. 이제 파일을 어떻게 access하는지 대략적으로 감을 잡았으리라고 본다. 그러면 이제는 조금 더 구체적으로 과정을 이야기 해보자. 방금전에 open-file table에 대해서 이야기를 했다.    
+* 그런데 이 open-file table은 사실 두 가지 형태로 존재한다. per-process open-file table 그리고 system-wide open-file table이다. per-process open-file table은 프로세스마다 가지고 있는 open-file table이다. system-wide open-file table은 시스템의 모든 open된 파일들에 대한 open-file table이다.    
 * 출처: https://operatingsystems.tistory.com/entry/OS-File-System [Maybe]
 
 ## window VS code 환경에서 파일 여러개 빌드하고 디버깅 하는 방법 
