@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 16:10:11 by jokang            #+#    #+#             */
-/*   Updated: 2022/01/07 00:45:42 by jokang           ###   ########.fr       */
+/*   Updated: 2022/01/07 14:33:37 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 
 int	build_queue_malloc(t_queue **queue)
 {
-	*queue = (t_queue *)malloc(sizeof(t_queue));
-	(*queue)->buffer_pa = ((char *)malloc(sizeof(char) * BUFFER_SIZE));
-	(*queue)->is_EOF = FALSE;
-	(*queue)->num_count = 0;
-	(*queue)->last_count = 0;
+	if (*queue == NULL)
+	{
+		*queue = (t_queue *)malloc(sizeof(t_queue));
+		(*queue)->buffer_pa = ((char *)malloc(sizeof(char) * BUFFER_SIZE));
+		(*queue)->is_EOF = FALSE;
+		(*queue)->num_count = 0;
+		(*queue)->last_count = 0;
+	}
 	return (TRUE);
 }
 
@@ -103,8 +106,7 @@ char	*get_next_line(int fd)
 	t_table			*head;
 	char			*result;
 
-	if (queue_pa == NULL)
-		build_queue_malloc(&queue_pa);
+	build_queue_malloc(&queue_pa);
 	if (queue_pa->num_count == 0 && !try_enqueue_fd(queue_pa, fd))
 	{
 		free_t_struct(&queue_pa, NULL);
