@@ -96,24 +96,30 @@
 <br>
 
 # 프로젝트를 진행하면서 배운 지식들
-## 한 파일을 여러 개 열었을 때 파일 디스크립트는 어떻게 되는가?
+### 한 파일을 여러 개 열었을 때 파일 디스크립트는 어떻게 되는가?
 * 같은 파일을 한 프로세스에서 2번 열었을 때 process의 파일 테이블에 새로운 fd가 생성된다.
 * 그리고 각 fd마다 system 파일 테이블에 독자적인 파일 상태 플러그, 파일 offset, inode주소를 가진다.
 * 단, 가르키는 아이노드는 같음 말그대로 주소값은 그대로고 포인터 구조체 변수가 새로 생성된다고 할 수 있다.
 
-## 파일 시스템 콜
+<br>
+
+### 파일 시스템 콜
 * 경로명을 따라가는 잃은 항상 파일 시스템의 루트에서 시작하며, 루트 디렉터리(rootdirectory)는 /로 표기된다. 파일 시스템이 디스크에서 가장 먼저 읽을 잃은 루트 디렉터리의 아이노드이다. 
 * 다음 순서는 경로명을 따라가서 원하는 아이노드를 찾는다. 이 예제에서 파일 시스템은 foo의 아이노드가 있는 블럭과 그에 대한 디렉터리 데이터를 읽은 후에 마침내 ar에 대한 아이노드 번호를 찾아낸다. 
 * 마지막 단계의 open()은 bar에 대한 아이노드를 메모리로 읽어 들인다. 파일 시스템은 최종적으로 해당 파일에 대한 접근 권한을 인하고, 이 프로세스의 open ile-table에서 파일 디스크립터를 할당받아 사용자에게 리턴한다.   
 * 출처 : 운영체제 : 아주 쉬운 세 가지 이야기 [ch 40]   
 
-## 파일 디스크립터와  open-file table
+<br>
+
+### 파일 디스크립터와  open-file table
 * 지금까지는 위에서 다 설명했던 내용이다. 그 다음 과정에는 open-file table이라는 새로운 개념이 들어간다. open-file table은 open()함수에 의해 open된 파일의 list 형태로 나타낸 테이블이다. 즉 이 테이블에는 open된 파일이 모두 들어와 있다고 보면 된다.  
 * open-file table은 결국 파일의 metadata가 저장되어 있는 주소값을 가지고 있는 것이고 그 각각의 index에 대한 주소가 바로 open()함수의 return 값이 되는 것이다. 이제 파일을 어떻게 access하는지 대략적으로 감을 잡았으리라고 본다. 그러면 이제는 조금 더 구체적으로 과정을 이야기 해보자. 방금전에 open-file table에 대해서 이야기를 했다.    
 * 그런데 이 open-file table은 사실 두 가지 형태로 존재한다. per-process open-file table 그리고 system-wide open-file table이다. per-process open-file table은 프로세스마다 가지고 있는 open-file table이다. system-wide open-file table은 시스템의 모든 open된 파일들에 대한 open-file table이다.    
 * 출처: https://operatingsystems.tistory.com/entry/OS-File-System [Maybe]
 
-## window VS code 환경에서 파일 여러개 빌드하고 디버깅 하는 방법 
+<br>
+
+### window VS code 환경에서 파일 여러개 빌드하고 디버깅 하는 방법 
 * wsl 설치, 우분투 설치한다.
 * gcc 설치 등을 위해서 업그레이드한다. 
 	* https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=lidaxi043682&logNo=221717515827
