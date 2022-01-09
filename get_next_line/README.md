@@ -127,9 +127,10 @@
 
 ### window VS code 환경에서 파일 여러개 빌드하고 디버깅 하는 방법 
 * wsl 설치, 우분투 설치한다.
-* gcc 설치 등을 위해서 업그레이드한다. 
+	* https://www.lainyzine.com/ko/article/how-to-install-wsl2-and-use-linux-on-windows-10/
+* gcc 설치 등을 위해서 우분투를 업그레이드한다. 
 	* https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=lidaxi043682&logNo=221717515827
-* vs 코드 리눅스로 실행 후 launch 에서 분할 컴파일이 되게 *.c로 수정한다.
+* VScode를 WSL로 실행 후 launch 에서 분할 컴파일이 되게 *.c로 수정한다.
 	* https://www.youtube.com/watch?v=DVyYnOHP4nY&t=441s&ab_channel=MichaelHoefer
 * lanch, task 생성 gcc, /bin에 있는 gcc-9로 설정해서 디버깅을 시도한다.
 * 마지막으로 c_cpp_프로퍼티 만들어준다.
