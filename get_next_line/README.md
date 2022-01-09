@@ -130,8 +130,8 @@
 	* https://www.lainyzine.com/ko/article/how-to-install-wsl2-and-use-linux-on-windows-10/
 * gcc 설치 등을 위해서 우분투를 업그레이드한다. 
 	* https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=lidaxi043682&logNo=221717515827
-* VScode를 WSL로 실행 후 launch 에서 분할 컴파일이 되게 *.c로 수정한다.
-	* https://www.youtube.com/watch?v=DVyYnOHP4nY&t=441s&ab_channel=MichaelHoefer
-* lanch, task 생성 gcc, /bin에 있는 gcc-9로 설정해서 디버깅을 시도한다.
-* 마지막으로 c_cpp_프로퍼티 만들어준다.
-	* https://sjkim-dev.tistory.com/26 
+* https://www.youtube.com/watch?v=DVyYnOHP4nY&t=441s&ab_channel=MichaelHoefer
+	* VScode를 WSL로 실행 후
+	* C/C++ 추가기능 설치(동영상에는 나와있지 않음 모른다면 따로 검색하서 알아볼 것)
+	* launch 에서 분할 컴파일이 되게 *.c로 수정한다.
+	* lanch, task 생성 gcc, /bin에 있는 gcc-9로 설정해서 디버깅을 시도한다.
