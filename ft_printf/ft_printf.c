@@ -9,9 +9,13 @@
 #define true 1
 #define false 0
 
-void ft_put_pointer(void *pointer);
-void ft_putInt_hex(int num, int isUpper);
-void	ft_putnbr_unsigned_fd(unsigned int n, int fd);
+void    ft_put_pointer(void *pointer, int *out_count);
+void    ft_putInt_hex(int num, int isUpper, int *out_count);
+void    ft_putnbr_unsigned(unsigned int n, int* out_count);
+void	ft_putnbr(int n, int* out_count);
+void	ft_putstr(char *s, int *out_count);
+void	putnbr_recursive(unsigned int n, int is_neg, int* out_count);
+
 
 int ft_printf(const char *format, ...)
 {
@@ -40,11 +44,9 @@ int ft_printf(const char *format, ...)
 
                     if (string == NULL)
                     {
-                        ft_putstr_fd("(null)", 1);
-                        count += 6;
+                        ft_putstr("(null)", &count);
                     } else {
-                        ft_putstr_fd(string, 1);
-                        count += ft_strlen(string);
+                        ft_putstr(string, &count);
                     }
 
                     format++;
@@ -55,7 +57,7 @@ int ft_printf(const char *format, ...)
                 {
                     void *p = va_arg(ap, void*);
 
-                    ft_put_pointer(p);
+                    ft_put_pointer(p, &count);
 
                     format++;
                     format++;
@@ -65,7 +67,7 @@ int ft_printf(const char *format, ...)
                 {
                     int num = va_arg(ap, int);
 
-                    ft_putInt_hex(num, false);
+                    ft_putInt_hex(num, false, &count);
 
                     format++;
                     format++;
@@ -75,7 +77,7 @@ int ft_printf(const char *format, ...)
                 {
                     int num = va_arg(ap, int);
 
-                    ft_putInt_hex(num, true);
+                    ft_putInt_hex(num, true, &count);
 
                     format++;
                     format++;
@@ -85,7 +87,7 @@ int ft_printf(const char *format, ...)
                 {
                     int num = va_arg(ap, int);
 
-                    ft_putnbr_fd(num, 1);
+                    ft_putnbr(num, &count);
 
                     format++;
                     format++;
@@ -95,7 +97,7 @@ int ft_printf(const char *format, ...)
                 {
                     unsigned int num = va_arg(ap, unsigned int);
 
-                    ft_putnbr_unsigned_fd(num, 1);
+                    ft_putnbr_unsigned(num, &count);
 
                     format++;
                     format++;
@@ -107,6 +109,7 @@ int ft_printf(const char *format, ...)
 
                     format++;
                     format++;
+                    count++;
                     continue;
                 }
             }
@@ -117,30 +120,80 @@ int ft_printf(const char *format, ...)
     }
     va_end(ap);
 
-    return 0;   
+    return count;   
 }
 
-void	ft_putnbr_unsigned_fd(unsigned int n, int fd)
+void	ft_putstr(char *s, int *out_count)
+{
+	while (*s != '\0')
+	{
+		write(1, s, 1);
+        (*out_count)++;
+		s++;
+	}
+}
+
+void	putnbr_recursive(unsigned int n, int is_neg, int* out_count)
+{
+	char	ch;
+
+	if (is_neg == 1)
+	{
+		is_neg = 0;
+		write(1, "-", 1);
+        (*out_count)++;
+	}
+	if (n > 9)
+	{
+		putnbr_recursive(n / 10, is_neg, out_count);
+	}
+	n %= 10;
+	ch = n + '0';
+	write(1, &ch, 1);
+    (*out_count)++;
+}
+
+void	ft_putnbr(int n, int* out_count)
+{
+	int				is_negative;
+	unsigned int	n_abs;
+
+	is_negative = 0;
+	if (n < 0)
+	{
+		is_negative = 1;
+		n_abs = (unsigned int)((n + 1) * -1 + 1);
+	}
+	else
+	{
+		n_abs = (unsigned int)n;
+	}
+	putnbr_recursive(n_abs, is_negative, out_count);
+}
+
+void ft_putnbr_unsigned(unsigned int n, int* out_count)
 {
 	char	ch;
 
 	if (n > 9)
 	{
-		ft_putnbr_unsigned_fd(n / 10, fd);
+		ft_putnbr_unsigned(n / 10, out_count);
 	}
 	n %= 10;
 	ch = n + '0';
-	write(fd, &ch, 1);
+	write(1, &ch, 1);
+    (*out_count)++;
 }
 
-void ft_put_pointer(void *pointer) 
+void ft_put_pointer(void *pointer, int *out_count) 
 {
     if (pointer == NULL) {
-        ft_putstr_fd("(nil)", 1);
+        ft_putstr("(nil)", out_count);
         return;
     }
 
     write(1, "0x", 2);
+    *out_count += 2;
 
     long num = (long)pointer;
     const int LONG_BYTES_COUNT = 8;
@@ -178,15 +231,16 @@ void ft_put_pointer(void *pointer)
 
     while (arr[i] != '\0') {
         write(1, &arr[i], 1);
+        (*out_count)++;
         i++;
     }
 }
 
-void ft_putInt_hex(int num, int isUpper)
+void ft_putInt_hex(int num, int isUpper, int *out_count)
 {
     if (num == 0)
     {
-        ft_putnbr_fd(num, 1);
+        ft_putnbr(num, out_count);
         return ;
     }
     const int INTEGER_BYTES_COUNT = 4;
@@ -231,6 +285,7 @@ void ft_putInt_hex(int num, int isUpper)
 
     while (arr[i] != '\0') {
         write(1, &arr[i], 1);
+        (*out_count)++;
         i++;
     }
 }

@@ -43,9 +43,6 @@ int main()
 
 	// Currently leaking print address (%p)
 	// also leaking: %x
-	int num = printf("%s\n", NULL);
-	printf("%d\n", num);
-
 	int ml = 	 ft_printf("Teasdasdasdsdst! %%%%%%%%%%%%%%%% %% %d %d %s %%%%%%%% Das ist ziemlich cool! %% %% %% test mich %u %i %p %x %s %d %p %p \n", int1, int2, "TEST ME", int3, int4, testpointer, int4, NULL, 4, NULL, NULL);
 	int pl =   		 printf("Teasdasdasdsdst! %%%%%%%%%%%%%%%% %% %d %d %s %%%%%%%% Das ist ziemlich cool! %% %% %% test mich %u %i %p %x %s %d %p %p \n", int1, int2, "TEST ME", int3, int4, testpointer, int4, NULL, 4, NULL, NULL);
 	ft_add_checksum(ml, pl, &c_ft, &c_sys);
