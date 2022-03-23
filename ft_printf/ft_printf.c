@@ -143,47 +143,42 @@ void ft_put_pointer(void *pointer)
     write(1, "0x", 2);
 
     long num = (long)pointer;
-    const int lONG_BYTES_COUNT = 8;
-    unsigned char *p = (unsigned char *)&num + lONG_BYTES_COUNT - 1;
+    const int LONG_BYTES_COUNT = 8;
+    unsigned char *p = (unsigned char *)&num + LONG_BYTES_COUNT - 1;
+    char arr[LONG_BYTES_COUNT * 2 + 1];
     int i = 0;
-    while (i < lONG_BYTES_COUNT)
+    while (i < LONG_BYTES_COUNT * 2)
     {
         unsigned char byte = *p;
 
         int tens = byte / 16;
         int unit = byte % 16;
 
-        if (tens > 0)
-        {
-            char ch = tens + '0';
-            if (tens > 9) {
+        char ch = tens + '0';
+        if (tens > 9) {
                 ch = (tens - 10) + 'a';
-            }
-
-            write(1, &ch, 1);
-
-            ch = unit + '0';
-            if (unit > 9) {
-                ch = (unit - 10) + 'a';
-            }
-
-            write(1, &ch, 1);
-        } else if (unit > 0) 
-        {
-            if (i > 0) 
-            {
-                write(1, "0", 1);
-            }
-
-            char ch = unit + '0';
-            if (unit > 9) {
-                ch = (unit - 10) + 'a';
-            }
-
-            write(1, &ch, 1);
         }
-        i++;
+
+        arr[i++] = ch;
+
+        ch = unit + '0';
+        if (unit > 9) {
+                ch = (unit - 10) + 'a';
+        }
+
+        arr[i++] = ch;
         p--;
+    }
+    arr[i] = '\0';
+    
+    i = 0;
+    while (arr[i] == '0') {
+        i++;
+    }
+
+    while (arr[i] != '\0') {
+        write(1, &arr[i], 1);
+        i++;
     }
 }
 
@@ -197,54 +192,46 @@ void ft_putInt_hex(int num, int isUpper)
     const int INTEGER_BYTES_COUNT = 4;
     char *p = (char *)&num + INTEGER_BYTES_COUNT - 1;
     int i = 0;
-    while (i < INTEGER_BYTES_COUNT)
+    char arr[INTEGER_BYTES_COUNT * 2 + 1];
+    //FF FF FF FF
+    while (i < INTEGER_BYTES_COUNT * 2)
     {
         unsigned char byte = *p;
 
         int tens = byte / 16;
         int unit = byte % 16;
 
-        if (i == )
-
-        if (tens > 0)
-        {
-            char ch = tens + '0';
-            if (tens > 9) {
-                if (isUpper)
-                    ch = (tens - 10) + 'A';
-                else
-                    ch = (tens - 10) + 'a';
-            }
-
-            write(1, &ch, 1);
-
-            ch = unit + '0';
-            if (unit > 9) {
-                if (isUpper)
-                    ch = (unit - 10) + 'A';
-                else
-                    ch = (unit - 10) + 'a';
-            }
-
-            write(1, &ch, 1);
-            continue;
+        char ch = tens + '0';
+        if (tens > 9) {
+            if (isUpper)
+                ch = (tens - 10) + 'A';
+            else
+                ch = (tens - 10) + 'a';
         }
 
-        if (unit > 0) {
-            char ch = unit + '0';
-            if (unit > 9) {
-                if (isUpper)
-                    ch = (unit - 10) + 'A';
-                else
-                    ch = (unit - 10) + 'a';
-            }
+        arr[i++] = ch;
 
-            write(1, "0", 1);
-            write(1, &ch, 1);
-            continue;
+        ch = unit + '0';
+        if (unit > 9) {
+            if (isUpper)
+                ch = (unit - 10) + 'A';
+            else
+                ch = (unit - 10) + 'a';
         }
-        i++;
+
+        arr[i++] = ch;
         p--;
+    }
+    arr[i] = '\0';
+    
+    i = 0;
+    while (arr[i] == '0') {
+        i++;
+    }
+
+    while (arr[i] != '\0') {
+        write(1, &arr[i], 1);
+        i++;
     }
 }
 

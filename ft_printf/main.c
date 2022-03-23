@@ -126,6 +126,7 @@ int main()
 	, &c_ft, &c_sys);
 	int ml22 =    ft_printf("%x\n", -1844674407	);
 	int pl22 =       printf("%x\n", -1844674407	);
+
 	ft_add_checksum(ml22, pl22
 	, &c_ft, &c_sys);
 	int ml23 =    ft_printf("%x\n", 0	);
