@@ -16,7 +16,7 @@ void	ft_putnbr_unsigned_fd(unsigned int n, int fd);
 int ft_printf(const char *format, ...)
 {
     va_list ap;
-    int count = 0;
+
     va_start(ap, format);
     {
         while (*format != '\0')
@@ -31,21 +31,13 @@ int ft_printf(const char *format, ...)
 
                     format++;
                     format++;
-                    count++;
                     continue;
                 } 
                 else if (*(format + 1) == 's')
                 {
                     char *string = va_arg(ap, char*);
 
-                    if (string == NULL)
-                    {
-                        ft_putstr_fd("(null)", 1);
-                        count += 6;
-                    } else {
-                        ft_putstr_fd(string, 1);
-                        count += ft_strlen(string);
-                    }
+                    ft_putstr_fd(string, 1);
 
                     format++;
                     format++;
@@ -112,7 +104,6 @@ int ft_printf(const char *format, ...)
             }
             write(1, format, 1);
             format++;
-            count++;
         }
     }
     va_end(ap);
@@ -161,20 +152,10 @@ void ft_put_pointer(void *pointer)
             }
 
             write(1, &ch, 1);
+        }
 
-            ch = unit + '0';
-            if (unit > 9) {
-                ch = (unit - 10) + 'a';
-            }
-
-            write(1, &ch, 1);
-        } else if (unit > 0) 
+        if (unit > 0)
         {
-            if (i > 0) 
-            {
-                write(1, "0", 1);
-            }
-
             char ch = unit + '0';
             if (unit > 9) {
                 ch = (unit - 10) + 'a';
@@ -189,11 +170,6 @@ void ft_put_pointer(void *pointer)
 
 void ft_putInt_hex(int num, int isUpper)
 {
-    if (num == 0)
-    {
-        ft_putnbr_fd(num, 1);
-        return ;
-    }
     const int INTEGER_BYTES_COUNT = 4;
     char *p = (char *)&num + INTEGER_BYTES_COUNT - 1;
     int i = 0;
@@ -203,8 +179,6 @@ void ft_putInt_hex(int num, int isUpper)
 
         int tens = byte / 16;
         int unit = byte % 16;
-
-        if (i == )
 
         if (tens > 0)
         {
@@ -217,20 +191,10 @@ void ft_putInt_hex(int num, int isUpper)
             }
 
             write(1, &ch, 1);
-
-            ch = unit + '0';
-            if (unit > 9) {
-                if (isUpper)
-                    ch = (unit - 10) + 'A';
-                else
-                    ch = (unit - 10) + 'a';
-            }
-
-            write(1, &ch, 1);
-            continue;
         }
 
-        if (unit > 0) {
+        if (unit > 0)
+        {
             char ch = unit + '0';
             if (unit > 9) {
                 if (isUpper)
@@ -239,9 +203,7 @@ void ft_putInt_hex(int num, int isUpper)
                     ch = (unit - 10) + 'a';
             }
 
-            write(1, "0", 1);
             write(1, &ch, 1);
-            continue;
         }
         i++;
         p--;
@@ -304,15 +266,6 @@ int main(void)
     }
 
     // F, G %x, %X 테스트 생략
-    {
-        //F00 : 단일 %x, %X 0 출력 검사
-        printf("%x\n", 0);
-        ft_printf("%x\n", 0);
-
-        //F01 : 단일 %x, %X "" 출력 검사
-        printf("%x\n", "");
-        ft_printf("%x\n", "");
-    }
 
     {
         //H00 : 단일 %d, %i 0 출력 검사
@@ -366,7 +319,5 @@ int main(void)
         printf("%u\n", (int)2147483648);
         ft_printf("%u\n", (int)2147483648);
     }
-
 }
-
-*/
+    */
