@@ -1,8 +1,20 @@
 #include "ft_printf.h"
 
+void	ft_putchar(const char c, int *out_count)
+{
+	write(1, &c, 1);
+    (*out_count)++;
+}
+
 void	ft_putstr(char *s, int *out_count)
 {
-	while (*s != '\0')
+	if (s == NULL)
+    {
+        ft_putstr("(null)", out_count);
+		return ;
+    }
+    
+    while (*s != '\0')
 	{
 		write(1, s, 1);
         (*out_count)++;
