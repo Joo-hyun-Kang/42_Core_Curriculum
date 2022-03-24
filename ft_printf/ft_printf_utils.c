@@ -1,28 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/24 13:34:08 by jokang            #+#    #+#             */
+/*   Updated: 2022/03/24 14:11:10 by jokang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	ft_putchar(const char c, int *out_count)
 {
 	write(1, &c, 1);
-    (*out_count)++;
+	(*out_count)++;
 }
 
 void	ft_putstr(char *s, int *out_count)
 {
 	if (s == NULL)
-    {
-        ft_putstr("(null)", out_count);
+	{
+		ft_putstr("(null)", out_count);
 		return ;
-    }
-    
-    while (*s != '\0')
+	}
+	while (*s != '\0')
 	{
 		write(1, s, 1);
-        (*out_count)++;
+		(*out_count)++;
 		s++;
 	}
 }
 
-void	putnbr_recursive(unsigned int n, int is_neg, int* out_count)
+void	putnbr_recursive(unsigned int n, int is_neg, int *out_count)
 {
 	char	ch;
 
@@ -30,7 +41,7 @@ void	putnbr_recursive(unsigned int n, int is_neg, int* out_count)
 	{
 		is_neg = 0;
 		write(1, "-", 1);
-        (*out_count)++;
+		(*out_count)++;
 	}
 	if (n > 9)
 	{
@@ -39,10 +50,10 @@ void	putnbr_recursive(unsigned int n, int is_neg, int* out_count)
 	n %= 10;
 	ch = n + '0';
 	write(1, &ch, 1);
-    (*out_count)++;
+	(*out_count)++;
 }
 
-void	ft_putnbr(int n, int* out_count)
+void	ft_putnbr(int n, int *out_count)
 {
 	int				is_negative;
 	unsigned int	n_abs;
@@ -60,7 +71,7 @@ void	ft_putnbr(int n, int* out_count)
 	putnbr_recursive(n_abs, is_negative, out_count);
 }
 
-void ft_putnbr_unsigned(unsigned int n, int* out_count)
+void	ft_putnbr_unsigned(unsigned int n, int *out_count)
 {
 	char	ch;
 
@@ -71,5 +82,5 @@ void ft_putnbr_unsigned(unsigned int n, int* out_count)
 	n %= 10;
 	ch = n + '0';
 	write(1, &ch, 1);
-    (*out_count)++;
+	(*out_count)++;
 }
