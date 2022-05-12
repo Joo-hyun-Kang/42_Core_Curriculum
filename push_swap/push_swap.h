@@ -14,6 +14,23 @@ typedef struct arraylist {
 	int capacity;
 } arraylist_t;
 
+typedef struct linkedlist {
+	int value;
+	struct linkedlist *next;
+	struct linkedlist *prev;
+} linkedlist_t;
+
+typedef struct ft_stack {
+	linkedlist_t **a_root;
+	linkedlist_t **a_end;
+	size_t a_length;
+	linkedlist_t **b_root;
+	linkedlist_t **b_end;
+	size_t b_length;
+	linkedlist_t **pivots;
+} ft_stack_t;
+
+
 
 static char	**ft_do_split_malloc_or_null(const char *s, char c, char **out_res);
 static int	get_w_length(const char *str, char c);
@@ -37,3 +54,8 @@ int allocate_arraylist(arraylist_t *arraylist);
 void free_arraylist(arraylist_t *arraylist);
 void is_parse_argv_malloc(int argc, char **argv, arraylist_t *arraylist);
 
+void get_optiml_pivot(arraylist_t *arraylist, stack_t *stack);
+void quick_sort(int start, int end, arraylist_t *arraylist, int *is_eailer_sorted);
+int divdie_and_conquer(int left, int right, int *nums);
+void swap(int *nums, int a, int b);
+int	is_overlap(arraylist_t *arraylist);

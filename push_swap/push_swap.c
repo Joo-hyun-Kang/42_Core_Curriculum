@@ -22,6 +22,14 @@ int allocate_arraylist(arraylist_t *arraylist);
 void free_arraylist(arraylist_t *arraylist);
 void is_parse_argv_malloc(int argc, char **argv, arraylist_t *arraylist);
 
+void get_optiml_pivot(arraylist_t *arraylist, stack_t *stack);
+void quick_sort(int start, int end, arraylist_t *arraylist, int *is_eailer_sorted);
+int divdie_and_conquer(int left, int right, int *nums);
+void swap(int *nums, int a, int b);
+int	is_overlap(arraylist_t *arraylist);
+
+///////라이브러리 가져와서 쓰는 함수////////
+
 char	**ft_split(const char *s, char c) 
 {
 	char		**result;
@@ -122,57 +130,6 @@ static void	do_free_malloc(char **res, char **tmp_res)
 	free(res);
 }
 
-static int	ft_isspace(char ch)
-{
-	if (ch == '\t' || ch == '\n' || ch == '\v'
-		|| ch == '\f' || ch == '\r' || ch == ' ')
-	{
-		return (1);
-	}
-	return (0);
-}
-
-/*
-* 후조건
-* - int 범위 문자열은 숫자로 반환
-* - int 범위 넘어서는 숫자는 -1 반환
-* - 숫자가 아닌 경우 0 반환
-*/
-
-int	ft_atoi(const char *str, int *out_res)
-{
-	int					sign;
-	unsigned long long	result;
-
-	while (ft_isspace(*str))
-		str++;
-	sign = 1;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
-	}
-	result = 0;
-	while (ft_isdigit(*str))
-	{
-		result *= 10;
-		result += *str - '0';
-		//Int 표현 범위 –2,147,483,648 ~ 2,147,483,647
-		if (result > 2147483647 && sign == 1)
-			return (false);
-		if (result > 2147483648 && sign == -1)
-			return (false);
-		str++;
-	}
-	if (result == 0) 
-	{
-		return (false);
-	}
-	*out_res = (int)(sign * result);
-	return (true);
-}
-
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -232,7 +189,63 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-////////////////////////////////////
+
+//////////라이브러리 수정해서 쓰는 함수////////////////////////////
+
+/*
+* 후조건
+* - int 범위 문자열은 숫자로 반환
+* - int 범위 넘어서는 숫자는 -1 반환
+* - 숫자가 아닌 경우 0 반환
+*/
+
+static int	ft_isspace(char ch)
+{
+	if (ch == '\t' || ch == '\n' || ch == '\v'
+		|| ch == '\f' || ch == '\r' || ch == ' ')
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_atoi(const char *str, int *out_res)
+{
+	int					sign;
+	int					is_digit;
+	unsigned long long	result;
+
+	while (ft_isspace(*str))
+		str++;
+	sign = 1;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	result = 0;
+	is_digit = false;
+	while (ft_isdigit(*str))
+	{
+		is_digit = true;
+		result *= 10;
+		result += *str - '0';
+		//Int 표현 범위 –2,147,483,648 ~ 2,147,483,647
+		if (result > 2147483647 && sign == 1)
+			return (false);
+		if (result > 2147483648 && sign == -1)
+			return (false);
+		str++;
+	}
+	if (!is_digit) 
+		return (false);
+	*out_res = (int)(sign * result);
+	return (true);
+}
+
+
+////////////push swap////////////////////////
 
 int add_arraylist(arraylist_t *arraylist, int value) {
 	if (!is_arraylist_full(arraylist)) {
@@ -289,26 +302,97 @@ void free_arraylist(arraylist_t *arraylist) {
 	arraylist->length = 0;
 }
 
-
-
 int main(int argc, char** argv)
 {
     arraylist_t pa_arraylist;
-    
+    stack_t stack;
+
     assert(allocate_arraylist(&pa_arraylist) == true);
     is_parse_argv_malloc(argc, argv, &pa_arraylist);
-
-	// 예외처리 4: 중복된 숫자가 들어왔을 때 Error 출력하고 종료
-	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
+	get_optiml_pivot(&pa_arraylist, &stack);
+	
 	for (int i = 0; i < pa_arraylist.length; i++) {
 		printf("%d\n", pa_arraylist.pa_arr[i]);
 	}
 }
 
-// 여기서 입력값 전부 방어한다
+void get_optiml_pivot(arraylist_t *arraylist, stack_t *stack) 
+{
+	int *p = arraylist->pa_arr;
+	int len = arraylist->length;
+	int is_eailer_sorted = false;
+	quick_sort(0, len - 1, arraylist, &is_eailer_sorted);
+	// 예외처리 4: 중복된 숫자가 들어왔을 때 Error 출력하고 종료
+	if (is_overlap(arraylist))
+		print_error_exit();
+	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
+	if (is_eailer_sorted)
+		exit(0);
+	arraylist->pa_arr;
+}
 
-// 함수의 후조건
-// 1. 입력이 잘못 들어오는 경우 -1 return
+int	is_overlap(arraylist_t *arraylist)
+{
+	int	i;
+
+	i = 1;
+	while (i < arraylist->length)
+	{
+		if (arraylist->pa_arr[i - 1] == arraylist->pa_arr[i])
+		{
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
+
+void quick_sort(int start, int end, arraylist_t *arraylist, int *is_eailer_sorted) 
+{
+	if (start >= end)
+	{
+		return;
+	}
+
+	int pivot = end;
+	int pivot_pos = divdie_and_conquer(start, pivot, arraylist->pa_arr);
+
+	if (start == 0 && end ==  arraylist->length - 1 && pivot == pivot_pos)
+		*is_eailer_sorted = true;
+
+	quick_sort(start, pivot_pos - 1, arraylist, is_eailer_sorted);
+	quick_sort(pivot_pos + 1, end, arraylist, is_eailer_sorted);
+}
+
+int divdie_and_conquer(int left, int right, int *nums)
+{
+	int swap_pos = left;
+	int pivot = nums[right];
+	int i = left;
+	while (i < right)
+	{
+		if (nums[i] < pivot)
+		{
+			swap(nums, i, swap_pos);
+			swap_pos++;
+		}
+		i++;
+	}
+	swap(nums, right, swap_pos);
+	return (swap_pos);
+}
+
+void swap(int *nums, int a, int b)
+{
+	int	temp;
+
+	temp = nums[a];
+	nums[a] = nums[b];
+	nums[b] = temp;
+}
+
+// 함수의 후조건 : 입력 값 방어함수
+// 1. 입력이 잘못 들어오는 경우 예외처리에서 프로그램 종료
 // 2. 입력이 잘 들어오는 경우 parse해서 개수 전달한다 
 void is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist)
 {
@@ -357,3 +441,49 @@ void print_error_exit()
 	write(2, "Error\n", 6);
 	exit(0);
 }
+
+//push_front 검증 필!
+void push_front(linkedlist_t **root, int content)
+{
+	linkedlist_t	*new;
+
+	new = ft_lstnew_malloc(content);
+	ft_lstadd_front(root, new);
+}
+
+linkedlist_t	*ft_lstnew_malloc(int content)
+{
+	linkedlist_t	*head;
+
+	head = (linkedlist_t *)malloc(sizeof(linkedlist_t));
+	if (head == NULL)
+		return (NULL);
+	head->value = content;
+	head->next = NULL;
+	head->prev = NULL;
+	return (head);
+}
+
+void	ft_lstadd_front(linkedlist_t **lst, linkedlist_t *new)
+{
+	if (*lst == NULL)
+	{
+		*lst = new;
+	}
+	else
+	{
+		new->next = *lst;
+		
+		*lst = new;
+	}
+}
+
+void push_back(linkedlist_t **end, int content)
+{
+	linkedlist_t	*new;
+
+	new = ft_lstnew_malloc(content);
+	ft_lstadd_front(end, new);
+}
+
+///////////

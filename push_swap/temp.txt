@@ -1,0 +1,36 @@
+ public static void quickSort(int[] nums) {
+        quickSortRecursive(nums, 0, nums.length - 1);
+    }
+
+    private static void quickSortRecursive(int[] nums, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+
+        int pivot = end;
+        int pivotPos = divideAndConquer(nums, start, pivot);
+
+        quickSortRecursive(nums, start, pivotPos - 1);
+        quickSortRecursive(nums, pivotPos + 1, end);
+    }
+
+    private static int divideAndConquer(int[] nums, int left, int right) {
+        int swapPos = left;
+        int pivot = nums[right];
+
+        for (int i = left; i < right; i++) {
+            if (nums[i] < pivot) {
+                swap(nums, i, swapPos);
+                swapPos++;
+            }
+        }
+
+        swap(nums, right, swapPos);
+        return swapPos;
+    }
+
+    private static void swap(int[] nums, int index1, int index2) {
+        int temp = nums[index1];
+        nums[index1] = nums[index2];
+        nums[index2] = temp;
+    }
