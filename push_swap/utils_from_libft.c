@@ -7,7 +7,7 @@ static void	do_free_malloc(char **res, char **tmp_res);
 char	**ft_split(const char *s, char c);
 
 static int	ft_isspace(char ch);
-int	ft_atoi(const char *str);
+int	ft_atoi(const char *str, int *out_res);
 int	ft_isdigit(int c);
 
 size_t	ft_strlen(const char *s);
@@ -114,7 +114,6 @@ static void	do_free_malloc(char **res, char **tmp_res)
 	free(res);
 }
 
-
 static int	ft_isspace(char ch)
 {
 	if (ch == '\t' || ch == '\n' || ch == '\v'
@@ -125,7 +124,14 @@ static int	ft_isspace(char ch)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+/*
+* 후조건
+* - int 범위 문자열은 숫자로 반환
+* - int 범위 넘어서는 숫자는 -1 반환
+* - 숫자가 아닌 경우 0 반환
+*/
+
+int	ft_atoi(const char *str, int *out_res)
 {
 	int					sign;
 	unsigned long long	result;
@@ -144,13 +150,19 @@ int	ft_atoi(const char *str)
 	{
 		result *= 10;
 		result += *str - '0';
-		if (result > 9223372036854775807 && sign == 1)
-			return (-1);
-		if (result > 9223372036854775807 && sign == -1)
-			return (0);
+		//Int 표현 범위 –2,147,483,648 ~ 2,147,483,647
+		if (result > 2147483647 && sign == 1)
+			return (false);
+		if (result > 2147483648 && sign == -1)
+			return (false);
 		str++;
 	}
-	return ((int)(sign * result));
+	if (result == 0) 
+	{
+		return (false);
+	}
+	*out_res = (int)(sign * result);
+	return (true);
 }
 
 int	ft_isdigit(int c)
