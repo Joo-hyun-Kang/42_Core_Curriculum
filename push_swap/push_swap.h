@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -28,8 +29,11 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 
+void print_error_exit();
+
 int add_arraylist(arraylist_t *arraylist, int value);
 int is_arraylist_full(arraylist_t *arraylist);
 int allocate_arraylist(arraylist_t *arraylist);
 void free_arraylist(arraylist_t *arraylist);
-int is_parse_argv_malloc(int argc, char **argv, arraylist_t *arraylist);
+void is_parse_argv_malloc(int argc, char **argv, arraylist_t *arraylist);
+

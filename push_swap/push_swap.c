@@ -14,6 +14,14 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 
+void print_error_exit();
+
+int add_arraylist(arraylist_t *arraylist, int value);
+int is_arraylist_full(arraylist_t *arraylist);
+int allocate_arraylist(arraylist_t *arraylist);
+void free_arraylist(arraylist_t *arraylist);
+void is_parse_argv_malloc(int argc, char **argv, arraylist_t *arraylist);
+
 char	**ft_split(const char *s, char c) 
 {
 	char		**result;
@@ -290,6 +298,11 @@ int main(int argc, char** argv)
     assert(allocate_arraylist(&pa_arraylist) == true);
     is_parse_argv_malloc(argc, argv, &pa_arraylist);
 
+	// 예외처리 4: 중복된 숫자가 들어왔을 때 Error 출력하고 종료
+	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
+	for (int i = 0; i < pa_arraylist.length; i++) {
+		printf("%d\n", pa_arraylist.pa_arr[i]);
+	}
 }
 
 // 여기서 입력값 전부 방어한다
@@ -297,48 +310,50 @@ int main(int argc, char** argv)
 // 함수의 후조건
 // 1. 입력이 잘못 들어오는 경우 -1 return
 // 2. 입력이 잘 들어오는 경우 parse해서 개수 전달한다 
-int is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist)
+void is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist)
 {
 	// 나중에 처리할 거 -> 배열이 정렬되서 들어오는 경우, 인자가 1개뿐일 경우
 	// 처리한 건데 수정할 것 -> 숫자가 아닌 값이 들어왔을 때, int범위를 넘어설 때 --> Error표시하기
 
-	// 인자가 없을 때
+	// 예외처리 1: 인자가 없을 때 아무것도 출력하지 않고 그냥 종료
 	if (argc < 2)
     {
-       return (-1);
+       exit(0);
     }
 
 	char **temp_argv = argv;
 	int i = 1;
 	while (i < argc)
 	{
-		
 		char **pa_splited_str = ft_split(temp_argv[i], ' ');
 		char **pp = pa_splited_str;
 		int length_splited_str = 0;
-		
+
 		while (*pp != NULL)
 		{	
-			int value = 0;
+			int value = 0;			
+			// 예외처리 2: 숫자가 아닌 경우 Error 콘솔에 출력하고 종료
+			// 예외처리 3: Int범위를 넘어서는 경우 Error 콘솔에 출력하고 종료
 			if (ft_atoi(*pp, &value) == false)
-				exit(0);
+				print_error_exit();
 			add_arraylist(pa_arraylist, value);
 			pp++;
 		}
 		i++;
 	}
 
-	//debugging용
-	/*
+	// 예외처리 6: 인자가 1개 일 때 아무것도 출력하지 않고 그냥 종료
+	// 예외처리 7: "", " "만 들어왔을 떄 아무것도 하지 않고 종료
+	// ""는 '/0'이기 때문에 여기서 들어올 수 atoi를 안 돌고 나감
+	// " "는 ' '로 split을 하기 때문에 널문자라서 atoi를 안 돌고 나감
+	if (pa_arraylist->length == 0 || pa_arraylist->length == 1)
 	{
-		int *p = pa_arraylist->pa_arr;
-		int index = 0;
-		while (index < pa_arraylist->length)
-		{
-			printf("%d\n", *p++);
-			index++;
-		}
+		exit(0);
 	}
-	*/
-	return 0;
+}
+
+void print_error_exit()
+{
+	write(2, "Error\n", 6);
+	exit(0);
 }
