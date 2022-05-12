@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "push_swap.h": "c",
+        "vector": "c",
+        "xstring": "c",
+        "xlocale": "c"
+    }
+}

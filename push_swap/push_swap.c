@@ -1,24 +1,11 @@
-#include <stdio.h>
-#include <assert.h>
-#include "libft.h"
-
-# define true (1);
-# define false (0);
-
-# define ARRAYLIST_BASIC_CAPACITY (10)
-
-typedef struct arraylist {
-	int* pa_arr;
-	int length;
-	int capacity;
-} arraylist_t
+#include "push_swap.h"
 
 int is_arraylist_full(arraylist_t *arraylist) {
 	if (arraylist->length >= arraylist->capacity) 
 	{
 		return (true);
 	}
-	return (false)
+	return (false);
 }
 
 int allocate_arraylist(arraylist_t *arraylist) {
@@ -31,16 +18,14 @@ int allocate_arraylist(arraylist_t *arraylist) {
 	else
 	{
 		int *tmp = (int *)malloc(arraylist->capacity * 2 * sizeof(int));
-		assert(capacity >= length);
-		ft_memcpy(tmp, arraylist->pa_arr, length);
-		free(pa_arr);
-		pa_arr = tmp;
-		tmp = NULL:
+		assert(arraylist->capacity >= arraylist->length);
+		ft_memcpy(tmp, arraylist->pa_arr, arraylist->length);
+		free(arraylist->pa_arr);
+		arraylist->pa_arr = tmp;
+		tmp = NULL;
 		arraylist->capacity *= 2;
 	}
 }
-
-int
 
 int is_parse_argv_malloc(int argc, char **argv, arraylist_t *arraylist);
 
@@ -48,7 +33,7 @@ int main(int argc, char** argv)
 {
     arraylist_t pa_arraylist;
     
-    is_parse_argv_malloc(argc, argv, pa_arraylist);
+    is_parse_argv_malloc(argc, argv, &pa_arraylist);
     
     
 }
@@ -58,7 +43,7 @@ int main(int argc, char** argv)
 // 함수의 후조건
 // 1. 입력이 잘못 들어오는 경우 -1 return
 // 2. 입력이 잘 들어오는 경우 parse해서 개수 전달한다 
-int is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist);
+int is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist)
 {
 	// 들어오는게 "12" "3" 4 5 라고 해보자
     
@@ -67,10 +52,6 @@ int is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist);
     {
        return (-1);
     }
-	// 어차피 argv는 문자열로 저장되어 있다? ㅇㅇ
-	// 문자열인 argv를 가져와서 처리하면 되는데
-	// ""가 들어가나? --> 실험 ㄱㄱ
-	// 
 
     // "1" "2" 34 
     // 1 2 3 4
@@ -93,7 +74,20 @@ int is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist);
 			// split에서 몇개를 주는 지 까봐야 함 길이를 구해서 그만큼 atoi를 구해야함
 
 			// atoi의 선조건 --> 숫자가 아닐 경우 어떻게 처리?
-		pa_arraylist->pa_arr = ft_atoi()
+			// atoi는 숫자가 아닐 경우 0을 반환함
+			// Int보다 더 커지는 경우는?  --> 지금 이거 따로 처리해주어야 함
+		char **pp = pa_splited_str;
+		int splited_str_len = 0;
+		int index = 0;
+		while (*pp != NULL)
+		{
+			printf("%d\n", ft_atoi(*pp));
+			pp++;
+			splited_str_len++;
+			index++;
+			//pa_arraylist->pa_arr[0] = ft_atoi(*pp);
+		}
+		
 		i++;
 		// "1 2 3" 4 5
 		// 1 2 3\04\05\0
