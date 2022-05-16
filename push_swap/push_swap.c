@@ -305,18 +305,47 @@ void free_arraylist(arraylist_t *arraylist) {
 int main(int argc, char** argv)
 {
     arraylist_t pa_arraylist;
-    stack_t stack;
+	ft_stack_t pa_stack_a;
+	ft_stack_t pa_stack_b;
+	ft_stack_t pa_pivot;
 
     assert(allocate_arraylist(&pa_arraylist) == true);
     is_parse_argv_malloc(argc, argv, &pa_arraylist);
-	get_optiml_pivot(&pa_arraylist, &stack);
-	
+	get_optiml_pivot(&pa_arraylist, &pa_pivot);
+
 	for (int i = 0; i < pa_arraylist.length; i++) {
 		printf("%d\n", pa_arraylist.pa_arr[i]);
 	}
-}
 
-void get_optiml_pivot(arraylist_t *arraylist, stack_t *stack) 
+	// 최적 피봇 구하기
+	// 팝 인큐 디큐 구현
+	// sa, sb 등 구현
+	// sort하기
+	
+
+
+	free_arraylist(&pa_arraylist);
+	//free_stack
+	//free_pivot
+}
+//내 로직에서 체크할 것
+//-빈칸이 있는 경우
+//"    1" 4 2
+
+// pivot을 따로 stack에서 빼고 pivot을 구하셈
+// 어째든 둘 다 링크스 리스트에서 스택에서 추가하고 빼는 걸 구현해야 함
+// 넣어야 할 것은 스택에 새로운 노드를 추가하는 것
+// pivot에 새로운 노드를 추가하는 것
+// 나중에 sort 할 때 옮기는 것 -> 추가하고 빼는 걸 이용한다
+
+// 함수의 선조건
+// 1. 할당된 arraylist에 parsing된 데이터가 있어야 함
+// 2. 할당되지 않은 pivot을 받음 NULL어야 함
+// 함수의 후조건
+// 1. 입력 데이터가 중복된 숫자가 들어왔을 떄 Error 출력하고 종료
+// 2. 입력 데이터가 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
+// 3. stack->pivot의 최적의 피봇을 linked list로 반환
+void get_optiml_pivot(arraylist_t *arraylist, ft_stack_t *pivot) 
 {
 	int *p = arraylist->pa_arr;
 	int len = arraylist->length;
@@ -328,7 +357,9 @@ void get_optiml_pivot(arraylist_t *arraylist, stack_t *stack)
 	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
 	if (is_eailer_sorted)
 		exit(0);
-	arraylist->pa_arr;
+	// 최적의 피봇 구하기
+	// 	
+
 }
 
 int	is_overlap(arraylist_t *arraylist)
@@ -357,7 +388,8 @@ void quick_sort(int start, int end, arraylist_t *arraylist, int *is_eailer_sorte
 	int pivot = end;
 	int pivot_pos = divdie_and_conquer(start, pivot, arraylist->pa_arr);
 
-	if (start == 0 && end ==  arraylist->length - 1 && pivot == pivot_pos)
+	//최초 정렬 시 pivot과 poivot_pos가 같으면 이미 정렬되어 있음
+	if (start == 0 && end == arraylist->length - 1 && pivot == pivot_pos)
 		*is_eailer_sorted = true;
 
 	quick_sort(start, pivot_pos - 1, arraylist, is_eailer_sorted);
@@ -424,6 +456,8 @@ void is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist)
 			pp++;
 		}
 		i++;
+		free(pa_splited_str);
+		pa_splited_str = NULL;
 	}
 
 	// 예외처리 6: 인자가 1개 일 때 아무것도 출력하지 않고 그냥 종료
@@ -434,6 +468,31 @@ void is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist)
 	{
 		exit(0);
 	}
+}
+
+void push_stack(ft_stack_t *stack, int content)
+{
+	linkedlist_t *new_lst;
+	
+	if (stack->top == NULL) 
+	{
+		stack->top = ft_lstnew_malloc(content);
+		stack->bottom = stack->top;
+		stack->size++;
+	}
+	new_lst = ft_lstnew_malloc(content);
+	new_lst->next = stack->root;
+	stack->top = new_lst;
+	stack->size++;
+}
+
+int pop_stack(ft_stack_t *stack)
+{
+	int value;
+	
+	value = stack->top->value;
+	//POCU lab2 Remove 코드 참고해
+
 }
 
 void print_error_exit()

@@ -21,16 +21,10 @@ typedef struct linkedlist {
 } linkedlist_t;
 
 typedef struct ft_stack {
-	linkedlist_t **a_root;
-	linkedlist_t **a_end;
-	size_t a_length;
-	linkedlist_t **b_root;
-	linkedlist_t **b_end;
-	size_t b_length;
-	linkedlist_t **pivots;
+	linkedlist_t *top;
+	linkedlist_t *bottom;
+	size_t size;
 } ft_stack_t;
-
-
 
 static char	**ft_do_split_malloc_or_null(const char *s, char c, char **out_res);
 static int	get_w_length(const char *str, char c);
