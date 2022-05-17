@@ -310,13 +310,13 @@ int main(int argc, char** argv)
 	ft_free(&pa_stack_b);
 	ft_free(&pa_pivot);
 	temp = pa_out_queue.front;
-	/*
+
 	while (temp != NULL)
 	{
 		printf("%d\n", temp->value);
 		temp = temp->next;
 	}
-	*/
+	
 	
 	ft_free(&pa_out_queue);
 	//제출 전 어서트 날리기
@@ -367,7 +367,7 @@ void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end
 	ft_enqueue(stack, arr[mid]);
 	
 	get_optimal_pivot_recursive(arr, stack, mid + 1, end);
-	get_optimal_pivot_recursive(arr, stack, start, mid - 1);
+	get_optimal_pivot_recursive(arr, stack, start, mid);
 }
 
 int	is_overlap(int *arr, int length)
@@ -847,15 +847,16 @@ void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 	int	ra_count;
 	int	pb_count;
 	int	pivot;
+	int	top;
 
-	if (a->size <= 1)
+	if (stack_a_count <= 1)
 		return;
-	if (a->size == 2)
+	if (stack_a_count == 2)
 	{
 		swap_size_two_a(a, queue);
 		return;
 	}
-	if (a->size == 3)
+	if (stack_a_count == 3)
 	{
 		swap_size_three_a(a, queue);
 		return;
@@ -866,7 +867,8 @@ void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 	pivot = ft_pop_front(pivots);
 	while (i < stack_a_count)
 	{
-		if (ft_peak(a) > pivot)
+		top = ft_peak(a);
+		if (top > pivot)
 		{
 			ft_ra(a, queue);
 			ra_count++;
@@ -878,11 +880,11 @@ void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 		}
 		i++;
 	}
-	i = ra_count;
-	while (i >= 0)
+	i = 0;
+	while (i < ra_count)
 	{
 		ft_rra(a, queue);
-		i--;
+		i++;
 	}
 	ft_split_a_to_b(a, b, pivots, queue, ra_count);
 	ft_split_b_to_a(a, b, pivots, queue, pb_count);
@@ -894,6 +896,7 @@ void ft_split_b_to_a(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 	int	rb_count;
 	int	pa_count;
 	int	pivot;
+	int	top;
 
 	if (count == 1)
 	{
@@ -913,23 +916,24 @@ void ft_split_b_to_a(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 	pivot = ft_pop_front(pivots);
 	while (i < count)
 	{
-		if (ft_peak(b) > pivot)
-		{
-			ft_rb(a, queue);
-			rb_count++;
-		}
-		else
+		top = ft_peak(b);
+		if (top > pivot)
 		{
 			ft_pa(a, b, queue);
 			pa_count++;
 		}
+		else
+		{
+			ft_rb(b, queue);
+			rb_count++;
+		}
 		i++;
 	}
-	i = rb_count;
-	while (i >= 0)
+	i = 0;
+	while (i < rb_count)
 	{
-		ft_rrb(a, queue);
-		i--;
+		ft_rrb(b, queue);
+		i++;
 	}
 	ft_split_a_to_b(a, b, pivots, queue, pa_count);
 	ft_split_b_to_a(a, b, pivots, queue, rb_count);
