@@ -287,12 +287,15 @@ int main(int argc, char** argv)
 	get_optiml_pivot(&pa_arraylist, &pa_pivot);
 	ft_set_stack(&pa_arraylist, &pa_stack_a, true);
 	ft_set_stack(&pa_arraylist, &pa_stack_b, false);
-	free_arraylist(&pa_arraylist);
-	ft_sort(&pa_stack_a, &pa_stack_b, &pa_pivot, &pa_out_queue);
 
 	for (int i = 0; i < pa_arraylist.length; i++) {
 		printf("%d\n", pa_arraylist.pa_arr[i]);
 	}
+
+	free_arraylist(&pa_arraylist);
+	ft_sort(&pa_stack_a, &pa_stack_b, &pa_pivot, &pa_out_queue);
+
+
 
 	printf("\n");
 
@@ -307,11 +310,13 @@ int main(int argc, char** argv)
 	ft_free(&pa_stack_b);
 	ft_free(&pa_pivot);
 	temp = pa_out_queue.front;
+	/*
 	while (temp != NULL)
 	{
 		printf("%d\n", temp->value);
 		temp = temp->next;
 	}
+	*/
 	
 	ft_free(&pa_out_queue);
 	//제출 전 어서트 날리기
@@ -326,21 +331,32 @@ int main(int argc, char** argv)
 // 3. stack->pivot의 최적의 피봇을 linked list로 반환
 void	get_optiml_pivot(arraylist_t *arraylist, ft_stack_t *pivot) 
 {
-	int *p = arraylist->pa_arr;
-	int len = arraylist->length;
+	int *arr_copy;
+	int	i;
+	int	len;
+
+	len = arraylist->length;
+	arr_copy = (int *)malloc(sizeof(int) * len);
+	i = 0;
+	while (i < len)
+	{
+		arr_copy[i] = arraylist->pa_arr[i];
+		i++;
+	}
 	int is_eailer_sorted = false;
-	quick_sort(0, len - 1, arraylist, &is_eailer_sorted);
+	quick_sort(0, len - 1, arr_copy, &is_eailer_sorted, len);
 	// 예외처리 4: 중복된 숫자가 들어왔을 때 Error 출력하고 종료
-	if (is_overlap(arraylist))
+	if (is_overlap(arr_copy, len))
 		print_error_exit();
 	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
 	if (is_eailer_sorted)
 		exit(0);
-	get_optimal_pivot_recursive(arraylist, pivot, 0, arraylist->length - 1);
-
+	get_optimal_pivot_recursive(arr_copy, pivot, 0, len - 1);
+	free(arr_copy);
+	arr_copy = NULL;
 }
 
-void	get_optimal_pivot_recursive(arraylist_t *arraylist, ft_stack_t *stack, int start, int end)
+void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end)
 {
 	int	mid;
 
@@ -348,20 +364,20 @@ void	get_optimal_pivot_recursive(arraylist_t *arraylist, ft_stack_t *stack, int 
 		return ;
 
 	mid = (start + end) / 2;
-	ft_enqueue(stack, arraylist->pa_arr[mid]);
+	ft_enqueue(stack, arr[mid]);
 	
-	get_optimal_pivot_recursive(arraylist, stack, mid + 1, end);
-	get_optimal_pivot_recursive(arraylist, stack, start, mid - 1);
+	get_optimal_pivot_recursive(arr, stack, mid + 1, end);
+	get_optimal_pivot_recursive(arr, stack, start, mid - 1);
 }
 
-int	is_overlap(arraylist_t *arraylist)
+int	is_overlap(int *arr, int length)
 {
 	int	i;
 
 	i = 1;
-	while (i < arraylist->length)
+	while (i < length)
 	{
-		if (arraylist->pa_arr[i - 1] == arraylist->pa_arr[i])
+		if (arr[i - 1] == arr[i])
 		{
 			return (true);
 		}
@@ -370,7 +386,7 @@ int	is_overlap(arraylist_t *arraylist)
 	return (false);
 }
 
-void quick_sort(int start, int end, arraylist_t *arraylist, int *is_eailer_sorted) 
+void quick_sort(int start, int end, int *arr, int *is_eailer_sorted, int length) 
 {
 	if (start >= end)
 	{
@@ -378,14 +394,14 @@ void quick_sort(int start, int end, arraylist_t *arraylist, int *is_eailer_sorte
 	}
 
 	int pivot = end;
-	int pivot_pos = divdie_and_conquer(start, pivot, arraylist->pa_arr);
+	int pivot_pos = divdie_and_conquer(start, pivot, arr);
 
 	//최초 정렬 시 pivot과 poivot_pos가 같으면 이미 정렬되어 있음
-	if (start == 0 && end == arraylist->length - 1 && pivot == pivot_pos)
+	if (start == 0 && end == length - 1 && pivot == pivot_pos)
 		*is_eailer_sorted = true;
 
-	quick_sort(start, pivot_pos - 1, arraylist, is_eailer_sorted);
-	quick_sort(pivot_pos + 1, end, arraylist, is_eailer_sorted);
+	quick_sort(start, pivot_pos - 1, arr, is_eailer_sorted, length);
+	quick_sort(pivot_pos + 1, end, arr, is_eailer_sorted, length);
 }
 
 int divdie_and_conquer(int left, int right, int *nums)
@@ -702,25 +718,21 @@ void ft_set_stack(arraylist_t *arraylist, ft_stack_t *stack, int is_stack_a)
 	stack->front = NULL;
 	stack->back = NULL;
 	stack->size = 0;
-	p = arraylist->pa_arr;
+	p = arraylist->pa_arr + arraylist->length - 1;
 	i = 0;
 	if (is_stack_a)
 	{
 		while (i < arraylist->length)
 		{
 			ft_push(stack, *p);
-			p++;
+			p--;
 			i++;
-			stack->size++;
 		}
 	}
 }
 
 void ft_sort(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivot, ft_stack_t *pa_out_queue)
 {
-	int circle;
-	
-	circle = 0;
 	if (a->size == 2)
 	{
 		swap_size_two_a(a, pa_out_queue);
@@ -836,7 +848,7 @@ void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 	int	pb_count;
 	int	pivot;
 
-	if (a->size <- 1)
+	if (a->size <= 1)
 		return;
 	if (a->size == 2)
 	{

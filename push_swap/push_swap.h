@@ -67,9 +67,9 @@ int allocate_arraylist(arraylist_t *arraylist);
 void free_arraylist(arraylist_t *arraylist);
 
 void	get_optiml_pivot(arraylist_t *arraylist, ft_stack_t *pivot);
-void	get_optimal_pivot_recursive(arraylist_t *arraylist, ft_stack_t *stack, int start, int end);
-int	is_overlap(arraylist_t *arraylist);
-void	quick_sort(int start, int end, arraylist_t *arraylist, int *is_eailer_sorted);
+void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end);
+int	is_overlap(int *arr, int length);
+void	quick_sort(int start, int end, int *arr, int *is_eailer_sorted, int length);
 int	divdie_and_conquer(int left, int right, int *nums);
 void	swap(int *nums, int a, int b);
 
