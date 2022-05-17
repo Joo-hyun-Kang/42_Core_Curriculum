@@ -773,24 +773,21 @@ void swap_size_three_a(ft_stack_t *a, ft_stack_t *queue)
 	int	arr[3];
 	int	sort_order;
 
+	sort_order = INT32_MAX;
 	arr[0] = ft_pop_front(a);
 	arr[1] = ft_pop_front(a);
 	arr[2] = ft_pop_front(a);
-	if (arr[0] > arr[1])
-		if (arr[0] > arr[2])
-		{
-			if (arr[1] > arr[2])
-				sort_order = THREE_NUM_ORDER_CASE2;
-			else
-				sort_order = THREE_NUM_ORDER_CASE3;
-		}
-		else
-			sort_order = THREE_NUM_ORDER_CASE1;	
-	else
-		if (arr[0] < arr[2] && arr[1] > arr[2])
-			sort_order = THREE_NUM_ORDER_CASE4;
-		else
-			sort_order = THREE_NUM_ORDER_CASE5;
+	if (arr[0] > arr[1] && arr[0] < arr[2])
+		sort_order = THREE_NUM_ORDER_CASE1;
+	/* THREE_NUM_ORDER_CASE2만 stack b 일 때와 다르게 역정렬이 되어있을 경우 예 : 3 2 1 */
+	else if (arr[0] > arr[1] && arr[1] > arr[2])
+		sort_order = THREE_NUM_ORDER_CASE2;
+	else if (arr[0] > arr[2] && arr[2] > arr[1])
+		sort_order = THREE_NUM_ORDER_CASE3;
+	else if (arr[0] < arr[2] && arr[2] < arr[1])
+		sort_order = THREE_NUM_ORDER_CASE4;
+	else if (arr[0] > arr[2] && arr[0] < arr[1])
+		sort_order = THREE_NUM_ORDER_CASE5;
 	swap_three_num_a(a, sort_order, queue);
 }
 
@@ -840,6 +837,54 @@ void swap_size_two_b(ft_stack_t *stack, ft_stack_t *queue)
 		ft_sb(stack, queue);
 	}
 }
+
+void	swap_size_three_b(ft_stack_t *b, ft_stack_t *queue)
+{
+	int	arr[3];
+	int	sort_order;
+
+	sort_order = INT32_MAX;
+	arr[0] = ft_pop_front(b);
+	arr[1] = ft_pop_front(b);
+	arr[2] = ft_pop_front(b);
+	if (arr[0] > arr[1] && arr[0] < arr[2])
+		sort_order = THREE_NUM_ORDER_CASE1;
+	/* THREE_NUM_ORDER_CASE2만 stack a 일 때와 다르게 정렬이 되어있을 경우 예 : 1 2 3 */
+	else if (arr[0] < arr[1] && arr[1] < arr[2])
+		sort_order = THREE_NUM_ORDER_CASE2;
+	else if (arr[0] > arr[2] && arr[2] > arr[1])
+		sort_order = THREE_NUM_ORDER_CASE3;
+	else if (arr[0] < arr[2] && arr[2] < arr[1])
+		sort_order = THREE_NUM_ORDER_CASE4;
+	else if (arr[0] > arr[2] && arr[0] < arr[1])
+		sort_order = THREE_NUM_ORDER_CASE5;
+	swap_three_num_b(b, sort_order, queue);
+}
+
+void swap_three_num_b(ft_stack_t *stack, int sort_order, ft_stack_t *queue)
+{
+	if (sort_order == THREE_NUM_ORDER_CASE1)
+	{
+		
+	}
+	else if (sort_order == THREE_NUM_ORDER_CASE2)
+	{
+		
+	}
+	else if (sort_order == THREE_NUM_ORDER_CASE3)
+	{
+	
+	}
+	else if (sort_order == THREE_NUM_ORDER_CASE4)
+	{
+	
+	}
+	else if (sort_order == THREE_NUM_ORDER_CASE5)
+	{
+		
+	}
+}
+
 
 void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_t *queue, int stack_a_count)
 {
@@ -910,6 +955,11 @@ void ft_split_b_to_a(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 		ft_pa(a, b, queue);
 		return ;
 	}
+	if (count == 3)
+	{
+		swap_size_three_b(b, queue);
+		return;
+	}
 	i = 0;
 	rb_count = 0;
 	pa_count = 0;
@@ -937,4 +987,55 @@ void ft_split_b_to_a(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_
 	}
 	ft_split_a_to_b(a, b, pivots, queue, pa_count);
 	ft_split_b_to_a(a, b, pivots, queue, rb_count);
+}
+
+void ft_put_queue(ft_stack_t *queue)
+{
+	linkedlist_t	*temp;
+	int				i;
+	int				res1;
+	int				res2;
+	int				is_even;
+	
+	i = 0;
+	temp = queue->front;
+	while (i < queue->size / 2)
+	{
+		res1 = temp->value;
+		temp = temp->next;
+		res2 = temp->value;
+		temp = temp->next;
+
+		if (res1 == COMMAND_SA && res2 == COMMAND_SB)
+
+		else if ()
+	}
+	is_even = queue->size % 2 == 0;
+
+	// 1 2 
+	// 2
+	// 1 2 3
+	// 1
+	// 1 2
+}
+
+void ft_put_command(int command)
+{
+	if (command == COMMAND_SA)
+		write(1, "sa\n", 3);
+	else if (command == COMMAND_SB)
+		write(1, "sb\n", 3);
+	else if (command == COMMAND_SS)
+		write(1, "ss\n", 3);
+	else if (command == COMMAND_RA)
+		write(1, "ra\n", 3);
+	else if (command == CO)
+	
+	COMMAND_RB,
+	COMMAND_RR,
+	COMMAND_RRA,
+	COMMAND_RRB,
+	COMMAND_RRR,
+	COMMAND_PA,
+	COMMAND_PB
 }
