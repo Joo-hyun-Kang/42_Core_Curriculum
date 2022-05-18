@@ -295,7 +295,7 @@ int main(int argc, char** argv)
 	}
 	*/
 	free_arraylist(&pa_arraylist);
-	/*
+	
 	printf("\n");
 	printf("pivot element\n");
 
@@ -305,7 +305,7 @@ int main(int argc, char** argv)
 		printf("%d\n", temp->value);
 		temp = temp->next;
 	}
-	*/
+	
 	member.a = &pa_stack_a;
 	member.b = &pa_stack_b;
 	ft_sort(&member, &pa_pivot, &pa_out_queue);
@@ -360,32 +360,30 @@ void	get_optiml_pivot(arraylist_t *arraylist, ft_stack_t *pivot)
 	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
 	if (is_sorted(arraylist->pa_arr, len))
 		exit(1);
-	get_optimal_pivot_recursive(arr_copy, pivot, 0, len - 1);
+	get_optimal_pivot_recursive(arr_copy, pivot, 0, len - 1, len);
 	free(arr_copy);
 	arr_copy = NULL;
 }
 
-void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end)
+void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end, int count)
 {
-	
-	/*
 	int	two_thirds;
 	int	one_thirds;
 
 	if (end - start <= 1)
 		return ;
 
-	two_thirds = (start + end) * 2 / 3;
-	one_thirds = (start + end) / 3;
+	two_thirds = start + (count * 2 / 3);
+	one_thirds = start + (count / 3);
 	
 	ft_enqueue(stack, arr[two_thirds]);
 	ft_enqueue(stack, arr[one_thirds]);
 	
-	get_optimal_pivot_recursive(arr, stack, two_thirds + 1, end);
-	get_optimal_pivot_recursive(arr, stack, one_thirds + 1, two_thirds);
-	get_optimal_pivot_recursive(arr, stack, start, one_thirds);
-	*/
+	get_optimal_pivot_recursive(arr, stack, two_thirds + 1, end, end - two_thirds);
+	get_optimal_pivot_recursive(arr, stack, one_thirds, two_thirds, two_thirds - one_thirds + 1);
+	get_optimal_pivot_recursive(arr, stack, start, one_thirds - 1, one_thirds - start);
 
+	/*
 	int	mid;
 
 	if (end - start <= 1)
@@ -397,7 +395,7 @@ void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end
 
 	get_optimal_pivot_recursive(arr, stack, mid + 1, end);
 	get_optimal_pivot_recursive(arr, stack, start, mid);
-
+	*/
 }
 
 int	is_overlap(int *arr, int length)
@@ -967,10 +965,12 @@ void ft_split_a_to_b(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	int	i;
 	int	ra_count;
 	int	pb_count;
-	int	pivot;
+	int	rb_count;
+	int	two_thirds_pivot;
+	int	one_thirds_pivot;
 	int	top;
 
-	if (stack_a_count <= 1)
+	if (stack_a_count == 1)
 		return;
 	if (stack_a_count == 2)
 	{
@@ -980,11 +980,13 @@ void ft_split_a_to_b(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	i = 0;
 	ra_count = 0;
 	pb_count = 0;
-	pivot = ft_pop_front(pivots);
+	rb_count = 0;
+	two_thirds_pivot = ft_pop_front(pivots);
+	one_thirds_pivot = ft_pop_front(pivots);
 	while (i < stack_a_count)
 	{
 		top = ft_peak(member->a);
-		if (top > pivot)
+		if (top >= two_thirds_pivot)
 		{
 			ft_ra(member->a, queue);
 			ra_count++;
@@ -993,17 +995,33 @@ void ft_split_a_to_b(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 		{
 			ft_pb(member->a, member->b, queue);
 			pb_count++;
+			if (top >= one_thirds_pivot)
+			{
+				ft_rb(member->b, queue);
+				rb_count++;
+			}
 		}
 		i++;
 	}
 	i = 0;
+	while (i < ra_count && i < rb_count)
+	{
+		ft_rrr(member->a, member->b, queue);
+		i++;
+	}
 	while (i < ra_count)
 	{
-		ft_rra(member->a, queue);
+		ft_ra(member->a, queue);
+		i++;
+	}
+	while (i < rb_count)
+	{
+		ft_rb(member->b, queue);
 		i++;
 	}
 	ft_split_a_to_b(member, pivots, queue, ra_count);
-	ft_split_b_to_a(member, pivots, queue, pb_count);
+	ft_split_b_to_a(member, pivots, queue, rb_count);
+	ft_split_b_to_a(member, pivots, queue, pb_count - rb_count);
 }
 
 void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t *queue, int count)
@@ -1011,7 +1029,9 @@ void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	int	i;
 	int	rb_count;
 	int	pa_count;
-	int	pivot;
+	int ra_count;
+	int	two_thirds_pivot;
+	int	one_thirds_pivot;
 	int	top;
 
 	if (count == 1)
@@ -1029,14 +1049,21 @@ void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	i = 0;
 	rb_count = 0;
 	pa_count = 0;
-	pivot = ft_pop_front(pivots);
+	ra_count = 0;
+	two_thirds_pivot = ft_pop_front(pivots);
+	one_thirds_pivot = ft_pop_front(pivots);
 	while (i < count)
 	{
 		top = ft_peak(member->b);
-		if (top > pivot)
+		if (top > one_thirds_pivot)
 		{
 			ft_pa(member->a, member->b, queue);
 			pa_count++;
+			if (top < two_thirds_pivot)
+			{
+				ft_ra(member->a, queue);
+				ra_count++;
+			}
 		}
 		else
 		{
@@ -1045,13 +1072,24 @@ void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 		}
 		i++;
 	}
+	ft_split_a_to_b(member, pivots, queue, pa_count - ra_count);
 	i = 0;
-	while (i < rb_count)
+	while (i < ra_count && i < rb_count)
 	{
-		ft_rrb(member->b, queue);
+		ft_rrr(member->a, member->b, queue);
 		i++;
 	}
-	ft_split_a_to_b(member, pivots, queue, pa_count);
+	while (i < ra_count)
+	{
+		ft_ra(member->a, queue);
+		i++;
+	}
+	while (i < rb_count)
+	{
+		ft_rb(member->b, queue);
+		i++;
+	}
+	ft_split_a_to_b(member, pivots, queue, ra_count);
 	ft_split_b_to_a(member, pivots, queue, rb_count);
 }
 
