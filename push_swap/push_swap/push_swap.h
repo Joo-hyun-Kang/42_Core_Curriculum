@@ -25,6 +25,11 @@ typedef struct ft_stack {
 	int	size;
 } ft_stack_t;
 
+typedef struct push_swap_member {
+	ft_stack_t *a;
+	ft_stack_t *b;
+} push_swap_member_t;
+
 enum COMMAND {
 	COMMAND_SA,
 	COMMAND_SB,
@@ -99,7 +104,7 @@ void ft_pa(ft_stack_t *a, ft_stack_t *b, ft_stack_t *queue);
 void ft_pb(ft_stack_t *a, ft_stack_t *b, ft_stack_t *queue);
 
 void ft_set_stack(arraylist_t *arraylist, ft_stack_t *stack, int is_stack_a);
-void ft_sort(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivot, ft_stack_t *pa_out_queue);
+void ft_sort(push_swap_member_t *member, ft_stack_t *pivot, ft_stack_t *pa_out_queue);
 void swap_size_two_a(ft_stack_t *stack, ft_stack_t *queue);
 void swap_size_three_a(ft_stack_t *a, ft_stack_t *queue);
 void swap_three_num_a(ft_stack_t *stack, int sort_order, ft_stack_t *queue);
@@ -107,8 +112,8 @@ void swap_size_two_b(ft_stack_t *stack, ft_stack_t *queue);
 void swap_size_five(ft_stack_t *a, ft_stack_t *b, ft_stack_t *queue, int count);
 int	get_max(ft_stack_t *stack);
 int	get_min(ft_stack_t *stack);
-void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_t *queue, int stack_a_count);
-void ft_split_b_to_a(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_t *queue, int count);
+void ft_split_a_to_b(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t *queue, int stack_a_count);
+void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t *queue, int count);
 
 void ft_put_queue(ft_stack_t *queue);
 void ft_put_command(int command);
