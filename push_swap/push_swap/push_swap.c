@@ -327,6 +327,7 @@ int main(int argc, char** argv)
 	ft_put_queue(&pa_out_queue);
 	ft_free(&pa_out_queue);
 	//제출 전 어서트 날리기
+	//쓰면 안되는 라이브러리 날리기
 }
 
 // 함수의 선조건
@@ -350,13 +351,13 @@ void	get_optiml_pivot(arraylist_t *arraylist, ft_stack_t *pivot)
 		arr_copy[i] = arraylist->pa_arr[i];
 		i++;
 	}
-	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
-	if (is_sorted(arr_copy, len))
-		exit(0);
 	quick_sort(0, len - 1, arr_copy);
 	// 예외처리 4: 중복된 숫자가 들어왔을 때 Error 출력하고 종료
 	if (is_overlap(arr_copy, len))
 		print_error_exit();
+	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
+	if (is_sorted(arraylist->pa_arr, len))
+		exit(1);
 	get_optimal_pivot_recursive(arr_copy, pivot, 0, len - 1);
 	free(arr_copy);
 	arr_copy = NULL;
@@ -497,14 +498,14 @@ void is_parse_argv_malloc(int argc, char **argv, arraylist_t *pa_arraylist)
 	// " "는 ' '로 split을 하기 때문에 널문자라서 atoi를 안 돌고 나감
 	if (pa_arraylist->length == 0 || pa_arraylist->length == 1)
 	{
-		exit(0);
+		exit(1);
 	}
 }
 
 void print_error_exit()
 {
 	write(2, "Error\n", 6);
-	exit(0);
+	exit(1);
 }
 
 void ft_push(ft_stack_t *stack, int content)
@@ -765,6 +766,10 @@ void ft_sort(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivot, ft_stack_t *pa_out
 	{
 		swap_size_three_a(a, pa_out_queue);
 	}
+	else if (a->size == 5)
+	{
+		swap_size_five(a, b, pa_out_queue, a->size);
+	}
 	else
 	{
 		ft_split_a_to_b(a, b, pivot, pa_out_queue, a->size);
@@ -863,6 +868,75 @@ void swap_size_two_b(ft_stack_t *stack, ft_stack_t *queue)
 		ft_push(stack, top);
 		ft_sb(stack, queue);
 	}
+}
+
+void swap_size_five(ft_stack_t *a, ft_stack_t *b, ft_stack_t *queue, int count)
+{
+	int	max;
+	int	min;
+	int	top;
+	int	i;
+
+	max = get_max(a);
+	min = get_min(a);
+
+	i = 0;
+	while (i < count)
+	{
+		top = ft_peak(a);
+		if (top == max || top == min)
+		{
+			ft_pb(a, b, queue);
+		}
+		else
+		{
+			ft_ra(a, queue);
+		}
+		i++;
+	}
+	swap_size_three_a(a, queue);
+	swap_size_two_b(b, queue);
+	ft_pa(a, b, queue);
+	ft_ra(a, queue);
+	ft_pa(a, b, queue);
+}
+
+int	get_max(ft_stack_t *stack)
+{
+	int	max;
+	int	i;
+	int	value;
+
+	max = INT32_MIN;
+	i = 0;
+	while (i < stack->size)
+	{
+		value = ft_pop_front(stack);
+		if (value > max)
+			max = value;
+		ft_enqueue(stack, value);
+		i++;
+	}
+	return (max);
+}
+
+int	get_min(ft_stack_t *stack)
+{
+	int	min;
+	int	i;
+	int	value;
+
+	min = INT32_MAX;
+	i = 0;
+	while (i < stack->size)
+	{
+		value = ft_pop_front(stack);
+		if (value < min)
+			min = value;
+		ft_enqueue(stack, value);
+		i++;
+	}
+	return (min);
 }
 
 void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_t *queue, int stack_a_count)

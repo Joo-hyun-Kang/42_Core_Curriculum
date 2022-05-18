@@ -104,6 +104,9 @@ void swap_size_two_a(ft_stack_t *stack, ft_stack_t *queue);
 void swap_size_three_a(ft_stack_t *a, ft_stack_t *queue);
 void swap_three_num_a(ft_stack_t *stack, int sort_order, ft_stack_t *queue);
 void swap_size_two_b(ft_stack_t *stack, ft_stack_t *queue);
+void swap_size_five(ft_stack_t *a, ft_stack_t *b, ft_stack_t *queue, int count);
+int	get_max(ft_stack_t *stack);
+int	get_min(ft_stack_t *stack);
 void ft_split_a_to_b(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_t *queue, int stack_a_count);
 void ft_split_b_to_a(ft_stack_t *a, ft_stack_t *b, ft_stack_t *pivots, ft_stack_t *queue, int count);
 
