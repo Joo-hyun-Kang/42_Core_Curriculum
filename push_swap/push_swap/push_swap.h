@@ -22,7 +22,7 @@ typedef struct linkedlist {
 typedef struct ft_stack {
 	linkedlist_t *front;
 	linkedlist_t *back;
-	size_t size;
+	int	size;
 } ft_stack_t;
 
 enum COMMAND {
