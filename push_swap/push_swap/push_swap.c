@@ -295,7 +295,7 @@ int main(int argc, char** argv)
 	}
 	*/
 	free_arraylist(&pa_arraylist);
-	
+	/*
 	printf("\n");
 	printf("pivot element\n");
 
@@ -305,7 +305,7 @@ int main(int argc, char** argv)
 		printf("%d\n", temp->value);
 		temp = temp->next;
 	}
-	
+	*/
 	member.a = &pa_stack_a;
 	member.b = &pa_stack_b;
 	ft_sort(&member, &pa_pivot, &pa_out_queue);
@@ -379,11 +379,11 @@ void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end
 	ft_enqueue(stack, arr[two_thirds]);
 	ft_enqueue(stack, arr[one_thirds]);
 	
-	get_optimal_pivot_recursive(arr, stack, two_thirds + 1, end, end - two_thirds);
-	get_optimal_pivot_recursive(arr, stack, one_thirds, two_thirds, two_thirds - one_thirds + 1);
+	get_optimal_pivot_recursive(arr, stack, two_thirds, end, end - two_thirds + 1);
+	get_optimal_pivot_recursive(arr, stack, one_thirds, two_thirds - 1, two_thirds - one_thirds);
 	get_optimal_pivot_recursive(arr, stack, start, one_thirds - 1, one_thirds - start);
 
-	/*
+	/*    
 	int	mid;
 
 	if (end - start <= 1)
@@ -970,6 +970,8 @@ void ft_split_a_to_b(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	int	one_thirds_pivot;
 	int	top;
 
+	if (stack_a_count == 0)
+		return;
 	if (stack_a_count == 1)
 		return;
 	if (stack_a_count == 2)
@@ -1011,12 +1013,12 @@ void ft_split_a_to_b(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	}
 	while (i < ra_count)
 	{
-		ft_ra(member->a, queue);
+		ft_rra(member->a, queue);
 		i++;
 	}
 	while (i < rb_count)
 	{
-		ft_rb(member->b, queue);
+		ft_rrb(member->b, queue);
 		i++;
 	}
 	ft_split_a_to_b(member, pivots, queue, ra_count);
@@ -1034,6 +1036,8 @@ void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	int	one_thirds_pivot;
 	int	top;
 
+	if (count == 0)
+		return ;
 	if (count == 1)
 	{
 		ft_pa(member->a, member->b, queue);
@@ -1081,12 +1085,12 @@ void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	}
 	while (i < ra_count)
 	{
-		ft_ra(member->a, queue);
+		ft_rra(member->a, queue);
 		i++;
 	}
 	while (i < rb_count)
 	{
-		ft_rb(member->b, queue);
+		ft_rrb(member->b, queue);
 		i++;
 	}
 	ft_split_a_to_b(member, pivots, queue, ra_count);
