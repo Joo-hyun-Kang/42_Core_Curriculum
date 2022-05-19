@@ -313,7 +313,7 @@ int main(int argc, char** argv)
 	printf("\n");
 	printf("pa_stack element\n");
 
-	temp = pa_stack_a.front;
+	linkedlist_t *temp = pa_stack_a.front;
 	while (temp != NULL)
 	{
 		printf("%d\n", temp->value);
@@ -360,6 +360,10 @@ void	get_optiml_pivot(arraylist_t *arraylist, ft_stack_t *pivot)
 	// 예외처리 5: 정렬된 거 일 때 아무것도 출력하지 않고 그냥 종료
 	if (is_sorted(arraylist->pa_arr, len))
 		exit(1);
+	/*	
+	for (int j = 0; j < len; j++)
+		printf("%d\n", arr_copy[j]);
+	*/
 	get_optimal_pivot_recursive(arr_copy, pivot, 0, len - 1, len);
 	free(arr_copy);
 	arr_copy = NULL;
@@ -373,15 +377,15 @@ void	get_optimal_pivot_recursive(int *arr, ft_stack_t *stack, int start, int end
 	if (end - start <= 1)
 		return ;
 
-	two_thirds = start + (count * 2 / 3);
-	one_thirds = start + (count / 3);
+	two_thirds = start + (count / 3) * 2;
+	one_thirds = start + (count / 3) - 1;
 	
 	ft_enqueue(stack, arr[two_thirds]);
 	ft_enqueue(stack, arr[one_thirds]);
 	
 	get_optimal_pivot_recursive(arr, stack, two_thirds, end, end - two_thirds + 1);
-	get_optimal_pivot_recursive(arr, stack, one_thirds, two_thirds - 1, two_thirds - one_thirds);
-	get_optimal_pivot_recursive(arr, stack, start, one_thirds - 1, one_thirds - start);
+	get_optimal_pivot_recursive(arr, stack, one_thirds + 1, two_thirds - 1, two_thirds - one_thirds - 1);
+	get_optimal_pivot_recursive(arr, stack, start, one_thirds, one_thirds - start + 1);
 
 	/*    
 	int	mid;
@@ -997,7 +1001,7 @@ void ft_split_a_to_b(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 		{
 			ft_pb(member->a, member->b, queue);
 			pb_count++;
-			if (top >= one_thirds_pivot)
+			if (top > one_thirds_pivot)
 			{
 				ft_rb(member->b, queue);
 				rb_count++;
@@ -1059,7 +1063,7 @@ void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	while (i < count)
 	{
 		top = ft_peak(member->b);
-		if (top >= one_thirds_pivot)
+		if (top > one_thirds_pivot)
 		{
 			ft_pa(member->a, member->b, queue);
 			pa_count++;
