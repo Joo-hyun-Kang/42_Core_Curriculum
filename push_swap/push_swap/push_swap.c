@@ -566,7 +566,7 @@ int	ft_pop_front(ft_stack_t *stack)
 {
 	int	result;
 
-	assert(stack->size != 0);
+	//assert(stack->size != 0);
 	result = stack->front->value;
 	stack->front = ft_remove(stack);
 	stack->size--;
@@ -1059,7 +1059,7 @@ void ft_split_b_to_a(push_swap_member_t *member, ft_stack_t *pivots, ft_stack_t 
 	while (i < count)
 	{
 		top = ft_peak(member->b);
-		if (top > one_thirds_pivot)
+		if (top >= one_thirds_pivot)
 		{
 			ft_pa(member->a, member->b, queue);
 			pa_count++;
