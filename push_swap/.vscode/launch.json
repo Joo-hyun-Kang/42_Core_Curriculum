@@ -1,0 +1,17 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "clang build active file",
+        "type": "lldb",
+        "request": "launch",
+        "program": "${fileDirname}/${fileBasenameNoExtension}",
+        "args": ["156 323 13 436 435 469 248 61 489 473 232 438 134 73 373 340 186 149 361 309 11 103 480 110 307 132 165 128 293 403 449 225 260 384 160 228 131 220 217 104"],
+        "cwd": "${workspaceFolder}",
+        "preLaunchTask": "clang build active file"
+      }
+    ]
+  }

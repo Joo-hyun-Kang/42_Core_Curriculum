@@ -1,0 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_swap_third.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/21 22:23:46 by jokang            #+#    #+#             */
+/*   Updated: 2022/05/21 23:03:22 by jokang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void	swap_hard_ba(t_stack *a, t_stack *b, t_stack *qu)
+{
+	int	arr[3];
+	int	sort_order;
+
+	sort_order = INT32_MAX;
+	arr[0] = ft_pop_front(b);
+	arr[1] = ft_pop_front(b);
+	arr[2] = ft_pop_front(b);
+	ft_push(b, arr[2]);
+	ft_push(b, arr[1]);
+	ft_push(b, arr[0]);
+	if (arr[0] > arr[1] && arr[0] < arr[2])
+		sort_order = THREE_NUM_ORDER_CASE1;
+	else if (arr[0] > arr[1] && arr[1] > arr[2])
+		sort_order = THREE_NUM_ORDER_CASE2;
+	else if (arr[0] > arr[2] && arr[2] > arr[1])
+		sort_order = THREE_NUM_ORDER_CASE3;
+	else if (arr[0] < arr[2] && arr[2] < arr[1])
+		sort_order = THREE_NUM_ORDER_CASE4;
+	else if (arr[0] > arr[2] && arr[0] < arr[1])
+		sort_order = THREE_NUM_ORDER_CASE5;
+	else if (arr[0] < arr[1] && arr[1] < arr[2])
+		sort_order = THREE_NUM_ORDER_CASE6;
+	swap_hard_ba_help(a, b, sort_order, qu);
+}
+
+void	swap_hard_ba_help(t_stack *a, t_stack *b, int num, t_stack *qu)
+{
+	if (num == THREE_NUM_ORDER_CASE1)
+	{
+		ft_pa(a, b, qu);
+		ft_ra(a, qu);
+		ft_rb(b, qu);
+		ft_pa(a, b, qu);
+		ft_rra(a, qu);
+		ft_rrb(b, qu);
+		ft_pa(a, b, qu);
+	}
+	else if (num == THREE_NUM_ORDER_CASE2)
+	{
+		ft_pa(a, b, qu);
+		ft_pa(a, b, qu);
+		ft_pa(a, b, qu);
+	}
+	else if (num == THREE_NUM_ORDER_CASE3)
+	{
+		ft_pa(a, b, qu);
+		ft_sb(b, qu);
+		ft_pa(a, b, qu);
+		ft_pa(a, b, qu);
+	}
+	else
+		swap_ba_help(a, b, num, qu);
+}
+
+void	swap_ba_help(t_stack *a, t_stack *b, int num, t_stack *qu)
+{
+	if (num == THREE_NUM_ORDER_CASE4)
+	{
+		ft_rb(b, qu);
+		ft_pa(a, b, qu);
+		ft_pa(a, b, qu);
+		ft_rrb(b, qu);
+		ft_pa(a, b, qu);
+	}
+	else if (num == THREE_NUM_ORDER_CASE5)
+	{
+		ft_rb(b, qu);
+		ft_pa(a, b, qu);
+		ft_rrb(b, qu);
+		ft_pa(a, b, qu);
+		ft_pa(a, b, qu);
+	}
+	else
+		swap_ba_help_sec(a, b, num, qu);
+}
+
+void	swap_ba_help_sec(t_stack *a, t_stack *b, int num, t_stack *qu)
+{
+	if (num == THREE_NUM_ORDER_CASE6)
+	{
+		ft_rb(b, qu);
+		ft_rb(b, qu);
+		ft_pa(a, b, qu);
+		ft_rrb(b, qu);
+		ft_pa(a, b, qu);
+		ft_rrb(b, qu);
+		ft_pa(a, b, qu);
+	}
+}
