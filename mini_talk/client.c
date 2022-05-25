@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 18:06:27 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/25 21:27:55 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/25 22:58:36 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 #define SIGNAL_DELAY (50)
 
+#include <stdio.h>
+#include <time.h>
+
 void	ft_kill(char **argv, int server_pid)
 {
 	unsigned char	*p;
 	unsigned char	ch;
 	unsigned char	signal;
 	int				i;
+
+	clock_t s = clock(); // timer
 
 	p = (unsigned char *)argv[2];
 	while (*p != '\0')
@@ -40,6 +45,9 @@ void	ft_kill(char **argv, int server_pid)
 	}
 	if (*p == '\0')
 		ft_send_null_terminator(server_pid);
+
+	clock_t f = clock();
+	printf("Duration: %lf [sec]\n", (double)(f - s)/CLOCKS_PER_SEC); // timer
 }
 
 void	ft_send_null_terminator(int server_pid)
