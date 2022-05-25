@@ -1,0 +1,24 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/jokang/inner/push_swap'
+gcc -Wall -Wextra -Werror -c arraylist.c -I./ -o arraylist.o
+gcc -Wall -Wextra -Werror -c command.c -I./ -o command.o
+gcc -Wall -Wextra -Werror -c command_queue.c -I./ -o command_queue.o
+gcc -Wall -Wextra -Werror -c command_three.c -I./ -o command_three.o
+gcc -Wall -Wextra -Werror -c command_two.c -I./ -o command_two.o
+gcc -Wall -Wextra -Werror -c ft_stack_fuction.c -I./ -o ft_stack_fuction.o
+gcc -Wall -Wextra -Werror -c ft_stack_fuction_two.c -I./ -o ft_stack_fuction_two.o
+gcc -Wall -Wextra -Werror -c libft_chagned.c -I./ -o libft_chagned.o
+gcc -Wall -Wextra -Werror -c libft_utils.c -I./ -o libft_utils.o
+gcc -Wall -Wextra -Werror -c libft_utils_two.c -I./ -o libft_utils_two.o
+gcc -Wall -Wextra -Werror -c push_swap.c -I./ -o push_swap.o
+gcc -Wall -Wextra -Werror -c push_swap_utils.c -I./ -o push_swap_utils.o
+gcc -Wall -Wextra -Werror -c quick_sort.c -I./ -o quick_sort.o
+gcc -Wall -Wextra -Werror -c sort.c -I./ -o sort.o
+gcc -Wall -Wextra -Werror -c sort_swap.c -I./ -o sort_swap.o
+gcc -Wall -Wextra -Werror -c sort_swap_sec.c -I./ -o sort_swap_sec.o
+gcc -Wall -Wextra -Werror -c sort_swap_third.c -I./ -o sort_swap_third.o
+gcc -Wall -Wextra -Werror -c sort_utils.c -I./ -o sort_utils.o
+make all -C libft /
+gcc -o push_swap arraylist.o command.o command_queue.o command_three.o command_two.o ft_stack_fuction.o ft_stack_fuction_two.o libft_chagned.o libft_utils.o libft_utils_two.o push_swap.o push_swap_utils.o quick_sort.o sort.o sort_swap.o sort_swap_sec.o sort_swap_third.o sort_utils.o -Llibft -lft
+make: Leaving directory `/Users/jokang/inner/push_swap'
+ 
