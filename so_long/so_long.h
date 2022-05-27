@@ -89,7 +89,7 @@ void		exit_malloc_fail(void *p);
 
 /* SO_LONG_UNTILS.c */
 
-void	ft_print_error();
+void		ft_print_error();
 
 /* ??? */
 
