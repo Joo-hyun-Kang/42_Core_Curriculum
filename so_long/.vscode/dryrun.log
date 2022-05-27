@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/jokang/inner/so_long'
+gcc -L./mlx -lmlx -framework OpenGL -framework AppKit so_long.c
+make: Leaving directory `/Users/jokang/inner/so_long'
+ 
