@@ -11,9 +11,16 @@
 
 # include "libft/libft.h"
 
+# define FT_NULL (0)
 # define TRUE (1)
 # define FALSE (0)
 # define BASIC_CAPACITY (10)
+
+# define ESC_KEY (53)
+# define W_KEY (13)
+# define A_KEY (0)
+# define D_KEY (2)
+# define S_KEY (1)
 
 typedef struct arraylist {
 	char	*pa_arr;
@@ -28,6 +35,9 @@ typedef struct map
 	void		*win_ptr;
 	int			width;
 	int			height;
+	int			item_total;
+	int			player_pos;
+	int			is_square;
 }	t_map;
 
 typedef struct image
@@ -39,12 +49,26 @@ typedef struct image
 	void	*player;
 }	t_image;
 
-/*
 typedef struct play
 {
-	
+	int	move_count;
+	int	item_count;
 }	t_play;
-*/
+
+typedef struct game
+{
+	t_map	map;
+	t_image	image;
+	t_play	play;
+}	t_game;
+
+enum e_DIR
+{
+	DIR_NORTH = W_KEY,
+	DIR_WEST = A_KEY,
+	DIR_SOUTH = S_KEY,
+	DIR_EAST = D_KEY
+};
 
 typedef struct s_table
 {
@@ -101,6 +125,11 @@ int			check_game_map(t_map *map);
 /* IMAGE.C */
 
 void		image_init(t_map *map, t_image *image);
+void		draw_map_to_image(t_map *map, t_image *image);
+
+/* PLAY.C */
+
+int			catch_move(int keycode, t_game *g);
 
 
 #endif /* SO_LONG_H */

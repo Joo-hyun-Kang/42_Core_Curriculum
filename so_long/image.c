@@ -14,33 +14,35 @@ void	image_init(t_map *map, t_image *image)
 
 void	draw_map_to_image(t_map *map, t_image *image)
 {
-	int	i;
-	int	j;
+	int	h;
+	int	w;
 
-	i = 0;
-	while (i < map->height)
+	h = 0;
+	while (h < map->height)
 	{
-		j = 0;
-		while (j < map->width)
+		w = 0;
+		while (w < map->width)
 		{
-			if (map->game_map->pa_arr[map->width * i + j] == '0')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->ground, i, j);
-			else if (map->game_map->pa_arr[map->width * i + j] == '1')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->wall, i, j);
-			else if (map->game_map->pa_arr[map->width * i + j] == 'C')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->item, i, j);
-			else if (map->game_map->pa_arr[map->width * i + j] == 'E')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->door, i, j);
-			else if (map->game_map->pa_arr[map->width * i + j] == 'P')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->door, i, j);
+			if (map->game_map->pa_arr[map->width * h + w] == '0')
+				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->ground, w * 64, h * 64);
+			else if (map->game_map->pa_arr[map->width * h + w] == '1')
+				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->wall, w * 64, h * 64);
+			else if (map->game_map->pa_arr[map->width * h + w] == 'C')
+			{
+				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->ground, w * 64, h * 64);
+				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->item, w * 64, h * 64);
+			}
+			else if (map->game_map->pa_arr[map->width * h + w] == 'E')
+				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->door, w * 64, h * 64);
+			else if (map->game_map->pa_arr[map->width * h + w] == 'P')
+			{
+				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->ground, w * 64, h * 64);
+				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->player, w * 64, h * 64);
+			}
 			else
 				ft_print_error();
-			j++;
-			// 0000
-			// 0000
-			// 0123
-			// 4567
+			w++;
 		}
-		i++;
+		h++;
 	}
 }

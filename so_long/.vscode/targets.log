@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Fri May 27 19:51:44 2022
+# Make data base, printed on Sat May 28 19:36:35 2022
 
 # Variables
 
@@ -37,8 +37,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cmnh00355c/T/vscode-ipc-7963a7ba-b738-4ff5-98b2-0ab775b49d9a.sock
- 
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cmnh00355c/T/vscode-ipc-07939412-d027-4c3d-814c-4383672fadd8.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -52,7 +51,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.Ogs3t6tlRI/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.q1PblroZNn/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -72,7 +71,7 @@ VSCODE_CODE_CACHE_PATH = /Users/jokang/Library/Application Support/Code/CachedDa
 # environment
 LOGNAME = jokang
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 ZSH = /Users/jokang/.oh-my-zsh
 # environment
@@ -116,7 +115,7 @@ MFLAGS = -Rrqp
 # environment
 MAIL = autoba9687@gmail.com
 # environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.2352
+XPC_SERVICE_NAME = com.microsoft.VSCode.2348
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -142,7 +141,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 5675
+VSCODE_PID = 4450
 # variable set hash-table stats:
 # Load=65/1024=6%, Rehash=0, Collisions=1/91=1%
 
@@ -152,9 +151,9 @@ VSCODE_PID = 5675
 
 # Directories
 
-# . (device 16777225, inode 4710059): 11 files, no impossibilities.
+# . (device 16777225, inode 4710059): 28 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -200,7 +199,6 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-05-26 14:12:10
 #  File has been updated.
 #  Successfully updated.
@@ -226,6 +224,6 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Fri May 27 19:51:44 2022
+# Finished Make data base on Sat May 28 19:36:35 2022
 
  

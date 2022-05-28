@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 00:45:58 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/27 15:35:55 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/28 15:27:14 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	char	*src_temp;
 	size_t	i;
 
-	if (dst == NULL && src == NULL)
-		return (NULL);
+	if (dst == FT_NULL && src == FT_NULL)
+		return (FT_NULL);
 	dst_temp = (char *)dst;
 	src_temp = (char *)src;
 	i = 0;
@@ -38,7 +38,7 @@ int	add_back_table_malloc(t_table **head)
 	tmp = *head;
 	while (TRUE)
 	{
-		if (tmp->next == NULL)
+		if (tmp->next == FT_NULL)
 		{
 			tmp->next = build_table_malloc();
 			return (TRUE);
@@ -54,13 +54,13 @@ t_table	*build_table_malloc(void)
 	table = (t_table *)malloc(sizeof(t_table));
 	table->string_pa = (char *)malloc(sizeof(char) * e_SIZE);
 	table->capacity = 0;
-	table->next = NULL;
+	table->next = FT_NULL;
 	return (table);
 }
 
 int	is_table_capacity_full(t_table *table)
 {
-	while (table->next != NULL)
+	while (table->next != FT_NULL)
 	{
 		table = table->next;
 	}
@@ -82,7 +82,7 @@ char	*ft_strdup_table_malloc(t_table *head)
 	tmp = head;
 	count = 0;
 	total = 0;
-	while (tmp != NULL)
+	while (tmp != FT_NULL)
 	{
 		total += tmp->capacity;
 		tmp = tmp->next;

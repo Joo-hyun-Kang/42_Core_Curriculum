@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:50:59 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/27 20:39:50 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/28 15:49:37 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	allocate_arraylist(t_arraylist *arraylist)
 {
 	char	*tmp;
 
-	if (arraylist->pa_arr == NULL || arraylist->capacity == 0)
+	if (arraylist->pa_arr == FT_NULL || arraylist->capacity == 0)
 	{
 		arraylist->pa_arr = (char *)malloc(BASIC_CAPACITY * sizeof(char));
 		exit_malloc_fail(arraylist->pa_arr);
@@ -49,14 +49,14 @@ int	allocate_arraylist(t_arraylist *arraylist)
 		arraylist->capacity = BASIC_CAPACITY;
 		return (TRUE);
 	}
-	if (arraylist->pa_arr != NULL && arraylist->capacity != 0)
+	if (arraylist->pa_arr != FT_NULL && arraylist->capacity != 0)
 	{
 		tmp = (char *)malloc(arraylist->capacity * 2 * sizeof(char));
 		exit_malloc_fail(tmp);
 		ft_memcpy(tmp, arraylist->pa_arr, arraylist->length);
 		free(arraylist->pa_arr);
 		arraylist->pa_arr = tmp;
-		tmp = NULL;
+		tmp = FT_NULL;
 		arraylist->capacity *= 2;
 		return (TRUE);
 	}
@@ -65,7 +65,7 @@ int	allocate_arraylist(t_arraylist *arraylist)
 
 void	exit_malloc_fail(void *p)
 {
-	if (p == NULL)
+	if (p == FT_NULL)
 	{
 		exit(1);
 	}
