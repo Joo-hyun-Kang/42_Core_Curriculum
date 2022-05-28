@@ -15,6 +15,8 @@ int	map_init_malloc(t_map *map, char *filename)
 	map->width = 0;
 	map->height = 0;
 	map->item_total = 0;
+	map->player_total = 0;
+	map->exit_total = 0;
 	map->is_square = TRUE;
 
 	map->game_map = (t_arraylist *)malloc(sizeof(t_arraylist));
@@ -33,20 +35,45 @@ int	map_init_malloc(t_map *map, char *filename)
 	return (0);
 }
 
-int	check_game_map(t_map *map)
+// 체크하기
+int	check_game_map(t_map *m)
 {
-	// 지도가 직사각형인지 체크
+	char	*p;
+	int		h;
+	int		w;
 	
-	// ***** 5
-	// ****** 6
-	// **** 4
-	//
-	// 5 * 3 = 15
-	// 
-
-	// 지도가 벽으로 둘러쌓였는 지 체크
-
-	// 맵에 출구 / 시작 지점 / 수집품이 없는 경우
+	if (!m->is_square)
+		ft_print_error();
+	h = 0;
+	p = m->game_map->pa_arr;
+	while (h < m->height)
+	{
+		w = 0;
+		while (w < m->width)
+		{
+			if (h == 0 && p[h * m->width + w] != '1')
+				ft_print_error();
+			if (h == m->height - 1 && p[h * m->width + w] != '1')
+				ft_print_error();
+			if (w == 0 && p[h * m->width + w] != '1')
+				ft_print_error();
+			if (w == m->width - 1 && p[h * m->width + w] != '1')
+				ft_print_error();
+			if (p[h * m->width + w] == 'E')
+				m->exit_total++;
+			else if (p[h * m->width + w] == 'C')
+				m->item_total++;
+			else if (p[h * m->width + w] == 'P')
+			{
+				m->player_total++;
+				m->player_pos = h * m->width + w;
+			}
+			w++;
+		}
+		h++;
+	}
+	if (m->exit_total == 0 || m->player_total != 1 || m->item_total == 0)
+			ft_print_error();
 	return (0);
 }
 
@@ -59,17 +86,17 @@ void	set_game_map(t_map *map, char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		exit(0);
-	prev_width = 0;
+	pa_line = get_next_line(fd);
+	prev_width = ft_strlen(pa_line) - 1;
+	map->height++;
+	ft_copy_line(map->game_map, pa_line);
+	free(pa_line);
 	pa_line = get_next_line(fd);
 	while (pa_line != NULL)
 	{
 		map->width = ft_strlen(pa_line) - 1;
-		// 최초의 이전 값은 0인데 일단 이건 넘어거야 함
-		// 0인 것보다 크면 넘어감
-		if (map->width > prev_width)
-		{
-			
-		}
+		if (prev_width != map->width)
+			map->is_square = FALSE;
 		map->height++;
 		ft_copy_line(map->game_map, pa_line);
 		free(pa_line);
@@ -89,7 +116,7 @@ void	ft_copy_line(t_arraylist *list, char *src)
 
 int main(int argc, char **argv)
 {
-	t_game	game;
+	t_game	*game;
 	/*
 	{
 		void	*mlx_ptr;
@@ -101,16 +128,25 @@ int main(int argc, char **argv)
 	}
 	*/
 	// 예외처리 ㄱㄱ
-	map_init_malloc(&game.map, argv[FIRST_ARG]);
+	game = (t_game *)malloc(sizeof(t_game));
+	game->pa_map = (t_map *)malloc(sizeof(t_map));
+	game->pa_image = (t_image *)malloc(sizeof(t_image));
+	game->pa_play = (t_play *)malloc(sizeof(t_play));
+	game->pa_play->item_count = 0;
+	game->pa_play->step_count = 0;
+	map_init_malloc(game->pa_map, argv[FIRST_ARG]);
 
-	image_init(&game.map, &game.image);
+	image_init(game->pa_map, game->pa_image);
 
-	draw_map_to_image(&game.map, &game.image);
+	draw_map_to_image(game->pa_map, game->pa_image);
  
-	mlx_key_hook(game.map.mlx_ptr, catch_move, &game);
+	mlx_key_hook(game->pa_map->win_ptr, &catch_move, game);
 
-	mlx_loop(game.map.mlx_ptr);
+	mlx_loop(game->pa_map->mlx_ptr);
 	//free ㄱㄱ
-	//free(map)
 	//free(arraylist)
+	//free(map)
+	//free(image)
+	//free(play)
+	//free(game)
 }

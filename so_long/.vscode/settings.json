@@ -19,6 +19,7 @@
         "libft.h": "c",
         "unistd.h": "c",
         "__config": "c",
-        "so_long.h": "c"
+        "so_long.h": "c",
+        "__node_handle": "c"
     }
 }

@@ -36,6 +36,8 @@ typedef struct map
 	int			width;
 	int			height;
 	int			item_total;
+	int			player_total;
+	int			exit_total;
 	int			player_pos;
 	int			is_square;
 }	t_map;
@@ -49,17 +51,17 @@ typedef struct image
 	void	*player;
 }	t_image;
 
-typedef struct play
+typedef struct ft_play
 {
-	int	move_count;
+	int	step_count;
 	int	item_count;
 }	t_play;
 
 typedef struct game
 {
-	t_map	map;
-	t_image	image;
-	t_play	play;
+	t_map	*pa_map;
+	t_image	*pa_image;
+	t_play	*pa_play;
 }	t_game;
 
 enum e_DIR
@@ -130,6 +132,7 @@ void		draw_map_to_image(t_map *map, t_image *image);
 /* PLAY.C */
 
 int			catch_move(int keycode, t_game *g);
-
+void		ft_exit_game();
+void		move_north(t_game *g);
 
 #endif /* SO_LONG_H */
