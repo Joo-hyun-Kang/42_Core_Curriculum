@@ -6,13 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Mon May 30 13:40:28 2022
+# Make data base, printed on Mon May 30 18:28:18 2022
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -29,16 +27,22 @@ VSCODE_LOG_NATIVE = false
 CURDIR := /Users/jokang/inner/so_long
 # makefile
 SHELL = /bin/sh
+# makefile (from `Makefile', line 31)
+RM = rm -rf
 # environment
 VSCODE_NLS_CONFIG = {"locale":"ko","availableLanguages":{"*":"ko"},"_languagePackId":"738ac08552cca045871a73764b8c446f.ko","_translationsConfigFile":"/Users/jokang/Library/Application Support/Code/clp/738ac08552cca045871a73764b8c446f.ko/tcf.json","_cacheRoot":"/Users/jokang/Library/Application Support/Code/clp/738ac08552cca045871a73764b8c446f.ko","_resolvedLanguagePackCoreLocation":"/Users/jokang/Library/Application Support/Code/clp/738ac08552cca045871a73764b8c446f.ko/57fd6d0195bb9b9d1b49f6da5db789060795de47","_corruptedFile":"/Users/jokang/Library/Application Support/Code/clp/738ac08552cca045871a73764b8c446f.ko/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
+# makefile (from `Makefile', line 29)
+CFLAGS = -Wall -Wextra -Werror
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
+# makefile (from `Makefile', line 22)
+OBJS = $(SRCS:.c=.o)
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cmnh00355c/T/vscode-ipc-dd61ee29-a941-4920-a4e2-c673d0ab93c2.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cmnh00355c/T/vscode-ipc-5a8836c9-0e9c-4c89-b2e1-9e8ec45aede8.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -85,14 +89,22 @@ XPC_FLAGS = 0x0
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
+# makefile (from `Makefile', line 13)
+SRCS = arraylist.c get_next_line_bonus.c get_next_line_utils_bonus.c image.c map.c move.c play.c so_long.c
 # environment
 SHLVL = 1
+# makefile (from `Makefile', line 25)
+LIBFT = libft
+# makefile (from `Makefile', line 28)
+CC = gcc
 # default
 MAKE_VERSION := 3.81
 # environment
 USER = jokang
 # makefile
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := so_long
+# makefile (from `Makefile', line 24)
+NAME = so_long
 # environment
 LESS = -R
 # automatic
@@ -143,8 +155,10 @@ MAKELEVEL := 0
 LANG = C
 # environment
 VSCODE_PID = 98595
+# makefile (from `Makefile', line 26)
+LIBFT_LIB = libft.a
 # variable set hash-table stats:
-# Load=65/1024=6%, Rehash=0, Collisions=1/91=1%
+# Load=73/1024=7%, Rehash=0, Collisions=4/101=4%
 
 # Pattern-specific Variable Values
 
@@ -152,45 +166,29 @@ VSCODE_PID = 98595
 
 # Directories
 
-# . (device 16777225, inode 4710059): 30 files, no impossibilities.
+# . (device 16777225, inode 4710059): 28 files, no impossibilities.
 
-# 30 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
- 
 
-all:
+all: so_long
+#  Phony target (prerequisite of .PHONY).
 #  Command-line target.
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: `'
 #  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := all
-# automatic
-# % := 
-# automatic
-# * := 
-# automatic
-# + := 
-# automatic
-# | := 
-# automatic
-# < := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
+#  File has not been updated.
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/10=10%
-#  commands to execute (from `Makefile', line 2):
-	gcc -L./mlx -lmlx -framework OpenGL -framework AppKit *.c libft.a -o so_long
-	
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+.PHONY: all clean fclean re bonus
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 .SUFFIXES:
@@ -199,13 +197,58 @@ all:
 #  File has not been updated.
 
 # Not a target:
+get_next_line_utils_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+arraylist.o:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-28 23:05:33
+#  Last modified 2022-05-30 16:14:08
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+map.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+bonus:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+.c.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 34):
+	$(CC) $(CFLAGS) -c $< -I./ -o $(<:.c=.o)
+	
+
+fclean: clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 47):
+	$(RM) $(NAME)
+	$(RM) $(LIBFT_LIB)
+	make fclean -C $(LIBFT)
+	
 
 # Not a target:
 .DEFAULT:
@@ -213,8 +256,68 @@ Makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+get_next_line_bonus.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+re: fclean all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+image.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 43):
+	$(RM) $(OBJS) $(OBJS_BONUS)
+	make clean -C $(LIBFT)
+	
+
+# Not a target:
+move.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+play.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+so_long: arraylist.o get_next_line_bonus.o get_next_line_utils_bonus.o image.o map.o move.o play.o so_long.o
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+ 
+make: *** No rule to make target `arraylist.o', needed by `so_long'.  Stop.
+
+#  commands to execute (from `Makefile', line 37):
+	make all -C $(LIBFT)
+	gcc -o $(NAME) $(OBJS) -Llibft -lft -L./mlx -lmlx -framework OpenGL -framework AppKit
+	
+
+# Not a target:
+so_long.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # files hash-table stats:
-# Load=4/1024=0%, Rehash=0, Collisions=0/18=0%
+# Load=19/1024=2%, Rehash=0, Collisions=0/49=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -226,6 +329,6 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon May 30 13:40:28 2022
+# Finished Make data base on Mon May 30 18:28:18 2022
 
  

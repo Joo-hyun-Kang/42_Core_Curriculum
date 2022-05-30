@@ -1,5 +1,14 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/jokang/inner/so_long'
-gcc -L./mlx -lmlx -framework OpenGL -framework AppKit *.c libft.a -o so_long
+gcc -Wall -Wextra -Werror -c arraylist.c -I./ -o arraylist.o
+gcc -Wall -Wextra -Werror -c get_next_line_bonus.c -I./ -o get_next_line_bonus.o
+gcc -Wall -Wextra -Werror -c get_next_line_utils_bonus.c -I./ -o get_next_line_utils_bonus.o
+gcc -Wall -Wextra -Werror -c image.c -I./ -o image.o
+gcc -Wall -Wextra -Werror -c map.c -I./ -o map.o
+gcc -Wall -Wextra -Werror -c move.c -I./ -o move.o
+gcc -Wall -Wextra -Werror -c play.c -I./ -o play.o
+gcc -Wall -Wextra -Werror -c so_long.c -I./ -o so_long.o
+make all -C libft
+gcc -o so_long arraylist.o get_next_line_bonus.o get_next_line_utils_bonus.o image.o map.o move.o play.o so_long.o -Llibft -lft -L./mlx -lmlx -framework OpenGL -framework AppKit
 make: Leaving directory `/Users/jokang/inner/so_long'
  

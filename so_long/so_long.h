@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:05:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/30 16:09:09 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:57:32 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void		draw_map_to_image_helper(t_map *m, t_image *i, int h, int w);
 /* PLAY.C */
 
 int			catch_move(int keycode, t_game *g);
-void		ft_exit_game(t_game *g);
+void		ft_exit_game(t_game *g, int is_esc);
 int			ft_end_game_press_x(t_game *g);
 void		ft_printf_steps(t_game *g);
 

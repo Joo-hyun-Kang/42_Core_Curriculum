@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:48:36 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/30 15:51:26 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:58:21 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	move_north(t_game *g)
 	}
 	else if ((map[player_pos - g->pa_map->width] == 'E') \
 	&& (g->pa_play->item_count == g->pa_map->item_total))
-		ft_exit_game(g);
+		ft_exit_game(g, FALSE);
 }
 
 void	move_south(t_game *g)
@@ -67,7 +67,7 @@ void	move_south(t_game *g)
 	}
 	else if ((map[player_pos + g->pa_map->width] == 'E') \
 	&& (g->pa_play->item_count == g->pa_map->item_total))
-		ft_exit_game(g);
+		ft_exit_game(g, FALSE);
 }
 
 void	move_east(t_game *g)
@@ -96,7 +96,7 @@ void	move_east(t_game *g)
 	}
 	else if ((map[player_pos + 1] == 'E') \
 	&& (g->pa_play->item_count == g->pa_map->item_total))
-		ft_exit_game(g);
+		ft_exit_game(g, FALSE);
 }
 
 void	move_west(t_game *g)
@@ -125,5 +125,5 @@ void	move_west(t_game *g)
 	}
 	else if ((map[player_pos + -1] == 'E') \
 	&& (g->pa_play->item_count == g->pa_map->item_total))
-		ft_exit_game(g);
+		ft_exit_game(g, FALSE);
 }

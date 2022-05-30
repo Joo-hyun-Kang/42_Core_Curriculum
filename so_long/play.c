@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:43:22 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/30 16:09:14 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:59:53 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	ft_end_game_press_x(t_game *g)
 	exit(1);
 }
 
-void	ft_exit_game(t_game *g)
+void	ft_exit_game(t_game *g, int is_esc)
 {
-	ft_printf_steps(g);
+	if (!is_esc)
+		ft_printf_steps(g);
 	printf("GAME FINISHED GOOD BYE!\n");
 	ft_free_game_resource(g);
 	exit(1);
@@ -43,6 +44,6 @@ int	catch_move(int keycode, t_game *g)
 	else if (keycode == D_KEY)
 		move_east(g);
 	else if (keycode == ESC_KEY)
-		ft_exit_game(g);
+		ft_exit_game(g, TRUE);
 	return (0);
 }
