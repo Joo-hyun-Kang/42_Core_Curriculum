@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:50:59 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/28 15:49:37 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/30 14:49:13 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,12 @@ void	exit_malloc_fail(void *p)
 	{
 		exit(1);
 	}
+}
+
+void	free_arraylist(t_arraylist *arraylist)
+{
+	free(arraylist->pa_arr);
+	arraylist->pa_arr = FT_NULL;
+	arraylist->capacity = 0;
+	arraylist->length = 0;
 }

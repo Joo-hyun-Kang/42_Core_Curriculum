@@ -8,10 +8,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Sat May 28 19:36:35 2022
+# Make data base, printed on Mon May 30 13:40:28 2022
 
 # Variables
 
+ 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -37,7 +38,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cmnh00355c/T/vscode-ipc-07939412-d027-4c3d-814c-4383672fadd8.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cmnh00355c/T/vscode-ipc-dd61ee29-a941-4920-a4e2-c673d0ab93c2.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -51,7 +52,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.q1PblroZNn/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.NQaIBAiCNp/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -71,7 +72,7 @@ VSCODE_CODE_CACHE_PATH = /Users/jokang/Library/Application Support/Code/CachedDa
 # environment
 LOGNAME = jokang
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 ZSH = /Users/jokang/.oh-my-zsh
 # environment
@@ -115,7 +116,7 @@ MFLAGS = -Rrqp
 # environment
 MAIL = autoba9687@gmail.com
 # environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.2348
+XPC_SERVICE_NAME = com.microsoft.VSCode.2344
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -141,7 +142,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 4450
+VSCODE_PID = 98595
 # variable set hash-table stats:
 # Load=65/1024=6%, Rehash=0, Collisions=1/91=1%
 
@@ -151,15 +152,16 @@ VSCODE_PID = 4450
 
 # Directories
 
-# . (device 16777225, inode 4710059): 28 files, no impossibilities.
+# . (device 16777225, inode 4710059): 30 files, no impossibilities.
 
-# 28 files, no impossibilities in 1 directories.
+# 30 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
+ 
 
 all:
 #  Command-line target.
@@ -187,7 +189,7 @@ all:
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/10=10%
 #  commands to execute (from `Makefile', line 2):
-	gcc -L./mlx -lmlx -framework OpenGL -framework AppKit so_long.c
+	gcc -L./mlx -lmlx -framework OpenGL -framework AppKit *.c libft.a -o so_long
 	
 
 # Not a target:
@@ -199,7 +201,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-26 14:12:10
+#  Last modified 2022-05-28 23:05:33
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -224,6 +226,6 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat May 28 19:36:35 2022
+# Finished Make data base on Mon May 30 13:40:28 2022
 
  
