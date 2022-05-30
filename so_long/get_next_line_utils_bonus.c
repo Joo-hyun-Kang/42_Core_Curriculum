@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 00:45:58 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/28 15:27:14 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:08:14 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_table	*build_table_malloc(void)
 	t_table	*table;
 
 	table = (t_table *)malloc(sizeof(t_table));
-	table->string_pa = (char *)malloc(sizeof(char) * e_SIZE);
+	table->string_pa = (char *)malloc(sizeof(char) * e_size);
 	table->capacity = 0;
 	table->next = FT_NULL;
 	return (table);
@@ -64,7 +64,7 @@ int	is_table_capacity_full(t_table *table)
 	{
 		table = table->next;
 	}
-	if (table->capacity == e_SIZE)
+	if (table->capacity == e_size)
 	{
 		return (TRUE);
 	}
@@ -92,10 +92,10 @@ char	*ft_strdup_table_malloc(t_table *head)
 	i = 0;
 	while (i < count - 1)
 	{
-		ft_memcpy(&res[i++ *e_SIZE], head->string_pa, e_SIZE);
+		ft_memcpy(&res[i++ *e_size], head->string_pa, e_size);
 		head = head->next;
 	}
-	ft_memcpy(&res[i * e_SIZE], head->string_pa, total - e_SIZE * (count - 1));
+	ft_memcpy(&res[i * e_size], head->string_pa, total - e_size * (count - 1));
 	res[total] = '\0';
 	return (res);
 }

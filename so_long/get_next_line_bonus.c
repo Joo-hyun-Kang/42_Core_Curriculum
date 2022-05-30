@@ -6,16 +6,16 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 00:39:36 by jokang            #+#    #+#             */
-/*   Updated: 2022/05/28 15:27:18 by jokang           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:07:12 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-# define BUFFER_SIZE (30)
+#define BUFFER_SIZE (30)
 
 t_queue	*set_queue_list(t_queue **queue, int fd)
-{ 
+{
 	t_queue	**p;
 	int		is_exist;
 
@@ -34,7 +34,7 @@ t_queue	*set_queue_list(t_queue **queue, int fd)
 	{
 		*p = (t_queue *)malloc(sizeof(t_queue));
 		(*p)->buffer_pa = ((char *)malloc(sizeof(char) * BUFFER_SIZE));
-		(*p)->is_EOF = FALSE;
+		(*p)->is_eof = FALSE;
 		(*p)->num_count = 0;
 		(*p)->last_count = 0;
 		(*p)->fd = fd;
@@ -52,7 +52,7 @@ int	try_enqueue_fd(t_queue *queue_pa, int fd)
 		return (FALSE);
 	if (ret == 0)
 	{
-		queue_pa->is_EOF = TRUE;
+		queue_pa->is_eof = TRUE;
 		queue_pa->num_count = 0;
 		return (FALSE);
 	}
@@ -60,7 +60,7 @@ int	try_enqueue_fd(t_queue *queue_pa, int fd)
 	{
 		queue_pa->num_count = ret;
 		queue_pa->last_count = ret;
-		queue_pa->is_EOF = TRUE;
+		queue_pa->is_eof = TRUE;
 	}
 	else
 		queue_pa->num_count = BUFFER_SIZE;
@@ -76,17 +76,17 @@ int	dequeue_by_next_line(t_queue *queue_pa, t_table *head)
 		head = head->next;
 	string = head->string_pa + head->capacity;
 	buffer = queue_pa->buffer_pa;
-	if (queue_pa->is_EOF == TRUE)
+	if (queue_pa->is_eof == TRUE)
 		buffer += (queue_pa->last_count - queue_pa->num_count);
 	else
 		buffer += (BUFFER_SIZE - queue_pa->num_count);
-	while (queue_pa->num_count != 0 && head->capacity != e_SIZE)
+	while (queue_pa->num_count != 0 && head->capacity != e_size)
 	{
 		*string++ = *buffer++;
 		queue_pa->num_count--;
 		head->capacity++;
 		if (*(string - 1) == '\n' \
-				|| (queue_pa->is_EOF && queue_pa->num_count == 0))
+				|| (queue_pa->is_eof && queue_pa->num_count == 0))
 		{
 			return (TRUE);
 		}
@@ -144,7 +144,7 @@ char	*get_next_line(int fd)
 	}
 	result = ft_strdup_table_malloc(head);
 	free_t_struct(FT_NULL, &head, fd);
-	if (queue_pa->is_EOF && queue_pa->num_count == 0)
+	if (queue_pa->is_eof && queue_pa->num_count == 0)
 		free_t_struct(&queue_list, FT_NULL, fd);
 	return (result);
 }

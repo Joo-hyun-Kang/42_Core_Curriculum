@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   image.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/30 15:30:12 by jokang            #+#    #+#             */
+/*   Updated: 2022/05/30 16:13:15 by jokang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void	image_init(t_map *map, t_image *image)
+void	image_init(t_map *map, t_image *im)
 {
-	int	width;
-	int	height;
+	int	w;
+	int	h;
 
-	image->ground = mlx_xpm_file_to_image(map->mlx_ptr, "./images/back.xpm", &width, &height);
-	image->wall = mlx_xpm_file_to_image(map->mlx_ptr, "./images/obs.xpm", &width, &height);
-	image->item = mlx_xpm_file_to_image(map->mlx_ptr, "./images/point.xpm", &width, &height);
-	image->door = mlx_xpm_file_to_image(map->mlx_ptr, "./images/goal.xpm", &width, &height);
-	image->player = mlx_xpm_file_to_image(map->mlx_ptr, "./images/play.xpm", &width, &height);
+	im->ground = mlx_xpm_file_to_image(map->mlx, "./img/back.xpm", &w, &h);
+	im->wall = mlx_xpm_file_to_image(map->mlx, "./img/obs.xpm", &w, &h);
+	im->item = mlx_xpm_file_to_image(map->mlx, "./img/point.xpm", &w, &h);
+	im->door = mlx_xpm_file_to_image(map->mlx, "./img/goal.xpm", &w, &h);
+	im->player = mlx_xpm_file_to_image(map->mlx, "./img/play.xpm", &w, &h);
 }
 
 void	draw_map_to_image(t_map *map, t_image *image)
@@ -23,26 +35,31 @@ void	draw_map_to_image(t_map *map, t_image *image)
 		w = 0;
 		while (w < map->width)
 		{
-			if (map->game_map->pa_arr[map->width * h + w] == '0')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->ground, w * 64, h * 64);
-			else if (map->game_map->pa_arr[map->width * h + w] == '1')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->wall, w * 64, h * 64);
-			else if (map->game_map->pa_arr[map->width * h + w] == 'C')
-			{
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->ground, w * 64, h * 64);
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->item, w * 64, h * 64);
-			}
-			else if (map->game_map->pa_arr[map->width * h + w] == 'E')
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->door, w * 64, h * 64);
-			else if (map->game_map->pa_arr[map->width * h + w] == 'P')
-			{
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->ground, w * 64, h * 64);
-				mlx_put_image_to_window(map->mlx_ptr, map->win_ptr, image->player, w * 64, h * 64);
-			}
-			else
-				ft_print_error();
+			draw_map_to_image_helper(map, image, h, w);
 			w++;
 		}
 		h++;
 	}
+}
+
+void	draw_map_to_image_helper(t_map *m, t_image *i, int h, int w)
+{
+	if (m->game_map->pa_arr[m->width * h + w] == '0')
+		mlx_put_image_to_window(m->mlx, m->win, i->ground, w * 64, h * 64);
+	else if (m->game_map->pa_arr[m->width * h + w] == '1')
+		mlx_put_image_to_window(m->mlx, m->win, i->wall, w * 64, h * 64);
+	else if (m->game_map->pa_arr[m->width * h + w] == 'C')
+	{
+		mlx_put_image_to_window(m->mlx, m->win, i->ground, w * 64, h * 64);
+		mlx_put_image_to_window(m->mlx, m->win, i->item, w * 64, h * 64);
+	}
+	else if (m->game_map->pa_arr[m->width * h + w] == 'E')
+		mlx_put_image_to_window(m->mlx, m->win, i->door, w * 64, h * 64);
+	else if (m->game_map->pa_arr[m->width * h + w] == 'P')
+	{
+		mlx_put_image_to_window(m->mlx, m->win, i->ground, w * 64, h * 64);
+		mlx_put_image_to_window(m->mlx, m->win, i->player, w * 64, h * 64);
+	}
+	else
+		ft_print_error();
 }

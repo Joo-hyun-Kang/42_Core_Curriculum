@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/30 16:05:05 by jokang            #+#    #+#             */
+/*   Updated: 2022/05/30 16:09:09 by jokang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -34,8 +46,8 @@ typedef struct arraylist {
 typedef struct map
 {
 	t_arraylist	*game_map;
-	void		*mlx_ptr;
-	void		*win_ptr;
+	void		*mlx;
+	void		*win;
 	int			width;
 	int			height;
 	int			item_total;
@@ -85,14 +97,14 @@ typedef struct s_table
 typedef struct s_queue
 {
 	char			*buffer_pa;
-	int				is_EOF;
+	int				is_eof;
 	size_t			num_count;
 	size_t			last_count;
 	int				fd;
 	struct s_queue	*next;
 }	t_queue;
 
-enum { e_SIZE = 2048 };
+enum { e_size = 2048 };
 
 /* GET_NEXT_LINE_BONUS.C */
 
@@ -116,29 +128,37 @@ int			allocate_arraylist(t_arraylist *arraylist);
 void		free_arraylist(t_arraylist *arraylist);
 void		exit_malloc_fail(void *p);
 
-/* SO_LONG_UNTILS.c */
+/* SO_LONG.C */
 
-void		ft_print_error();
+void		ft_print_error(void);
+void		ft_vaildate_argument(int argc, char **argv);
+void		ft_free_game_resource(t_game *game);
 
-/* ??? */
-
+/* MAP.C */
 void		ft_copy_line(t_arraylist *list, char *src);
 void		set_game_map(t_map *map, char *filename);
 void		map_init_malloc(t_map *map, char *filename);
 void		check_game_map(t_map *map);
-void		ft_vaildate_argument(int argc, char **argv);
-void		ft_free_game_resource(t_game *game);
+void		check_game_map_helper(t_map *m, char *p, int h, int w);
 
 /* IMAGE.C */
 
 void		image_init(t_map *map, t_image *image);
 void		draw_map_to_image(t_map *map, t_image *image);
+void		draw_map_to_image_helper(t_map *m, t_image *i, int h, int w);
 
 /* PLAY.C */
 
 int			catch_move(int keycode, t_game *g);
-void		ft_exit_game();
-void		move_north(t_game *g);
+void		ft_exit_game(t_game *g);
 int			ft_end_game_press_x(t_game *g);
+void		ft_printf_steps(t_game *g);
+
+/* MOVE.C */
+
+void		move_north(t_game *g);
+void		move_south(t_game *g);
+void		move_east(t_game *g);
+void		move_west(t_game *g);
 
 #endif /* SO_LONG_H */
