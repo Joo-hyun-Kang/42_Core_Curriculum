@@ -131,6 +131,7 @@
 * gcc 설치 등을 위해서 우분투를 업그레이드한다. 
 	* https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=lidaxi043682&logNo=221717515827
 * https://www.youtube.com/watch?v=DVyYnOHP4nY&t=441s&ab_channel=MichaelHoefer
+	* vscode 확장에서 remote wsl을 설치해야 한다
 	* VScode를 WSL로 실행 후
 	* C/C++ 추가기능 설치(동영상에는 나와있지 않음 모른다면 따로 검색하서 알아볼 것)
 	* launch 에서 분할 컴파일이 되게 *.c로 수정한다.
