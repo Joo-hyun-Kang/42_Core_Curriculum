@@ -49,7 +49,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < philo.info.philo_num)
 	{
-		ft_create_philo(&philo, i);
+		ft_create_philo(philo, i);
 		i++;
 	}
 	
@@ -65,43 +65,43 @@ int	main(int argc, char **argv)
 	//ft_free_philo
 }
 
-void	ft_create_philo(t_philo *philo, int idx)
+void	ft_create_philo(t_philo philo, int idx)
 {
-	//philo->cur = idx;
-	int *num = (int *)malloc(sizeof(int));
-	*num = idx;
-	//printf("cur is %d\n", philo->cur);
-	pthread_create(&philo->philsophers[idx], NULL, &ft_activate_philo, num);
+	philo.cur = idx;
+	//int *num = (int *)malloc(sizeof(int));
+	//*num = idx;
+	printf("cur is %d\n", philo.cur);
+	pthread_create(&(philo.philsophers[idx]), NULL, &ft_activate_philo, &philo);
 }
 
 void	*ft_activate_philo(void *philo)
 {
-	int *num = philo;
-	printf("", 0);
-	printf("hi! i'm %d\n", *num);
+	// int num = philo->cur;
+	// printf("", 0);
+	// printf("hi! i'm %d\n", *num);
 
 
-	// t_philo *ph;
-	// ph = (t_philo *)philo;
-	// printf("hi! i'm %d\n", ph->cur);
+	t_philo *ph;
+	ph = (t_philo *)philo;
+	printf("hi! i'm %d\n", ph->cur);
 	
-	/*
-	int		i;
+	
+	// int		i;
 
-	i = ph->cur;
+	// i = ph->cur;
 	
-	//pick up
-	pthread_mutex_lock(&(ph->state_mutx));
+	// pick up
+	// pthread_mutex_lock(&(ph->state_mutx));
 	
-	ph->states[i] = HUNGRY;
-	if (ph->states[(i + 4) % 5] != EATING && \
-	ph->states[i] == HUNGRY && \
-	ph->states[(i + 1) % 5] != EATING)
-	{
-		ph->states[i] = EATING;
-		ph->authority[i] = true;
-	}
-	pthread_mutex_unlock(&(ph->state_mutx));
-	*/
+	// ph->states[i] = HUNGRY;
+	// if (ph->states[(i + 4) % 5] != EATING && \
+	// ph->states[i] == HUNGRY && \
+	// ph->states[(i + 1) % 5] != EATING)
+	// {
+	// 	ph->states[i] = EATING;
+	// 	ph->authority[i] = true;
+	// }
+	// pthread_mutex_unlock(&(ph->state_mutx));
+	
 	return NULL;
 }

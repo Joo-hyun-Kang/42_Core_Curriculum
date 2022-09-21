@@ -30,7 +30,7 @@ typedef struct philo {
 
 /* philo.c */
 void	*ft_activate_philo(void *philo);
-void	ft_create_philo(t_philo *philo, int idx);
+void	ft_create_philo(t_philo philo, int idx);
 
 /* philo_utils.c */
 int		ft_atoi(const char *str);
