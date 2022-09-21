@@ -10,8 +10,8 @@ enum	e_STATE {
 	HUNGRY
 };
 
-typedef struct th_info {
-	int philo_num;
+typedef struct thread_info {
+	 philo_num;
 	int	time_to_die;
 	int	time_to_eat;
 	int time_to_sleep;

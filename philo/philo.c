@@ -1,12 +1,18 @@
 #include "philo.h"
 
-int	ft_try_init_info(t_info *info, int argc, char **argv)
+int ft_try_init_info(t_info *info, int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
 		return (false);
 
-	// 필요시 int 이상 범위일 때 예외처리 해주기
+	// 예외 케이스 
+	// 1. int 이상 범위일 때 예외처리 해주기
+	// 2. 숫자가 아닐 때
+	// 3. 음수 일 때
 	// 매직 넘버 날리기
+
+	//argv[1]이 4비트 표현 범위보다 클 때  생기는 문제
+	//철학자가 1명이면 예외처리? --> 일단 나오고 죽는게 맞음
 	info->philo_num = ft_atoi(argv[1]);
 	info->time_to_die = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);
@@ -26,7 +32,7 @@ int	main(int argc, char **argv)
 	if (ft_try_init_info(&philo.info, argc, argv) == false)
 	{
 		printf("%s\n", "illegal argument");
-		return (1);
+		return (false);
 	}
 
 	//철학자 만들고 그만큼 포크를 만듬
@@ -63,6 +69,7 @@ int	main(int argc, char **argv)
 	//free(arg);'
 	//ft_destory_mutex -> forkes, state_mutx
 	//ft_free_philo
+
 }
 
 void	ft_create_philo(t_philo *philo, int idx)
@@ -76,9 +83,9 @@ void	ft_create_philo(t_philo *philo, int idx)
 
 void	*ft_activate_philo(void *philo)
 {
-	int *num = philo;
-	printf("", 0);
-	printf("hi! i'm %d\n", *num);
+	// int *num = philo;
+	// printf("", 0);
+	// printf("hi! i'm %d\n", *num);
 
 
 	// t_philo *ph;
@@ -102,6 +109,7 @@ void	*ft_activate_philo(void *philo)
 		ph->authority[i] = true;
 	}
 	pthread_mutex_unlock(&(ph->state_mutx));
+	
 	*/
 	return NULL;
 }
