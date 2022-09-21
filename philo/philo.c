@@ -1,18 +1,19 @@
 #include "philo.h"
 
-int ft_try_init_info(t_info *info, int argc, char **argv)
+bool construct_info(t_info *info, int argc, char **argv)
 {
+	int arguments[argc];
+	
 	if (argc < 5 || argc > 6)
 		return (false);
-
-	// 예외 케이스 
-	// 1. int 이상 범위일 때 예외처리 해주기
-	// 2. 숫자가 아닐 때
-	// 3. 음수 일 때
-	// 매직 넘버 날리기
-
-	//argv[1]이 4비트 표현 범위보다 클 때  생기는 문제
-	//철학자가 1명이면 예외처리? --> 일단 나오고 죽는게 맞음
+	int i = 1;
+	while (i < argc)
+	{
+		arguments[i] = ft_atoi(argv[i]);
+		if (arguments[i] <= 0) 
+			return (false);
+		i++;
+	}
 	info->philo_num = ft_atoi(argv[1]);
 	info->time_to_die = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);
@@ -27,16 +28,14 @@ int ft_try_init_info(t_info *info, int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_philo		philo;
+	int			i;
 
-	//매개변수 가지는 거 초기화 해주기
-	if (ft_try_init_info(&philo.info, argc, argv) == false)
+	if (construct_info(&philo.info, argc, argv) == false)
 	{
 		printf("%s\n", "illegal argument");
 		return (false);
 	}
 
-	//철학자 만들고 그만큼 포크를 만듬
-	int i = 0;
 	philo.forks = (pthread_mutex_t *)malloc((sizeof(pthread_mutex_t) * philo.info.philo_num));
 	philo.states = (enum e_STATE *)malloc((sizeof(enum e_STATE) * philo.info.philo_num));
 	philo.authority = (bool *)malloc((sizeof(bool) * philo.info.philo_num));
@@ -55,7 +54,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < philo.info.philo_num)
 	{
-		ft_create_philo(philo, i);
+		ft_create_philo(&philo, i);
 		i++;
 	}
 	
@@ -69,16 +68,15 @@ int	main(int argc, char **argv)
 	//free(arg);'
 	//ft_destory_mutex -> forkes, state_mutx
 	//ft_free_philo
+	return 0;
 
 }
 
-void	ft_create_philo(t_philo philo, int idx)
+void	ft_create_philo(t_philo *philo, int idx)
 {
-	philo.cur = idx;
-	//int *num = (int *)malloc(sizeof(int));
-	//*num = idx;
-	printf("cur is %d\n", philo.cur);
-	pthread_create(&(philo.philsophers[idx]), NULL, &ft_activate_philo, &philo);
+	philo->cur = idx;
+	printf("cur is %d\n", philo->cur);
+	pthread_create(&(philo->philsophers[idx]), NULL, &ft_activate_philo, philo);
 }
 
 void	*ft_activate_philo(void *philo)
@@ -109,6 +107,5 @@ void	*ft_activate_philo(void *philo)
 	// 	ph->authority[i] = true;
 	// }
 	// pthread_mutex_unlock(&(ph->state_mutx));
-	
 	return NULL;
 }

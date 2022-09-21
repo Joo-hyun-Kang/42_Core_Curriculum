@@ -11,7 +11,7 @@ enum	e_STATE {
 };
 
 typedef struct thread_info {
-	 philo_num;
+	int philo_num;
 	int	time_to_die;
 	int	time_to_eat;
 	int time_to_sleep;
@@ -30,7 +30,7 @@ typedef struct philo {
 
 /* philo.c */
 void	*ft_activate_philo(void *philo);
-void	ft_create_philo(t_philo philo, int idx);
+void	ft_create_philo(t_philo *philo, int idx);
 
 /* philo_utils.c */
 int		ft_atoi(const char *str);
