@@ -1,111 +1,68 @@
 #include "philo.h"
 
-bool construct_info(t_info *info, int argc, char **argv)
-{
-	int arguments[argc];
-	
-	if (argc < 5 || argc > 6)
-		return (false);
-	int i = 1;
-	while (i < argc)
-	{
-		arguments[i] = ft_atoi(argv[i]);
-		if (arguments[i] <= 0) 
-			return (false);
-		i++;
-	}
-	info->philo_num = ft_atoi(argv[1]);
-	info->time_to_die = ft_atoi(argv[2]);
-	info->time_to_eat = ft_atoi(argv[3]);
-	info->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		info->count_must_eat = ft_atoi(argv[5]);
-	else
-		info->count_must_eat = -1;
-	return (true);
-}
+
 
 int	main(int argc, char **argv)
 {
-	t_philo		philo;
+	t_monitor	monitor;
+	t_forks		forks;
 	int			i;
 
-	if (construct_info(&philo.info, argc, argv) == false)
-	{
-		printf("%s\n", "illegal argument");
-		return (false);
-	}
+	if (construct_monitor(&monitor, argc, argv) == false)
+		return print_error(ARGUMENT);
 
-	philo.forks = (pthread_mutex_t *)malloc((sizeof(pthread_mutex_t) * philo.info.philo_num));
-	philo.states = (enum e_STATE *)malloc((sizeof(enum e_STATE) * philo.info.philo_num));
-	philo.authority = (bool *)malloc((sizeof(bool) * philo.info.philo_num));
-	pthread_mutex_init(&philo.state_mutx, NULL);
-	
-	while (i < philo.info.philo_num)
-	{
-		pthread_mutex_init(&philo.forks[i], NULL);
-		philo.states[i] = HUNGRY;
-		philo.authority[i] = false;
-		i++;
-	}
+	forks.forks = (pthread_mutex_t *)malloc((sizeof(pthread_mutex_t) * monitor.philo_num));
+	monitor.philos = (t_philo *)malloc((sizeof(t_philo) * monitor.philo_num));
+	if (forks.forks == NULL || monitor.philos == NULL)
+		return print_error(MALLOC);
 
-	philo.philsophers = (pthread_t *)malloc((sizeof(pthread_t) * philo.info.philo_num));
-	
+	forks.num = 0;
+	pthread_mutex_init(&(forks.test), NULL);
 	i = 0;
-	while (i < philo.info.philo_num)
+	while (i < monitor.philo_num)
 	{
-		ft_create_philo(&philo, i);
+		pthread_mutex_init(&(forks.forks[i]), NULL);
+		monitor.philos[i].idx = i;
+		monitor.philos[i].forks = &forks;
 		i++;
 	}
 	
 	i = 0;
-	while (i < philo.info.philo_num)
+	while (i < monitor.philo_num)
 	{
-		pthread_join(philo.philsophers[i], NULL);
+		pthread_create(&monitor.philos[i].thread, NULL, &ft_activate_philo, &monitor.philos[i]);
+		i++;
+	}
+	
+	i = 0;
+	while (i < monitor.philo_num)
+	{
+		pthread_join(monitor.philos[i].thread, NULL);
 		i++;
 	}
 
-	//free(arg);'
-	//ft_destory_mutex -> forkes, state_mutx
-	//ft_free_philo
+
+	//free statement
+	// free(monitor.philos);
+	// free(forks.forks);
+	//mutex destroy(monitor.forks)
+
+	//쓰레드 종료?
+
 	return 0;
 
 }
 
-void	ft_create_philo(t_philo *philo, int idx)
+void	*ft_activate_philo(void *arg)
 {
-	philo->cur = idx;
-	printf("cur is %d\n", philo->cur);
-	pthread_create(&(philo->philsophers[idx]), NULL, &ft_activate_philo, philo);
-}
+	t_philo *philo;
 
-void	*ft_activate_philo(void *philo)
-{
-	// int num = philo->cur;
-	// printf("", 0);
-	// printf("hi! i'm %d\n", *num);
+	philo = (t_philo *)arg;
 
+	pthread_mutex_lock(&philo->forks->test);
+	printf("hi! i'm %p the number is %d\n", &philo->idx, philo->forks->num);
+	philo->forks->num++;
+	pthread_mutex_unlock(&philo->forks->test);
 
-	t_philo *ph;
-	ph = (t_philo *)philo;
-	printf("hi! i'm %d\n", ph->cur);
-	
-	
-	// int		i;
-
-	// i = ph->cur;
-	
-	// pick up
-	// pthread_mutex_lock(&(ph->state_mutx));
-	
-	// ph->states[i] = HUNGRY;
-	// if (ph->states[(i + 4) % 5] != EATING && \
-	// ph->states[i] == HUNGRY && \
-	// ph->states[(i + 1) % 5] != EATING)
-	// {
-	// 	ph->states[i] = EATING;
-	// 	ph->authority[i] = true;
-	// }
-	// pthread_mutex_unlock(&(ph->state_mutx));
 	return NULL;
 }

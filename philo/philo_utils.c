@@ -1,6 +1,6 @@
 #include "philo.h"
 
-static int	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 	{
@@ -9,7 +9,7 @@ static int	ft_isdigit(int c)
 	return (0);
 }
 
-static int	ft_isspace(char ch)
+int	ft_isspace(char ch)
 {
 	if (ch == '\t' || ch == '\n' || ch == '\v'
 		|| ch == '\f' || ch == '\r' || ch == ' ')
@@ -53,4 +53,13 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return ((int)(sign * result));
+}
+
+int print_error(enum e_ERROR code)
+{
+	if (code == MALLOC)
+		printf("%s\n", "process fail allocating heap memory");
+	else if (code == ARGUMENT)
+		printf("%s\n", "illegal argument");
+	return (1);
 }
