@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	
+	//monitor create
 	i = 0;
 	while (i < monitor.philo_num)
 	{
@@ -34,6 +35,7 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	
+	//monitor watching
 	i = 0;
 	while (i < monitor.philo_num)
 	{
@@ -53,6 +55,7 @@ int	main(int argc, char **argv)
 
 }
 
+//philo
 void	*ft_activate_philo(void *arg)
 {
 	t_philo *philo;
