@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:15:24 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 20:43:32 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:07:24 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	ph_construct(t_philo **philo, int id, t_monitor *m)
 	int	ret;
 
 	(*philo) = (t_philo *)malloc(sizeof(t_philo));
-	if (philo == NULL)
+	if (philo == NUL)
 		return (false);
 	(*philo)->id = id;
 	(*philo)->philo_num = m->philo_num;
@@ -30,10 +30,10 @@ bool	ph_construct(t_philo **philo, int id, t_monitor *m)
 	(*philo)->right = m->forks[(id + 1) % m->philo_num];
 	(*philo)->status = NONE;
 	(*philo)->monitor = m;
-	ret = pthread_mutex_init(&(*philo)->life, NULL);
+	ret = pthread_mutex_init(&(*philo)->life, NUL);
 	if (ret == -1)
 		return (false);
-	ret = pthread_mutex_init(&(*philo)->status_mtx, NULL);
+	ret = pthread_mutex_init(&(*philo)->status_mtx, NUL);
 	if (ret == -1)
 		return (false);
 	return (true);
@@ -47,7 +47,7 @@ void	*ph_activate_philo(void *philo)
 	if (p->philo_num == 1)
 	{
 		up_fork_alone(p);
-		return (NULL);
+		return (NUL);
 	}
 	if (ph_is_thinker(p))
 		ph_wait(p);
@@ -65,7 +65,7 @@ void	*ph_activate_philo(void *philo)
 		if (ph_check_monitor(p))
 			break ;
 	}
-	return (NULL);
+	return (NUL);
 }
 
 bool	ph_is_waiter(t_philo *philo)

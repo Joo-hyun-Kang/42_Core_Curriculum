@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:18:06 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:02:46 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:07:24 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ bool	ft_get_forks(t_monitor *m)
 
 	m->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
 	* m->philo_num);
-	if (m->forks == NULL)
+	if (m->forks == NUL)
 		return (false);
 	i = 0;
 	while (i < m->philo_num)
 	{
-		ret = pthread_mutex_init(&m->forks[i], NULL);
+		ret = pthread_mutex_init(&m->forks[i], NUL);
 		if (ret == -1)
 			return (false);
 		i++;
@@ -38,7 +38,7 @@ bool	ft_get_philos(t_monitor *monitor, int count)
 	int		i;
 
 	philos = (t_philo **)malloc(sizeof(t_philo *) * count);
-	if (philos == NULL)
+	if (philos == NUL)
 		return (false);
 	i = 0;
 	while (i < count)
@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < monitor.philo_num)
 	{
-		pthread_join(monitor.philos[i]->thread, NULL);
+		pthread_join(monitor.philos[i]->thread, NUL);
 		i++;
 	}
 	free_resource(&monitor);
@@ -84,7 +84,7 @@ void	free_resource(t_monitor *m)
 
 	fk_free(m->forks, m->philo_num);
 	free(m->forks);
-	m->forks = NULL;
+	m->forks = NUL;
 	pthread_mutex_destroy(&m->must);
 	pthread_mutex_destroy(&m->watier);
 	pthread_mutex_destroy(&m->speak);
@@ -95,9 +95,9 @@ void	free_resource(t_monitor *m)
 		pthread_mutex_destroy(&m->philos[i]->life);
 		pthread_mutex_destroy(&m->philos[i]->status_mtx);
 		free(m->philos[i]);
-		m->philos[i] = NULL;
+		m->philos[i] = NUL;
 		i++;
 	}
 	free(m->philos);
-	m->philos = NULL;
+	m->philos = NUL;
 }

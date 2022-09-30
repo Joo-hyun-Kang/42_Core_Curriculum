@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:04:34 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:04:19 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:07:24 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ bool	mo_construct_helper(t_monitor *monitor)
 	monitor->is_end_check = false;
 	monitor->waiter_offset = 0;
 	monitor->finish_philos = 0;
-	res = pthread_mutex_init(&monitor->speak, NULL);
+	res = pthread_mutex_init(&monitor->speak, NUL);
 	if (res == -1)
 		return (false);
-	res = pthread_mutex_init(&monitor->end, NULL);
+	res = pthread_mutex_init(&monitor->end, NUL);
 	if (res == -1)
 		return (false);
-	res = pthread_mutex_init(&monitor->watier, NULL);
+	res = pthread_mutex_init(&monitor->watier, NUL);
 	if (res == -1)
 		return (false);
-	res = pthread_mutex_init(&monitor->must, NULL);
+	res = pthread_mutex_init(&monitor->must, NUL);
 	if (res == -1)
 		return (false);
 	return (true);
@@ -80,7 +80,7 @@ bool	mo_start_philo(t_monitor *monitor)
 	{
 		monitor->philos[i]->life_count = monitor->time_to_die;
 		monitor->philos[i]->init_time = time;
-		ret = pthread_create(&monitor->philos[i]->thread, NULL, \
+		ret = pthread_create(&monitor->philos[i]->thread, NUL, \
 		&ph_activate_philo, monitor->philos[i]);
 		if (ret != 0)
 			return (false);

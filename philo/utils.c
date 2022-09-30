@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:33:04 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:03:38 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:07:24 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ unsigned long	get_current_time(void)
 {
 	static struct timeval	t;
 
-	gettimeofday(&t, NULL);
+	gettimeofday(&t, NUL);
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
