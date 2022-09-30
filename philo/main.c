@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:18:06 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 12:22:24 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 15:02:14 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ bool ft_get_forks(t_fork ***out_forks, int fork_cnt)
     {
         if (fk_construct(&(*out_forks)[i]) == false)
             return (false);
+        printf("%p\n", (*out_forks)[i]);
         i++;
     }
     return (true);
@@ -92,9 +93,13 @@ int	main(int argc, char **argv)
     //forks 배열
     //philo
     //philos 배열
-    //moniotr에서 philos speak end
-    //philo 에서 death
-
+    //moniotr에서 philos speak end watier
+    //philo 에서 life thread?
+    // i = 0;
+    // while (i < monitor.philo_num)
+    // {
+        
+    // }
 	return 0;
 
 }

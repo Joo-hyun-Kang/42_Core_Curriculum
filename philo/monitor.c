@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:04:34 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 12:16:45 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 14:02:06 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,17 @@ bool mo_construct(t_monitor *monitor, int argc, char **argv)
 	else
 		monitor->count_must_eat = -1;
 	monitor->is_end = false;
+	monitor->is_end_check = false;
+	monitor->waiter_offset = 0;
 	res = pthread_mutex_init(&monitor->speak, NULL);
     if (res == -1)
         return (false);
 	res = pthread_mutex_init(&monitor->end, NULL);
     if (res == -1)
         return (false);
+	res = pthread_mutex_init(&monitor->watier, NULL);
+		if (res == -1)
+			return (false);		
 	return (true);
 }
 
@@ -58,7 +63,7 @@ bool mo_start_philo(t_monitor *monitor)
 	i = 0;
 	while (i < monitor->philo_num)
 	{
-		monitor->philos[i]->life_count = get_current_time();
+		monitor->philos[i]->life_count = monitor->time_to_die;
 		ret = pthread_create(&monitor->philos[i]->thread, NULL, &ph_activate_philo, monitor->philos[i]);
 		if (ret != 0)
 			return (false);

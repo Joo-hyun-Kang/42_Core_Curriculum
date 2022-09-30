@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 22:22:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 12:22:50 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 14:37:37 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ typedef struct philo {
 	int				time_to_die;
 	int				time_to_sleep;
 	int				time_to_eat;
+	int				eat_count;
 	unsigned long	init_time;
 	unsigned long	life_count;
 	enum e_STATUS	status;
 	pthread_t		thread;
-	pthread_mutex_t death;
-	t_fork			**forks;
+	pthread_mutex_t life;
+	pthread_mutex_t *left;
+	pthread_mutex_t *right;
 	t_monitor		*monitor;
 }	t_philo;
 
@@ -63,7 +65,10 @@ typedef struct monitor {
 	int				time_to_eat;
 	int 			time_to_sleep;
 	int				count_must_eat;
+	int				waiter_offset;
+	bool			is_end_check;
 	bool			is_end;
+	pthread_mutex_t watier;
 	pthread_mutex_t speak;
 	pthread_mutex_t end;
 	t_philo			**philos;
@@ -80,15 +85,19 @@ bool 			ph_construct(t_philo **philo, int id, t_fork **forks, t_monitor *m);
 void	*ph_activate_philo(void *arg);
 void	ph_free(t_fork **philo);
 
+bool ph_is_waiter(t_philo *philo);
 bool ph_is_thinker(t_philo *philo);
 void ph_wait(t_philo *philo);
 void ph_think(t_philo *philo);
 void ph_eat(t_philo *philo);
 void ph_sleep(t_philo *philo);
+void	up_fork(t_philo *philo);
+void	down_fork(t_philo *philo);
 void ph_spend(t_philo *philo, unsigned long time);
 void ph_dead(t_philo *philo);
 int	ph_is_dead(t_philo *philo);
 void ph_print_state(t_philo *philo);
+int	ph_check_monitor(t_philo* philo);
 
 /* philo_utils.c */
 int		ft_isdigit(int c);
