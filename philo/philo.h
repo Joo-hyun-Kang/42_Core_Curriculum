@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 22:22:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 17:33:01 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:15:47 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct philo {
 	int				time_to_die;
 	int				time_to_sleep;
 	int				time_to_eat;
+	int				count_must_eat;
 	int				eat_count;
 	unsigned long	init_time;
 	unsigned long	life_count;
@@ -62,9 +63,11 @@ typedef struct monitor {
 	int				time_to_eat;
 	int 			time_to_sleep;
 	int				count_must_eat;
+	int				finish_philos;
 	int				waiter_offset;
 	bool			is_end_check;
 	bool			is_end;
+	pthread_mutex_t must;
 	pthread_mutex_t watier;
 	pthread_mutex_t speak;
 	pthread_mutex_t end;
@@ -76,12 +79,14 @@ typedef struct monitor {
 bool			ft_get_forks(t_monitor *m);
 bool			ft_get_philos(t_monitor *monitor, int count);
 void			ft_philo_check_finish(t_monitor *m);
+void			free_resource(t_monitor *m);
 
 /* philo.c */
 bool			ph_construct(t_philo **philo, int id, t_monitor *m);
 void			*ph_activate_philo(void *arg);
 bool			ph_is_waiter(t_philo *philo);
 bool			ph_is_thinker(t_philo *philo);
+bool			ph_count_must_eat(t_philo* p);
 
 /* philo_action.c */
 void			ph_wait(t_philo *philo);

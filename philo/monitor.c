@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:04:34 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 17:32:45 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 17:57:37 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ bool mo_construct(t_monitor *monitor, int argc, char **argv)
 	monitor->is_end = false;
 	monitor->is_end_check = false;
 	monitor->waiter_offset = 0;
+	monitor->finish_philos = 0;
 	res = pthread_mutex_init(&monitor->speak, NULL);
     if (res == -1)
         return (false);
@@ -45,8 +46,11 @@ bool mo_construct(t_monitor *monitor, int argc, char **argv)
     if (res == -1)
         return (false);
 	res = pthread_mutex_init(&monitor->watier, NULL);
-		if (res == -1)
-			return (false);		
+	if (res == -1)
+		return (false);
+	res = pthread_mutex_init(&monitor->must, NULL);
+	if (res == -1)
+		return (false);
 	return (true);
 }
 
@@ -98,12 +102,14 @@ void	mo_check_philos(t_monitor *m)
 			}
 			i++;
         }
-		// pthread_mutex_lock(&info->fin_mtx);
-		// if (info->meal_fin_num == info->philo_num)
-		// {
-		// 	pthread_mutex_unlock(&info->fin_mtx);
-		// 	break ;
-		// }
-		// pthread_mutex_unlock(&info->fin_mtx);
+
+		pthread_mutex_lock(&m->must);
+		if (m->philo_num == m->finish_philos)
+		{
+			pthread_mutex_unlock(&m->must);
+			break;
+		}
+		else
+			pthread_mutex_unlock(&m->must);
     }
 }

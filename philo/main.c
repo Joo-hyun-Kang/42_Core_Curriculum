@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:18:06 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 16:51:42 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:23:57 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,37 @@ int	main(int argc, char **argv)
         i++;
 	}
 
-
 	//free statement
-	//forks 배열 내부 fork들과 그 안에 뮤텍스
-    //forks 배열
-    //philo
-    //philos 배열
-    //moniotr에서 philos speak end watier
-    //philo 에서 life status thread?
-    // i = 0;
-    // while (i < monitor.philo_num)
-    // {
-        
-    // }
+    free_resource(&monitor);
+
+    while (1)
+    {
+    }
+
 	return 0;
 
+}
+
+void    free_resource(t_monitor *m)
+{
+    int i;
+    
+    fk_free(m->forks, m->philo_num);
+    free(m->forks);
+    m->forks = NULL;
+    pthread_mutex_destroy(&m->must);
+	pthread_mutex_destroy(&m->watier);
+	pthread_mutex_destroy(&m->speak);
+	pthread_mutex_destroy(&m->end);
+    i = 0;
+    while (i < m->philo_num)
+    {
+        pthread_mutex_destroy(&m->philos[i]->life);
+	    pthread_mutex_destroy(&m->philos[i]->status_mtx);
+        free(m->philos[i]);
+        m->philos[i] = NULL;
+        i++;
+    }
+    free(m->philos);
+    m->philos = NULL;
 }

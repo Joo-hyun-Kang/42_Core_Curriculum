@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:32:33 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 17:33:37 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:24:23 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ void fk_free(pthread_mutex_t *out_fork, int count)
     {
         pthread_mutex_destroy(&out_fork[i]);
         i++;
-    free(out_fork);
     }
 }

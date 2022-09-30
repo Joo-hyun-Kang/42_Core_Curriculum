@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:15:24 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 17:27:31 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 17:59:17 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ bool ph_construct(t_philo **philo, int id, t_monitor *m)
 	(*philo)->time_to_die = m->time_to_die;
 	(*philo)->time_to_sleep = m->time_to_sleep;
 	(*philo)->time_to_eat = m->time_to_eat;
+	(*philo)->count_must_eat = m->count_must_eat;
 	(*philo)->eat_count = 0;
 	(*philo)->left = m->forks[id];
 	(*philo)->right = m->forks[(id + 1) % m->philo_num];
@@ -57,6 +58,8 @@ void	*ph_activate_philo(void *philo)
 		up_fork(p);
 		ph_eat(p);
 		down_fork(p);
+		if (ph_count_must_eat(p))
+			break;
 		ph_sleep(p);
 		ph_think(p);
 		if (ph_check_monitor(p))
@@ -101,6 +104,18 @@ bool ph_is_thinker(t_philo *philo)
 			return (true);
 		if (philo->id == philo->philo_num - 1)
 			return (true);
+	}
+	return (false);
+}
+
+bool	ph_count_must_eat(t_philo* p)
+{
+	if (p->eat_count == p->count_must_eat)
+	{
+		pthread_mutex_lock(&p->monitor->must);
+		p->monitor->finish_philos++;
+		pthread_mutex_unlock(&p->monitor->must);
+		return (true);
 	}
 	return (false);
 }
