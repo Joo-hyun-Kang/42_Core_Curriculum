@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 22:22:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:05:49 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:08:48 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/time.h>
 
 # define NUL ((void *) 0)
-//NILL UNistd,h pthread;
+
 typedef struct monitor	t_monitor;
 
 enum e_ERROR {
