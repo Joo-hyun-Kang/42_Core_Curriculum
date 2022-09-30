@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:04:34 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:20:00 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:31:37 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	mo_check_philos(t_monitor *m)
 			break ;
 		}
 		pthread_mutex_unlock(&m->end);
-		
 		i = -1;
 		while (++i < m->philo_num)
 		{
