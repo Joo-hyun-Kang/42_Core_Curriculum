@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
+/*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:32:33 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 18:24:23 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:03:13 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void fk_free(pthread_mutex_t *out_fork, int count)
+void	fk_free(pthread_mutex_t *out_fork, int count)
 {
-    int i;
-    i = 0;
-    while (i < count)
-    {
-        pthread_mutex_destroy(&out_fork[i]);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		pthread_mutex_destroy(&out_fork[i]);
+		i++;
+	}
 }

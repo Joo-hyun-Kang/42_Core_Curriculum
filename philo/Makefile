@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+         #
+#    By: jokang <jokang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 17:32:17 by jokang            #+#    #+#              #
-#    Updated: 2022/09/30 18:34:32 by jokang           ###   ########.fr        #
+#    Updated: 2022/09/30 20:47:40 by jokang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ OBJS = $(SRCS:.c=.o)
 
 NAME = philo
 
-CC	= gcc
-CFLAGS = -Wall -Wextra -Werror -pthread -g
+CC	= cc
+CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
 
 RM = rm -rf
 
@@ -32,7 +32,7 @@ RM = rm -rf
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 $(NAME) : $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) 
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 all : $(NAME)
 
@@ -44,4 +44,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

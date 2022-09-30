@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
+/*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 22:22:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 18:15:47 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:03:47 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-
-#define NULL ((void *) 0)
 
 # include <stdio.h>
 # include <stdbool.h>
@@ -22,7 +20,9 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef struct monitor t_monitor;
+# define NUL ((void *) 0)
+//NILL UNistd,h pthread;
+typedef struct monitor	t_monitor;
 
 enum e_ERROR {
 	SYSTEM_CALL,
@@ -50,27 +50,27 @@ typedef struct philo {
 	unsigned long	life_count;
 	enum e_STATUS	status;
 	pthread_t		thread;
-	pthread_mutex_t life;
-	pthread_mutex_t status_mtx;
-	pthread_mutex_t left;
-	pthread_mutex_t right;
+	pthread_mutex_t	life;
+	pthread_mutex_t	status_mtx;
+	pthread_mutex_t	left;
+	pthread_mutex_t	right;
 	t_monitor		*monitor;
 }	t_philo;
 
 typedef struct monitor {
-	int 			philo_num;
+	int				philo_num;
 	int				time_to_die;
 	int				time_to_eat;
-	int 			time_to_sleep;
+	int				time_to_sleep;
 	int				count_must_eat;
 	int				finish_philos;
 	int				waiter_offset;
 	bool			is_end_check;
 	bool			is_end;
-	pthread_mutex_t must;
-	pthread_mutex_t watier;
-	pthread_mutex_t speak;
-	pthread_mutex_t end;
+	pthread_mutex_t	must;
+	pthread_mutex_t	watier;
+	pthread_mutex_t	speak;
+	pthread_mutex_t	end;
 	pthread_mutex_t	*forks;
 	t_philo			**philos;
 }	t_monitor;
@@ -86,7 +86,7 @@ bool			ph_construct(t_philo **philo, int id, t_monitor *m);
 void			*ph_activate_philo(void *arg);
 bool			ph_is_waiter(t_philo *philo);
 bool			ph_is_thinker(t_philo *philo);
-bool			ph_count_must_eat(t_philo* p);
+bool			ph_count_must_eat(t_philo *p);
 
 /* philo_action.c */
 void			ph_wait(t_philo *philo);
@@ -101,10 +101,11 @@ void			down_fork(t_philo *philo);
 void			up_fork(t_philo *philo);
 
 /* philo_death.c */
-int				ph_check_monitor(t_philo* philo);
+int				ph_check_monitor(t_philo *philo);
 void			ph_dead(t_philo *philo);
 int				ph_is_dead(t_philo *philo);
 void			ph_print_state(t_philo *philo);
+void			ph_print_helper(t_monitor *m, t_philo *philo);
 
 /* utils.c */
 int				ft_isdigit(int c);
@@ -115,6 +116,7 @@ unsigned long	get_current_time(void);
 
 /* monitor.c */
 bool			mo_construct(t_monitor *monitor, int argc, char **argv);
+bool			mo_construct_helper(t_monitor *monitor);
 void			mo_set_philos(t_monitor *monitor, t_philo **philos);
 bool			mo_start_philo(t_monitor *monitor);
 void			mo_check_philos(t_monitor *m);

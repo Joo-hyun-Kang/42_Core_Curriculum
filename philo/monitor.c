@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
+/*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:04:34 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 17:57:37 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:04:19 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool mo_construct(t_monitor *monitor, int argc, char **argv)
+bool	mo_construct(t_monitor *monitor, int argc, char **argv)
 {
-	int arguments[5];
-	int	res;
-	
+	int	arguments[5];
+	int	idx;
+
 	if (argc < 5 || argc > 6)
 		return (false);
-	int idx = 1;
+	idx = 1;
 	while (idx < argc)
 	{
 		arguments[idx - 1] = ft_atoi(argv[idx]);
-		if (arguments[idx - 1] <= 0) 
+		if (arguments[idx - 1] <= 0)
 			return (false);
 		idx++;
 	}
@@ -35,16 +35,25 @@ bool mo_construct(t_monitor *monitor, int argc, char **argv)
 		monitor->count_must_eat = arguments[4];
 	else
 		monitor->count_must_eat = -1;
+	if (mo_construct_helper(monitor) == false)
+		return (false);
+	return (true);
+}
+
+bool	mo_construct_helper(t_monitor *monitor)
+{
+	int	res;
+
 	monitor->is_end = false;
 	monitor->is_end_check = false;
 	monitor->waiter_offset = 0;
 	monitor->finish_philos = 0;
 	res = pthread_mutex_init(&monitor->speak, NULL);
-    if (res == -1)
-        return (false);
+	if (res == -1)
+		return (false);
 	res = pthread_mutex_init(&monitor->end, NULL);
-    if (res == -1)
-        return (false);
+	if (res == -1)
+		return (false);
 	res = pthread_mutex_init(&monitor->watier, NULL);
 	if (res == -1)
 		return (false);
@@ -54,24 +63,25 @@ bool mo_construct(t_monitor *monitor, int argc, char **argv)
 	return (true);
 }
 
-void mo_set_philos(t_monitor *monitor, t_philo **philos)
+void	mo_set_philos(t_monitor *monitor, t_philo **philos)
 {
 	monitor->philos = philos;
 }
 
-bool mo_start_philo(t_monitor *monitor)
+bool	mo_start_philo(t_monitor *monitor)
 {
-	int 			i;
-	int 			ret;
-	unsigned long   time;
-	
+	int				i;
+	int				ret;
+	unsigned long	time;
+
 	time = get_current_time();
 	i = 0;
 	while (i < monitor->philo_num)
 	{
 		monitor->philos[i]->life_count = monitor->time_to_die;
 		monitor->philos[i]->init_time = time;
-		ret = pthread_create(&monitor->philos[i]->thread, NULL, &ph_activate_philo, monitor->philos[i]);
+		ret = pthread_create(&monitor->philos[i]->thread, NULL, \
+		&ph_activate_philo, monitor->philos[i]);
 		if (ret != 0)
 			return (false);
 		i++;
@@ -81,9 +91,9 @@ bool mo_start_philo(t_monitor *monitor)
 
 void	mo_check_philos(t_monitor *m)
 {
-	int             i;
+	int	i;
 
-    while (true)
+	while (true)
 	{
 		pthread_mutex_lock(&m->end);
 		if (m-> is_end == true)
@@ -92,24 +102,18 @@ void	mo_check_philos(t_monitor *m)
 			break ;
 		}
 		pthread_mutex_unlock(&m->end);
-        
-		i = 0;
-		while (i < m->philo_num)
-        {
+		i = -1;
+		while (++i < m->philo_num)
+		{
 			if (ph_is_dead(m->philos[i]))
-			{
 				ph_dead(m->philos[i]);
-			}
-			i++;
-        }
-
+		}
 		pthread_mutex_lock(&m->must);
 		if (m->philo_num == m->finish_philos)
 		{
 			pthread_mutex_unlock(&m->must);
-			break;
+			break ;
 		}
-		else
-			pthread_mutex_unlock(&m->must);
-    }
+		pthread_mutex_unlock(&m->must);
+	}
 }

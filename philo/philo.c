@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
+/*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:15:24 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 17:59:17 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 20:43:32 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool ph_construct(t_philo **philo, int id, t_monitor *m)
+bool	ph_construct(t_philo **philo, int id, t_monitor *m)
 {	
-	int ret;
-	
+	int	ret;
+
 	(*philo) = (t_philo *)malloc(sizeof(t_philo));
 	if (philo == NULL)
 		return (false);
@@ -31,17 +31,17 @@ bool ph_construct(t_philo **philo, int id, t_monitor *m)
 	(*philo)->status = NONE;
 	(*philo)->monitor = m;
 	ret = pthread_mutex_init(&(*philo)->life, NULL);
-    if (ret == -1)
-        return (false);
+	if (ret == -1)
+		return (false);
 	ret = pthread_mutex_init(&(*philo)->status_mtx, NULL);
-    if (ret == -1)
-        return (false);
+	if (ret == -1)
+		return (false);
 	return (true);
 }
 
 void	*ph_activate_philo(void *philo)
 {
-	t_philo *p;
+	t_philo	*p;
 
 	p = (t_philo *)philo;
 	if (p->philo_num == 1)
@@ -59,16 +59,16 @@ void	*ph_activate_philo(void *philo)
 		ph_eat(p);
 		down_fork(p);
 		if (ph_count_must_eat(p))
-			break;
+			break ;
 		ph_sleep(p);
 		ph_think(p);
 		if (ph_check_monitor(p))
-			break;
+			break ;
 	}
 	return (NULL);
 }
 
-bool ph_is_waiter(t_philo *philo)
+bool	ph_is_waiter(t_philo *philo)
 {
 	t_monitor	*m;
 	int			waiter_count;
@@ -91,7 +91,7 @@ bool ph_is_waiter(t_philo *philo)
 	return (ret);
 }
 
-bool ph_is_thinker(t_philo *philo)
+bool	ph_is_thinker(t_philo *philo)
 {
 	if (philo->philo_num % 2 == 0)
 	{
@@ -108,7 +108,7 @@ bool ph_is_thinker(t_philo *philo)
 	return (false);
 }
 
-bool	ph_count_must_eat(t_philo* p)
+bool	ph_count_must_eat(t_philo *p)
 {
 	if (p->eat_count == p->count_must_eat)
 	{
