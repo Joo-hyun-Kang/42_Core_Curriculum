@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:04:34 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 14:02:06 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:48:50 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,57 @@ void mo_set_philos(t_monitor *monitor, t_philo **philos)
 
 bool mo_start_philo(t_monitor *monitor)
 {
-	int i;
-	int ret;
+	int 			i;
+	int 			ret;
+	unsigned long   time;
 	
+	time = get_current_time();
 	i = 0;
 	while (i < monitor->philo_num)
 	{
 		monitor->philos[i]->life_count = monitor->time_to_die;
+		monitor->philos[i]->init_time = time;
 		ret = pthread_create(&monitor->philos[i]->thread, NULL, &ph_activate_philo, monitor->philos[i]);
 		if (ret != 0)
 			return (false);
 		i++;
 	}
 	return (true);
+}
+
+void	mo_check_philos(t_monitor *m)
+{
+	int             i;
+
+    while (true)
+	{
+		pthread_mutex_lock(&m->end);
+		if (m-> is_end == true)
+		{
+			pthread_mutex_unlock(&m->end);
+			break ;
+		}
+		pthread_mutex_unlock(&m->end);
+        
+		i = 0;
+		while (i < m->philo_num)
+        {
+			//pthread_mutex_lock(&m->end);
+			if (ph_is_dead(m->philos[i]))
+			{
+				//pthread_mutex_unlock(&m->end);
+				ph_dead(m->philos[i]);
+			}
+			// else
+			// 	pthread_mutex_unlock(&m->end);
+			i++;
+        }
+		// pthread_mutex_lock(&info->fin_mtx);
+		// if (info->meal_fin_num == info->philo_num)
+		// {
+		// 	pthread_mutex_unlock(&info->fin_mtx);
+		// 	break ;
+		// }
+		// pthread_mutex_unlock(&info->fin_mtx);
+    }
 }

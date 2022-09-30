@@ -6,46 +6,45 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:18:06 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 15:02:14 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:51:42 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool ft_get_forks(t_fork ***out_forks, int fork_cnt)
+bool ft_get_forks(t_monitor *m)
 {
     int i;
+    int ret;
 
-    (*out_forks) = (t_fork **)malloc(sizeof(t_fork *) * fork_cnt);
-    if (*out_forks == NULL)
+    m->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * m->philo_num);
+    if (m->forks == NULL)
         return (false);
     i = 0;
-    while (i < fork_cnt) 
+    while (i < m->philo_num) 
     {
-        if (fk_construct(&(*out_forks)[i]) == false)
+        ret = pthread_mutex_init(&m->forks[i], NULL);
+        if (ret == -1)
             return (false);
-        printf("%p\n", (*out_forks)[i]);
         i++;
     }
     return (true);
 }
 
-bool ft_get_philos(t_monitor *monitor, t_fork **forks, int count)
+bool ft_get_philos(t_monitor *monitor, int count)
 {
     t_philo         **philos;
-    unsigned long   time;
+    
     int             i;
 
     philos = (t_philo **)malloc(sizeof(t_philo *) * count);
     if (philos == NULL)
         return (false);
     i = 0;
-    time = get_current_time();
     while (i < count) 
     {
-        if (ph_construct(&philos[i], i, forks, monitor) == false)
+        if (ph_construct(&philos[i], i, monitor) == false)
             return (false);
-        philos[i]->init_time = time;
         i++;
     }
     mo_set_philos(monitor, philos);
@@ -55,7 +54,6 @@ bool ft_get_philos(t_monitor *monitor, t_fork **forks, int count)
 int	main(int argc, char **argv)
 {
 	t_monitor	monitor;
-	t_fork		**forks;
     int         ret;
     int         i;
 
@@ -64,12 +62,12 @@ int	main(int argc, char **argv)
 		return print_error(ARGUMENT);
 
     //포크 배열을 생성한다
-	ret = ft_get_forks(&forks, monitor.philo_num);
+	ret = ft_get_forks(&monitor);
     if (ret == false)
         return print_error(SYSTEM_CALL);
 
     //철학자들의 배열을 생성하고 모니터에 등록한다
-    ret = ft_get_philos(&monitor, forks, monitor.philo_num);
+    ret = ft_get_philos(&monitor, monitor.philo_num);
     if (ret == false)
         return print_error(SYSTEM_CALL);
 
@@ -78,13 +76,13 @@ int	main(int argc, char **argv)
         return print_error(SYSTEM_CALL);
 
 	//monitor watching
-    ft_philo_check_finish(&monitor);
+    mo_check_philos(&monitor);
 
 	i = 0;
 	while (i < monitor.philo_num)
 	{
         pthread_join(monitor.philos[i]->thread, NULL);
-		i++;
+        i++;
 	}
 
 
@@ -94,7 +92,7 @@ int	main(int argc, char **argv)
     //philo
     //philos 배열
     //moniotr에서 philos speak end watier
-    //philo 에서 life thread?
+    //philo 에서 life status thread?
     // i = 0;
     // while (i < monitor.philo_num)
     // {
@@ -102,24 +100,4 @@ int	main(int argc, char **argv)
     // }
 	return 0;
 
-}
-
-void	ft_philo_check_finish(t_monitor *m)
-{
-	int             i;
-
-	while (!m->is_end)
-	{
-		// if ((arg->eat_times != 0) && (arg->philo_num == arg->finished_eat))
-		// {
-		// 	arg->finish = 1;
-		// 	break ;
-		// }
-		i = 0;
-		while (i < m->philo_num)
-		{
-            ph_is_dead(m->philos[i]);
-			i++;
-		}
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 22:22:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 14:37:37 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:18:01 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@ enum e_STATUS {
 	NONE,
 };
 
-typedef struct fork {
-	pthread_mutex_t fork;
-} t_fork;
-
 typedef struct philo {
 	int				id;
 	int				philo_num;
@@ -54,8 +50,9 @@ typedef struct philo {
 	enum e_STATUS	status;
 	pthread_t		thread;
 	pthread_mutex_t life;
-	pthread_mutex_t *left;
-	pthread_mutex_t *right;
+	pthread_mutex_t status_mtx;
+	pthread_mutex_t left;
+	pthread_mutex_t right;
 	t_monitor		*monitor;
 }	t_philo;
 
@@ -71,19 +68,19 @@ typedef struct monitor {
 	pthread_mutex_t watier;
 	pthread_mutex_t speak;
 	pthread_mutex_t end;
+	pthread_mutex_t	*forks;
 	t_philo			**philos;
 }	t_monitor;
 
 /* main.c */
-bool ft_get_forks(t_fork ***out_forks, int fork_cnt);
-bool ft_get_philos(t_monitor *monitor, t_fork **forks, int count);
+bool ft_get_forks(t_monitor *m);
+bool ft_get_philos(t_monitor *monitor, int count);
 void	ft_philo_check_finish(t_monitor *m);
 
 
 /* philo.c */
-bool 			ph_construct(t_philo **philo, int id, t_fork **forks, t_monitor *m);
+bool 	ph_construct(t_philo **philo, int id, t_monitor *m);
 void	*ph_activate_philo(void *arg);
-void	ph_free(t_fork **philo);
 
 bool ph_is_waiter(t_philo *philo);
 bool ph_is_thinker(t_philo *philo);
@@ -110,9 +107,9 @@ unsigned long	get_current_time(void);
 bool mo_construct(t_monitor *monitor, int argc, char **argv);
 void mo_set_philos(t_monitor *monitor, t_philo **philos);
 bool mo_start_philo(t_monitor *monitor);
+void	mo_check_philos(t_monitor *m);
 
 /* fork.c */
-bool fk_construct(t_fork **out_fork);
-void fk_free(t_fork **out_fork);
+void fk_free(pthread_mutex_t *out_fork, int count);
 
 #endif

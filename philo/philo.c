@@ -6,13 +6,13 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:15:24 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 14:53:26 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:52:34 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool ph_construct(t_philo **philo, int id, t_fork **forks, t_monitor *m)
+bool ph_construct(t_philo **philo, int id, t_monitor *m)
 {	
 	int ret;
 	
@@ -25,19 +25,17 @@ bool ph_construct(t_philo **philo, int id, t_fork **forks, t_monitor *m)
 	(*philo)->time_to_sleep = m->time_to_sleep;
 	(*philo)->time_to_eat = m->time_to_eat;
 	(*philo)->eat_count = 0;
-	(*philo)->left = &(forks)[id]->fork;
-	(*philo)->right = &(forks)[(id + 1) % m->philo_num]->fork;
+	(*philo)->left = m->forks[id];
+	(*philo)->right = m->forks[(id + 1) % m->philo_num];
 	(*philo)->status = NONE;
 	(*philo)->monitor = m;
 	ret = pthread_mutex_init(&(*philo)->life, NULL);
     if (ret == -1)
         return (false);
+	ret = pthread_mutex_init(&(*philo)->status_mtx, NULL);
+    if (ret == -1)
+        return (false);
 	return (true);
-}
-
-void ph_free(t_fork **philo)
-{
-    free(*philo);
 }
 
 void	*ph_activate_philo(void *philo)
@@ -53,9 +51,9 @@ void	*ph_activate_philo(void *philo)
 			ph_spend(p, p->time_to_eat);
 		up_fork(p);
 		ph_eat(p);
+		down_fork(p);
 		ph_sleep(p);
 		ph_think(p);
-			
 		if (ph_check_monitor(philo))
 			break;
 	}
@@ -126,7 +124,6 @@ void ph_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->life);
 	ph_print_state(philo);
 	ph_spend(philo, philo->time_to_eat);
-	down_fork(philo);
 }
 
 void ph_sleep(t_philo *philo)
@@ -138,7 +135,7 @@ void ph_sleep(t_philo *philo)
 
 void	up_fork(t_philo *philo)
 {
-	pthread_mutex_lock(philo->left);
+	pthread_mutex_lock(&philo->left);
 	philo->status = FORK;
 	ph_print_state(philo);
 	// if (philo->info->philo_num == 1)
@@ -154,15 +151,15 @@ void	up_fork(t_philo *philo)
 	// 		}
 	// 	}
 	// }
-	pthread_mutex_lock(philo->right);
+	pthread_mutex_lock(&philo->right);
 	philo->status = FORK;
 	ph_print_state(philo);
 }
 
 void	down_fork(t_philo *philo)
 {
-	pthread_mutex_lock(philo->right);
-	pthread_mutex_lock(philo->left);
+	pthread_mutex_unlock(&philo->left);
+	pthread_mutex_unlock(&philo->right);
 	philo->eat_count += 1;
 }
 
@@ -190,7 +187,9 @@ void ph_spend(t_philo *philo, unsigned long time)
 
 void ph_dead(t_philo *philo)
 {
+	// pthread_mutex_lock(&philo->status_mtx);
 	philo->status = DEATH;
+	// pthread_mutex_unlock(&philo->status_mtx);
 	ph_print_state(philo);
 }
 
