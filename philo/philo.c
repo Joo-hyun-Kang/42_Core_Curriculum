@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:15:24 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 16:52:34 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 16:53:57 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,9 +187,7 @@ void ph_spend(t_philo *philo, unsigned long time)
 
 void ph_dead(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->status_mtx);
 	philo->status = DEATH;
-	// pthread_mutex_unlock(&philo->status_mtx);
 	ph_print_state(philo);
 }
 
