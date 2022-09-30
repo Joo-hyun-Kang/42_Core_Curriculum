@@ -55,11 +55,19 @@ int	ft_atoi(const char *str)
 	return ((int)(sign * result));
 }
 
-int print_error(enum e_ERROR code)
+int	print_error(enum e_ERROR code)
 {
-	if (code == MALLOC)
-		printf("%s\n", "process fail allocating heap memory");
+	if (code == SYSTEM_CALL)
+		printf("%s\n", "process fail to call system");
 	else if (code == ARGUMENT)
 		printf("%s\n", "illegal argument");
 	return (1);
+}
+
+unsigned long	get_current_time(void)
+{
+	static struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }

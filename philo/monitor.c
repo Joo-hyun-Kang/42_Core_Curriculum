@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/29 17:04:34 by jokang            #+#    #+#             */
+/*   Updated: 2022/09/30 12:16:45 by jokang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-bool construct_monitor(t_monitor *monitor, int argc, char **argv)
+bool mo_construct(t_monitor *monitor, int argc, char **argv)
 {
 	int arguments[5];
+	int	res;
 	
 	if (argc < 5 || argc > 6)
 		return (false);
@@ -22,5 +35,34 @@ bool construct_monitor(t_monitor *monitor, int argc, char **argv)
 		monitor->count_must_eat = arguments[4];
 	else
 		monitor->count_must_eat = -1;
+	monitor->is_end = false;
+	res = pthread_mutex_init(&monitor->speak, NULL);
+    if (res == -1)
+        return (false);
+	res = pthread_mutex_init(&monitor->end, NULL);
+    if (res == -1)
+        return (false);
+	return (true);
+}
+
+void mo_set_philos(t_monitor *monitor, t_philo **philos)
+{
+	monitor->philos = philos;
+}
+
+bool mo_start_philo(t_monitor *monitor)
+{
+	int i;
+	int ret;
+	
+	i = 0;
+	while (i < monitor->philo_num)
+	{
+		monitor->philos[i]->life_count = get_current_time();
+		ret = pthread_create(&monitor->philos[i]->thread, NULL, &ph_activate_philo, monitor->philos[i]);
+		if (ret != 0)
+			return (false);
+		i++;
+	}
 	return (true);
 }

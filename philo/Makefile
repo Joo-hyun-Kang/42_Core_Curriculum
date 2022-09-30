@@ -1,6 +1,9 @@
-SRCS	= 	philo.c\
+SRCS	= 	main.c\
+			philo.c\
 			philo_utils.c\
 			monitor.c\
+			fork.c\
+
 
 OBJS = $(SRCS:.c=.o)
 
