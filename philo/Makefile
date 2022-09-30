@@ -6,7 +6,7 @@
 #    By: jokang <jokang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 17:32:17 by jokang            #+#    #+#              #
-#    Updated: 2022/09/30 20:47:40 by jokang           ###   ########.fr        #
+#    Updated: 2022/09/30 21:29:34 by jokang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJS = $(SRCS:.c=.o)
 NAME = philo
 
 CC	= cc
-CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 RM = rm -rf
 

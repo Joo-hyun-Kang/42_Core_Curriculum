@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:32:48 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 20:40:20 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:30:02 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 void	ph_wait(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->status_mtx);
 	philo->status = THINK;
+	pthread_mutex_unlock(&philo->status_mtx);
 	ph_print_state(philo);
 	ph_spend(philo, philo->time_to_eat);
 }
 
 void	ph_think(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->status_mtx);
 	philo->status = THINK;
+	pthread_mutex_unlock(&philo->status_mtx);
 	ph_print_state(philo);
 }
 

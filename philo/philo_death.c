@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:32:51 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 20:39:37 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 21:19:31 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ph_print_state(t_philo *philo)
 void	ph_print_helper(t_monitor *m, t_philo *philo)
 {
 	pthread_mutex_lock(&m->speak);
+	pthread_mutex_lock(&philo->status_mtx);
 	printf("%lu ms  ", get_current_time() - philo->init_time);
 	printf("%d  ", philo->id + 1);
 	if (philo->status == SLEEP)
@@ -92,5 +93,6 @@ void	ph_print_helper(t_monitor *m, t_philo *philo)
 		printf("%s\n", "died");
 	else
 		printf("%s\n", "error!");
+	pthread_mutex_unlock(&philo->status_mtx);
 	pthread_mutex_unlock(&m->speak);
 }
