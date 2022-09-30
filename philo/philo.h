@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 22:22:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 16:18:01 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 17:02:09 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void ph_think(t_philo *philo);
 void ph_eat(t_philo *philo);
 void ph_sleep(t_philo *philo);
 void	up_fork(t_philo *philo);
+void	up_fork_alone(t_philo *philo);
 void	down_fork(t_philo *philo);
 void ph_spend(t_philo *philo, unsigned long time);
 void ph_dead(t_philo *philo);

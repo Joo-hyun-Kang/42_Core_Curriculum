@@ -6,7 +6,7 @@
 /*   By: jokang <autoba9687@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:15:24 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 16:53:57 by jokang           ###   ########.fr       */
+/*   Updated: 2022/09/30 17:18:54 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	*ph_activate_philo(void *philo)
 	t_philo *p;
 
 	p = (t_philo *)philo;
+	if (p->philo_num == 1)
+	{
+		up_fork_alone(p);
+		return (NULL);
+	}
 	if (ph_is_thinker(p))
 		ph_wait(p);
 	while (true)
@@ -54,7 +59,7 @@ void	*ph_activate_philo(void *philo)
 		down_fork(p);
 		ph_sleep(p);
 		ph_think(p);
-		if (ph_check_monitor(philo))
+		if (ph_check_monitor(p))
 			break;
 	}
 	return (NULL);
@@ -117,7 +122,9 @@ void ph_eat(t_philo *philo)
 {
 	unsigned long init_to_eat;
 	
+	pthread_mutex_lock(&philo->status_mtx);
 	philo->status = EAT;
+	pthread_mutex_unlock(&philo->status_mtx);
 	init_to_eat = get_current_time() - philo->init_time;
 	pthread_mutex_lock(&philo->life);
 	philo->life_count = init_to_eat + philo->time_to_die;
@@ -128,7 +135,9 @@ void ph_eat(t_philo *philo)
 
 void ph_sleep(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->status_mtx);
 	philo->status = SLEEP;
+	pthread_mutex_unlock(&philo->status_mtx);
 	ph_print_state(philo);
 	ph_spend(philo, philo->time_to_sleep);
 }
@@ -138,23 +147,27 @@ void	up_fork(t_philo *philo)
 	pthread_mutex_lock(&philo->left);
 	philo->status = FORK;
 	ph_print_state(philo);
-	// if (philo->info->philo_num == 1)
-	// {
-	// 	while (LOOP)
-	// 	{
-	// 		if (check_death(philo))
-	// 		{
-	// 			show_philo_state(philo, DEAD);
-	// 			pthread_mutex_unlock(&philo->mtx);
-	// 			pthread_mutex_unlock(&philo->info->fork_mtx[philo->left]);
-	// 			break ;
-	// 		}
-	// 	}
-	// }
 	pthread_mutex_lock(&philo->right);
 	philo->status = FORK;
 	ph_print_state(philo);
 }
+
+void	up_fork_alone(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->left);
+	philo->status = FORK;
+	ph_print_state(philo);
+
+	while (!ph_is_dead(philo))
+	{
+	}
+	pthread_mutex_lock(&philo->status_mtx);
+	philo->status = DEATH;
+	pthread_mutex_unlock(&philo->status_mtx);
+	ph_print_state(philo);
+	pthread_mutex_unlock(&philo->left);
+}
+
 
 void	down_fork(t_philo *philo)
 {
@@ -187,7 +200,9 @@ void ph_spend(t_philo *philo, unsigned long time)
 
 void ph_dead(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->status_mtx);
 	philo->status = DEATH;
+	pthread_mutex_unlock(&philo->status_mtx);
 	ph_print_state(philo);
 }
 
@@ -208,21 +223,7 @@ int	ph_is_dead(t_philo *philo)
 void ph_print_state(t_philo *philo)
 {
 	t_monitor *m;
-	// if (ph_check_monitor(philo))
-	// 	return ;
-	// m = philo->monitor;
-	// pthread_mutex_lock(&m->speak);
-	// if (ph_check_monitor(philo))
-	// {
-	// 	pthread_mutex_unlock(&m->speak);
-	// 	return ;
-	// }
-	// if (ph_is_dead(philo))
-	// {
-	// 	pthread_mutex_unlock(&m->speak);
-	// 	ph_dead(philo);
-	// 	return ;
-	// }
+
 	m = philo->monitor;
 	pthread_mutex_lock(&m->end);
 	if (m->is_end_check == true)
@@ -233,14 +234,14 @@ void ph_print_state(t_philo *philo)
 	}
 	pthread_mutex_unlock(&m->end);
 
+	pthread_mutex_lock(&m->end);
 	if (m->is_end_check == false)
 	{
 		if (philo->status == DEATH)
 		{
-			pthread_mutex_lock(&m->end);
 			m->is_end_check = true;
-			pthread_mutex_unlock(&m->end);
 		}
+		pthread_mutex_unlock(&m->end);
 
 		pthread_mutex_lock(&m->speak);
 		printf("%lu ms  ", get_current_time() - philo->init_time);
@@ -258,7 +259,9 @@ void ph_print_state(t_philo *philo)
 		else
 			printf("%s\n", "error!");
 		pthread_mutex_unlock(&m->speak);
-	}
+	} else
+		pthread_mutex_unlock(&m->end);
+
 }
 
 int	ph_check_monitor(t_philo* philo)
