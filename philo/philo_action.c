@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:32:48 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:30:02 by jokang           ###   ########.fr       */
+/*   Updated: 2022/10/01 23:08:14 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void	ph_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->life);
 	ph_print_state(philo);
 	ph_spend(philo, philo->time_to_eat);
+	pthread_mutex_unlock(philo->left);
+	pthread_mutex_unlock(philo->right);
+	philo->eat_count += 1;
 }
 
 void	ph_sleep(t_philo *philo)
@@ -55,12 +58,9 @@ void	ph_sleep(t_philo *philo)
 
 void	ph_spend(t_philo *philo, unsigned long time)
 {
-	unsigned long	start;
-	unsigned long	current;
-	int				is_dead;
+	unsigned long	target;
 
-	is_dead = false;
-	start = get_current_time();
+	target = get_current_time() + time;
 	while (true)
 	{
 		if (ph_is_dead(philo))
@@ -68,9 +68,8 @@ void	ph_spend(t_philo *philo, unsigned long time)
 			ph_dead(philo);
 			break ;
 		}
-		current = get_current_time();
-		if (current >= start + time)
+		if (get_current_time() >= target)
 			break ;
-		usleep(200);
+		usleep(300);
 	}
 }

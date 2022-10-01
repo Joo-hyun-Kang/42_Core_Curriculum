@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:32:51 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:19:31 by jokang           ###   ########.fr       */
+/*   Updated: 2022/10/01 23:02:56 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ph_check_monitor(t_philo *philo)
 
 	pthread_mutex_lock(&philo->monitor->end);
 	ret = false;
-	if (philo->monitor->is_end)
+	if (philo->monitor->is_end_check)
 		ret = true;
 	pthread_mutex_unlock(&philo->monitor->end);
 	return (ret);
@@ -77,22 +77,23 @@ void	ph_print_state(t_philo *philo)
 
 void	ph_print_helper(t_monitor *m, t_philo *philo)
 {
+	unsigned long	time;
+
+	time = get_current_time() - philo->init_time;
 	pthread_mutex_lock(&m->speak);
 	pthread_mutex_lock(&philo->status_mtx);
-	printf("%lu ms  ", get_current_time() - philo->init_time);
-	printf("%d  ", philo->id + 1);
 	if (philo->status == SLEEP)
-		printf("%s\n", "is sleeping");
+		printf("%lu ms  %d  %s\n", time, philo->id + 1, "is sleeping");
 	else if (philo->status == EAT)
-		printf("%s\n", "is eating");
+		printf("%lu ms  %d  %s\n", time, philo->id + 1, "is eating");
 	else if (philo->status == THINK)
-		printf("%s\n", "is thinking");
+		printf("%lu ms  %d  %s\n", time, philo->id + 1, "is thinking");
 	else if (philo->status == FORK)
-		printf("%s\n", "has taken a fork");
+		printf("%lu ms  %d  %s\n", time, philo->id + 1, "has taken a fork");
 	else if (philo->status == DEATH)
-		printf("%s\n", "died");
+		printf("%lu ms  %d  %s\n", time, philo->id + 1, "died");
 	else
-		printf("%s\n", "error!");
+		printf("%lu ms  %d  %s\n", time, philo->id + 1, "error!");
 	pthread_mutex_unlock(&philo->status_mtx);
 	pthread_mutex_unlock(&m->speak);
 }

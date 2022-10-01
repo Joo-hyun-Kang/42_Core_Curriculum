@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 17:15:24 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:07:24 by jokang           ###   ########.fr       */
+/*   Updated: 2022/10/01 23:02:18 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 bool	ph_construct(t_philo **philo, int id, t_monitor *m)
 {	
 	int	ret;
+	int	right;
 
 	(*philo) = (t_philo *)malloc(sizeof(t_philo));
-	if (philo == NUL)
+	if (*philo == NUL)
 		return (false);
 	(*philo)->id = id;
 	(*philo)->philo_num = m->philo_num;
@@ -26,8 +27,9 @@ bool	ph_construct(t_philo **philo, int id, t_monitor *m)
 	(*philo)->time_to_eat = m->time_to_eat;
 	(*philo)->count_must_eat = m->count_must_eat;
 	(*philo)->eat_count = 0;
-	(*philo)->left = m->forks[id];
-	(*philo)->right = m->forks[(id + 1) % m->philo_num];
+	(*philo)->left = &m->forks[id];
+	right = (id + 1) % m->philo_num;
+	(*philo)->right = &m->forks[right];
 	(*philo)->status = NONE;
 	(*philo)->monitor = m;
 	ret = pthread_mutex_init(&(*philo)->life, NUL);
@@ -55,9 +57,9 @@ void	*ph_activate_philo(void *philo)
 	{
 		if (ph_is_waiter(p))
 			ph_spend(p, p->time_to_eat);
-		up_fork(p);
+		if (!try_up_fork(p))
+			break ;
 		ph_eat(p);
-		down_fork(p);
 		if (ph_count_must_eat(p))
 			break ;
 		ph_sleep(p);

@@ -6,7 +6,7 @@
 /*   By: jokang <jokang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 22:22:05 by jokang            #+#    #+#             */
-/*   Updated: 2022/09/30 21:08:48 by jokang           ###   ########.fr       */
+/*   Updated: 2022/10/01 23:02:23 by jokang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ typedef struct philo {
 	pthread_t		thread;
 	pthread_mutex_t	life;
 	pthread_mutex_t	status_mtx;
-	pthread_mutex_t	left;
-	pthread_mutex_t	right;
+	pthread_mutex_t	*left;
+	pthread_mutex_t	*right;
 	t_monitor		*monitor;
 }	t_philo;
 
@@ -97,8 +97,7 @@ void			ph_spend(t_philo *philo, unsigned long time);
 
 /* philo_fork.c */
 void			up_fork_alone(t_philo *philo);
-void			down_fork(t_philo *philo);
-void			up_fork(t_philo *philo);
+bool			try_up_fork(t_philo *philo);
 
 /* philo_death.c */
 int				ph_check_monitor(t_philo *philo);
