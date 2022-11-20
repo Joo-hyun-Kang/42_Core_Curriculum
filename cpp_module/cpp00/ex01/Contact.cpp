@@ -38,7 +38,7 @@ void Contact::printColumn(std::string str)
     }
     else
     {
-        std::cout << std::right << std::setw(9) << str.substr(0, 9) << "." << "|";
+        std::cout << str.substr(0, 9) << "." << "|";
     }
 }
 

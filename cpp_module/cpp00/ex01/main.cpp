@@ -56,10 +56,12 @@ void PhoneBook::searchContact()
         mContacts[i].printContact();
     }
 
-    int index;
+    
     std::cout << "the index of the entry to display" << std::endl;
 
+    int index;
     std::cin >> index;
+
     if (std::cin.fail() || index <= 0 || index > mTotal || index > MAX_CONTACTS)
     {
         std::cout << "Wrong Index!" << std::endl;
@@ -81,12 +83,14 @@ int main()
     while(true)
     {
         std::cout << "Please input what you want (ADD, SEARCH, EXIT)" << std::endl;
+
         std::getline(std::cin, input);
-        if (input == "ADD" ||input == "1")
+
+        if (input == "ADD")
         {
             phonebook.addContact();
         }
-        else if (input == "SEARCH" || input == "2")
+        else if (input == "SEARCH")
         {
             phonebook.searchContact();
         }
