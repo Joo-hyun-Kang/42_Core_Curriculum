@@ -1,35 +1,22 @@
 #include "FragTrap.hpp"
     
 FragTrap::FragTrap(void)
-{
-    mName = "FragTrap";
-    mHitPoint = 100;
-    mEnergyPoint = 100;
-    mAttackDamage = 30;
-    
+    : ClapTrap("FragTrap", 100, 100, 30)
+{   
     std::cout << "FragTrap is made by default constructor" << std::endl;
 }
 
 FragTrap::FragTrap(std::string name)
-{
-    mName = name;
-    mHitPoint = 100;
-    mEnergyPoint = 100;
-    mAttackDamage = 30;
-    
+    : ClapTrap(name, 100, 100, 30)
+{   
     std::cout << "FragTrap " << mName << " is made by constructor" << std::endl;
 }
 
 FragTrap::FragTrap(const FragTrap &fragTrap)
+    : ClapTrap(fragTrap.mName, fragTrap.mHitPoint, fragTrap.mEnergyPoint, fragTrap.mAttackDamage)
 {
-    mName = fragTrap.mName;
-    mHitPoint = fragTrap.mHitPoint;
-    mEnergyPoint = fragTrap.mEnergyPoint;
-    mAttackDamage = fragTrap.mAttackDamage;
-
     std::cout << "FragTrap " << mName << " is made by copy constructor" << std::endl;
 }
-
 
 FragTrap& FragTrap::operator=(const FragTrap &fragTrap)
 {

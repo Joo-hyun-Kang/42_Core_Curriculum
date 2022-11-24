@@ -12,7 +12,7 @@ public:
     FragTrap(std::string name);
     FragTrap(const FragTrap &fragTrap);
     FragTrap& operator=(const FragTrap &fragTrap);
-    ~FragTrap();
+    virtual ~FragTrap();
 
     void highFivesGuys(void);
 };

@@ -18,6 +18,15 @@ ClapTrap::ClapTrap(std::string name)
     std::cout << mName << " is made by constructor" << std::endl;
 }
 
+ClapTrap::ClapTrap(std::string name, unsigned int hitPoint, unsigned int energyPoint, unsigned int attackDamage)
+    : mName(name)
+    , mHitPoint(hitPoint)
+    , mEnergyPoint(energyPoint)
+    , mAttackDamage(attackDamage)
+{
+    std::cout << mName << " is made by constructor" << std::endl;
+}
+
 ClapTrap::ClapTrap(const ClapTrap &clapTrap)
     : mName(clapTrap.mName)
     , mHitPoint(clapTrap.mHitPoint)

@@ -1,32 +1,20 @@
 #include "ScavTrap.hpp"
 
 ScavTrap::ScavTrap(void)
-{
-    mName = "ScavTrap";
-    mHitPoint = 100;
-    mEnergyPoint = 50;
-    mAttackDamage = 20;
-    
+    : ClapTrap("ScavTrap", 100, 50, 20)
+{   
     std::cout << "ScavTrap is made by default constructor" << std::endl;
 }
 
 ScavTrap::ScavTrap(std::string name)
+    : ClapTrap(name, 100, 50, 20)
 {
-    mName = name;
-    mHitPoint = 100;
-    mEnergyPoint = 50;
-    mAttackDamage = 20;
-    
     std::cout << "ScavTrap " << mName << " is made by constructor" << std::endl;
 }
 
 ScavTrap::ScavTrap(const ScavTrap &scavTrap)
+    : ClapTrap(scavTrap.mName, scavTrap.mHitPoint, scavTrap.mEnergyPoint, scavTrap.mAttackDamage)
 {
-    mName = scavTrap.mName;
-    mHitPoint = scavTrap.mHitPoint;
-    mEnergyPoint = scavTrap.mEnergyPoint;
-    mAttackDamage = scavTrap.mAttackDamage;
-
     std::cout << "ScavTrap " << mName << " is made by copy constructor" << std::endl;
 }
 

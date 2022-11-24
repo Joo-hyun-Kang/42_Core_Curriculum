@@ -14,6 +14,7 @@ protected:
 public:
     ClapTrap(void);
     ClapTrap(std::string name);
+    ClapTrap(std::string name, unsigned int hitPoint, unsigned int energyPoint, unsigned int attackDamage);
     ClapTrap(const ClapTrap &clapTrap);
     ClapTrap& operator=(const ClapTrap &clapTrap);
     virtual ~ClapTrap();
