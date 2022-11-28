@@ -120,6 +120,8 @@ bool Convert::checkValid(std::string value) const {
 }
 
 bool Convert::checkIsConvertable() const {
+    // 남은 문자열이 있는 경우와 남은 문자열이 f가 아닌 경우 거짓을 반환 ==> 출력 못 함
+    // 그게 아니라면 true
     if (*(this->endptr) && !(*(this->endptr) == 'f'))
         return false;
     return true;

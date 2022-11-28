@@ -1,22 +1,19 @@
 SRCS =	main.cpp\
-		Contact.cpp\
-		PhoneBook.cpp\
+		Convert.cpp\
+		Parser.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
-NAME = phonebook
+NAME = convert
 
-CC = c++
+CXX = c++
 
-FLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 RM = rm -rf
 
-.cpp.o:
-	$(CC) $(FLAGS) -c $< -o $(<:.cpp=.o)
-
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(OBJS) -o $(NAME)
 
 all: $(NAME)
 
