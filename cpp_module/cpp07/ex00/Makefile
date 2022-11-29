@@ -1,9 +1,8 @@
 SRCS =	main.cpp\
-		Parser.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
-NAME = parser
+NAME = template
 
 CXX = c++
 

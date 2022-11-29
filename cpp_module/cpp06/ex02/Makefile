@@ -1,9 +1,12 @@
 SRCS =	main.cpp\
-		Parser.cpp\
+		A.cpp\
+		B.cpp\
+		C.cpp\
+		Base.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
-NAME = parser
+NAME = real_value
 
 CXX = c++
 
