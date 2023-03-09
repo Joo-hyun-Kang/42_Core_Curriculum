@@ -1,0 +1,63 @@
+version: "2"
+
+networks:
+  app-network:
+    name: app-network
+    driver: bridge
+
+volumes:
+  wp:
+    driver: local
+    name: wp
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/jinhyeok/Desktop/42inception/data/wordpress
+  db:
+    driver: local
+    name: db
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/jinhyeok/Desktop/42inception/data/mariadb
+
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    build: ./mariadb
+    env_file:
+      - .env
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    build: ./wordpress
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - app-network
+    restart: unless-stopped
