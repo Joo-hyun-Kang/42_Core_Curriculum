@@ -1,18 +1,16 @@
+#ifndef BITCOINEXCHANGE_HPP
+#define BITCOINEXCHANGE_HPP
+
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <vector>
+#include <cstdlib>
+#include <iomanip>
 
-class BitcoinExchange
-{
-    public:
-        BitcoinExchange(int database);
-        ~BitcoinExchange();
-        BitcoinExchange &operator=(const BitcoinExchange &othter);
+std::vector<std::pair<std::string, float> > readData();
 
-        // std::stream calculateExchangeRateByFile(int fd);
-        // 
-    
-    private:
-        BitcoinExchange();
-        std::vector<int> date;
-        std::vector<int> value;
-};
+void operateInput(std::vector<std::pair<std::string, float> > &data, char *input);
+
+#endif
