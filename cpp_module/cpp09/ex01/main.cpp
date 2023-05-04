@@ -2,12 +2,12 @@
 
 int	main(int argc, char **argv)
 {
-	std::stack<int>	stackMain;
+	std::stack<int>	stack;
 
 	if (argc != 2) {
 		std::cout << "Error: invalid argument" << std::endl;
 		exit(1);
 	}
-	stackMain = pileStack(argv[1]);
-	std::cout << stackMain.top() << std::endl;
+	stack = calculate(argv[1]);
+	std::cout << stack.top() << std::endl;
 }

@@ -4,6 +4,6 @@
 #include <iostream>
 #include <stack>
 
-std::stack<int>	pileStack(char *argv);
+std::stack<int>	calculate(char *argv);
 
 #endif

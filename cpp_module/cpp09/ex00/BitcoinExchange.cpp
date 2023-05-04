@@ -13,9 +13,7 @@ std::vector<std::pair<std::string, float> > readFile() {
 
 	std::string readline;
 	std::getline(fin, readline);
-	while (!fin.eof()) {
-		std::getline(fin, readline);
-		
+	while (std::getline(fin, readline)) {
 		std::stringstream buffer(readline);
 
 		std::string date, rate;
