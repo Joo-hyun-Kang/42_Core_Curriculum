@@ -2,13 +2,16 @@
 
 int main(int argc, char *argv[])
 {
-    std::vector<std::pair<std::string, float> > data;
+    std::vector<std::pair<std::string, float> > vec;
+
 	if (argc != 2)
 	{
 		std::cout << "Error: could not open file." << std::endl;
-		exit(1);
+		return 1;
 	}
-	data = readData();
-	operateInput(data, argv[1]);
+	
+	vec = readFile();
+	calculateInput(vec, argv[1]);
+
 	return 0;
 }

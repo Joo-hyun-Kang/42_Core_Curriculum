@@ -1,21 +1,7 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: taehykim <taehykim@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/04 19:49:35 by taehykim          #+#    #+#              #
-#    Updated: 2022/12/04 19:49:37 by taehykim         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = btc
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 RM = rm -f
-AR = ar
-CRS = crs
 
 SRCS = main.cpp \
 		BitcoinExchange.cpp
