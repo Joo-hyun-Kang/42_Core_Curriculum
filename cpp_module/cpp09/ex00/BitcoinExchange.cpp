@@ -6,7 +6,7 @@ std::vector<std::pair<std::string, float> > readFile() {
 	std::ifstream fin;
 	fin.open("data.csv", std::ios_base::in);
 
-	if (fin.is_open()) {
+	if (!fin.is_open()) {
 		std::cout << "Counldn't open data.csv" << std::endl;
 		exit(1);
 	}
@@ -46,9 +46,7 @@ void printErrorWithData(std::string str, std::string date) {
 }
 
 bool isLeapYear(int year) {
-	if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-		return true;
-	return false;
+	return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
 }
 
 bool checkDate(std::string date) {
@@ -61,7 +59,7 @@ bool checkDate(std::string date) {
 		return false;
 	}
 
-    for (int i = 0; i < date.length(); ++i) {
+    for (unsigned long i = 0; i < date.length(); ++i) {
         if (i == 4 || i == 7) {
             if (date[i] != '-') {
                 return false;
@@ -75,79 +73,109 @@ bool checkDate(std::string date) {
 
 	buffer >> year >> sep1 >> month >> sep2 >> day;
 	if (buffer.fail() || year < 0 || year > 9999 || month < 0 || month > 12 || day < 1 || day > 31 || sep1 != '-' || sep2 != '-')
+	{
 		return false;
-	if (isLeapYear(year) && month == 2 && day > 29) {
-		return false;
-	} else if (month == 2 && day > 28)
-		return false;
+	}
+
+	if (isLeapYear(year))
+	{
+		if (month == 2 && day > 29)
+		{
+			return false;
+		}
+	} 
+	else 
+	{
+		if (month == 2 && day > 28)
+		{
+			return false;
+		}
+	}
+
 	if ((month == 4 || month == 6 || month == 9 || month == 11) && (day > 30))
+	{
 		return false;
+	}
+
 	return true;
 }
 
-float getRatio(std::vector<std::pair<std::string, float> > &data, std::string date) {
-	float prevRatio = data.begin()->second;
-	int year, month, day;
+float getDBValue(std::vector<std::pair<std::string, float> > &db, std::string date) {
+	int yearOfDate, monthOfDate, dayOfDate;
 
 	try {
-		year = atoi(date.substr(0, 4).c_str());
-		month = atoi(date.substr(5, 2).c_str());
-		day = atoi(date.substr(8, 2).c_str());
+		yearOfDate = atoi(date.substr(0, 4).c_str());
+		monthOfDate = atoi(date.substr(5, 2).c_str());
+		dayOfDate = atoi(date.substr(8, 2).c_str());
 	} catch (std::exception &e) {
 		std::cout << e.what() << std::endl;
-	
-	return -1;
-}
-for (std::vector<std::pair<std::string, float> >::iterator iter = data.begin(); iter != data.end(); iter++) {
-	if (iter->first == date.substr(0, 10)) {
-		return iter->second;
-	} else if (year < atoi((iter->first).substr(0, 4).c_str())) {
-		return prevRatio;
-	} else if (year == atoi((iter->first).substr(0, 4).c_str())) {
-		if (month < atoi((iter->first).substr(5, 2).c_str()))
-			return prevRatio;
-		else if (month == atoi((iter->first).substr(5, 2).c_str()) && day < atoi((iter->first).substr(8, 2).c_str()))
-			return prevRatio;
+		return -1;
 	}
-	prevRatio = iter->second;
-}
-if (year == 2022)
+
+	float prevRatio = db.begin()->second;
+	for (std::vector<std::pair<std::string, float> >::iterator iter = db.begin(); iter != db.end(); iter++) {
+		if (iter->first == date.substr(0, 10)) 
+		{
+			// db에 있는 데이터와 같을 때
+			return iter->second;
+		} 
+		else if (yearOfDate < atoi((iter->first).substr(0, 4).c_str()))
+		{
+			// db에 있는 데이터보다 더 기준이 빠를 떄
+			return prevRatio;
+		} 
+		else if (yearOfDate == atoi((iter->first).substr(0, 4).c_str())) 
+		{
+			if (monthOfDate < atoi((iter->first).substr(5, 2).c_str()))
+			{
+				return prevRatio;
+			}
+			else if (monthOfDate == atoi((iter->first).substr(5, 2).c_str()) && dayOfDate < atoi((iter->first).substr(8, 2).c_str()))
+			{
+				return prevRatio;
+			}
+		}
+		// db에 있는 데이터보다 클 때
+		prevRatio = iter->second;
+	}
+
 	return (prevRatio);
-return -1;
-
 }
 
-bool checkValue(std::string value) {
-float v;
+bool checkValueAndPrintError(std::string value) {
+	for (size_t i = 0; i < value.length(); i++) {
+		if (value[i] == '-' || value[i] == '+') {
+			errorMessage("Error: invaild format of number");
+			return false;
+		}
+	}
 
-for (size_t i = 0; i < value.length(); i++) {
-	if (value[i] == '-' || value[i] == '+') {
-		errorMessage("Error: a weird number");
+	float parsedValue;
+	try {
+		parsedValue = static_cast<float>(atof(value.c_str()));
+		
+		if (parsedValue < 0) 
+		{
+			errorMessage("Error: not a positive number");
+			return false;
+		} else if (parsedValue > 1000) 
+		{
+			errorMessage("Error: too large a number");
+			return false;
+		}
+	} catch (std::exception &e) {
+		std::cout << e.what() << std::endl;
 		return false;
 	}
-}
-try {
-	v = static_cast<float>(atof(value.c_str()));
-	if (v < 0) {
-		errorMessage("Error: not a positive number");
-		return false;
-	} else if (v > 1000) {
-		errorMessage("Error: too large a number");
-		return false;
-	}
-} catch (std::exception &e) {
-	std::cout << e.what() << std::endl;
-	return false;
-}
-return true;
 
+	return true;
 }
 
 void calculateInput(std::vector<std::pair<std::string, float> > &db, char *input) {
 	std::ifstream fin;
 	fin.open(input, std::ios_base::in);
 
-	if (fin.is_open()) {
+	if (!fin.is_open()) {
 		std::cout << "Error: could not open file." << std::endl;
 		exit(1);
 	}
@@ -166,23 +194,33 @@ void calculateInput(std::vector<std::pair<std::string, float> > &db, char *input
 		std::string date;
 		std::string value;
 		char seperator;
-		float ratio;
+		float DBValue;
 
 		if (!(buffer >> date >> seperator >> value) || seperator != '|')
+		{
 			printErrorWithData("Error: bad input => ", date);
+		}
 		else if (!checkDate(date))
+		{
 			printErrorWithData("Error: bad input => ", date);
-		else if (!checkValue(value)) {}
-		else {
-			ratio = getRatio(data, date);
-			if (ratio != -1) {
+		}
+		else if (!checkValueAndPrintError(value)) 
+		{
+		}
+		else 
+		{
+			DBValue = getDBValue(db, date);
+			if (DBValue != -1) 
+			{
 				std::cout << std::fixed;
 				std::cout.precision(2);
-				std::cout << date << " => " << value << " = " << static_cast<float>(atof(value.c_str())) * getRatio(data, date) << std::endl;
-			} else {
-				std::cout << "Error: cannot find the date" << std::endl;
+				std::cout << date << " => " << value << " = " << static_cast<float>(atof(value.c_str())) * DBValue << std::endl;
+			} else 
+			{
+				std::cout << "Error: bad input => " << date << std::endl;
 			}
+		}
 	}
-}
-readFile.close();
+
+	fin.close();
 }
