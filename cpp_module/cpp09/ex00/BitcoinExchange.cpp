@@ -70,7 +70,7 @@ bool checkDate(std::string date) {
     }
 
 	buffer >> year >> sep1 >> month >> sep2 >> day;
-	if (buffer.fail() || year < 0 || year > 9999 || month < 0 || month > 12 || day < 1 || day > 31 || sep1 != '-' || sep2 != '-')
+	if (buffer.fail() || year < 0 || year > 9999 || month < 1 || month > 12 || day < 1 || day > 31 || sep1 != '-' || sep2 != '-')
 	{
 		return false;
 	}
