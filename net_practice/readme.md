@@ -5,6 +5,7 @@
 
 ネットプラクティスは、PC から内部ネットワーク、ルーター、外部ウェブサイトへの接続をシミュレーションを通じて練習する課題です。
 
+<img width="810" alt="スクリーンショット 2024-07-21 0 57 27" src="https://github.com/user-attachments/assets/7b0e467f-228a-4e0d-b071-b67441f09d31">
 
 
 
@@ -40,7 +41,6 @@ on R1: send to gateway 163.69.250.1 through interface R12
 on I : loop detected
 ```
 
-### Notionリング
 
 ### 主な概念
 
